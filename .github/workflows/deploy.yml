@@ -42,6 +42,9 @@ jobs:
         env:
           STATIC_EXPORT: "1"
           PAYLOAD_SECRET: build-only-not-a-secret
+          # Build from the hosted database (same source as the Vercel admin)
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
 
       - uses: actions/configure-pages@v5
 

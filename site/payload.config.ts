@@ -165,7 +165,11 @@ const publicRead = { read: () => true };
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "dev-secret-change-me",
   db: sqliteAdapter({
-    client: { url: process.env.DATABASE_URI || `file:${path.resolve(dirname, "payload.db")}` },
+    client: {
+      // Hosted (Turso/libSQL) when DATABASE_URI is set; local file otherwise.
+      url: process.env.DATABASE_URI || `file:${path.resolve(dirname, "payload.db")}`,
+      authToken: process.env.DATABASE_AUTH_TOKEN,
+    },
   }),
   editor: lexicalEditor(),
   admin: { user: "users" },
