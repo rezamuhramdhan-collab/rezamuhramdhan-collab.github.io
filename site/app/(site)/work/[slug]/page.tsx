@@ -6,6 +6,14 @@ import { CaseStudy } from "@/components/case/CaseStudy";
 
 // Case study route: /work/[slug] (PRD §6). Published projects are statically
 // generated; drafts render only via Next draft mode (preview).
+// Under STATIC_EXPORT there is no server: only generated params exist and
+// draft mode is unavailable.
+
+const isStaticExport = Boolean(process.env.STATIC_EXPORT);
+
+// Only slugs from generateStaticParams exist; in dev the params are
+// recomputed per request, so newly created projects still resolve.
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const projects = await getPublishedProjects();
@@ -32,7 +40,10 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { isEnabled: isDraftMode } = await draftMode();
+  let isDraftMode = false;
+  if (!isStaticExport) {
+    isDraftMode = (await draftMode()).isEnabled;
+  }
   const project = await getProjectBySlug(slug, isDraftMode);
 
   if (!project || (project.status === "draft" && !isDraftMode)) {

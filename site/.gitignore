@@ -1,5 +1,4 @@
 node_modules
 .next
-payload.db
-media
+out
 .env
