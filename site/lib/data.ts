@@ -135,9 +135,20 @@ function fromProjectDoc(doc: any, index: number): Project {
 
 // ---------- Globals ----------
 
+function fromUpload(media: any): ImageRef | undefined {
+  return media && typeof media === "object" && media.url
+    ? { src: media.url, alt: media.alt ?? "" }
+    : undefined;
+}
+
 export async function getSiteSettings(): Promise<SiteSettings> {
   const payload = await payloadClient();
-  return (await payload.findGlobal({ slug: "site-settings" })) as unknown as SiteSettings;
+  const doc: any = await payload.findGlobal({ slug: "site-settings", depth: 1 });
+  return {
+    ...doc,
+    logoImage: fromUpload(doc.logoImage),
+    favicon: fromUpload(doc.favicon),
+  } as SiteSettings;
 }
 
 export async function getHero(): Promise<Hero> {

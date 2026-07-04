@@ -30,11 +30,18 @@ export function Btn({ button, small }: { button: ButtonItem; small?: boolean }) 
 }
 
 export function HomeNav({ settings }: { settings: SiteSettings }) {
-  const { logoText, navLinks, ctaButton } = settings;
+  const { logoText, logoImage, navLinks, ctaButton } = settings;
   return (
     <nav>
       <div className="container nav-inner">
-        <Link className="logo" href="/">{logoText}</Link>
+        <Link className="logo" href="/" aria-label={logoText}>
+          {logoImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} />
+          ) : (
+            logoText
+          )}
+        </Link>
         <div className="nav-links">
           {navLinks.map((link) => (
             <Link key={link.label} href={link.href}>{link.label}</Link>

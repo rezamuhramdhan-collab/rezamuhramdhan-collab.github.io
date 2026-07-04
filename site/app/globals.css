@@ -68,7 +68,8 @@ nav {
   align-items: center;
   justify-content: space-between;
 }
-.logo { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.logo { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; display: flex; align-items: center; }
+.logo-img { height: 32px; width: auto; }
 .nav-links {
   display: flex;
   gap: 36px;

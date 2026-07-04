@@ -26,6 +26,8 @@ export interface SocialLink {
 
 export interface SiteSettings {
   logoText: string;
+  logoImage?: ImageRef; // replaces the text logo when set
+  favicon?: ImageRef; // browser tab icon
   navLinks: LinkItem[];
   ctaButton: ButtonItem;
   footerText: string;

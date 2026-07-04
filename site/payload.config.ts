@@ -294,6 +294,18 @@ export default buildConfig({
       hooks: { afterChange: [revalidateSite] },
       fields: [
         { name: "logoText", type: "text", required: true },
+        {
+          name: "logoImage",
+          type: "upload",
+          relationTo: "media",
+          admin: { description: "Replaces the text logo in the header when set" },
+        },
+        {
+          name: "favicon",
+          type: "upload",
+          relationTo: "media",
+          admin: { description: "Browser tab icon (PNG/SVG/ICO, ideally square)" },
+        },
         { name: "navLinks", type: "array", fields: linkFields },
         { name: "ctaButton", type: "group", fields: buttonFields },
         { name: "footerText", type: "text" },

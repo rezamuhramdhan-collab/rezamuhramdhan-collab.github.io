@@ -10,11 +10,15 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata: Metadata = {
-  title: "Reza Ramdhan — Product Designer",
-  description:
-    "I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: "Reza Ramdhan — Product Designer",
+    description:
+      "I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.",
+    icons: settings.favicon ? { icon: settings.favicon.src } : undefined,
+  };
+}
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
