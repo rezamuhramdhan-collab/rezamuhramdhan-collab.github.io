@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Banking App Homepage Redesign — Reza Ramdhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#results">Results</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ---------- Header ---------- -->
+<header class="case-header">
+  <div class="container">
+    <h1>Mobile Banking App Homepage Redesign</h1>
+    <p class="lede">Rethinking the first screen of a mobile banking app so the daily essentials — balance, transfer, pay — are instant, and everything else knows its place.</p>
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="meta-label">Role</div><div class="meta-value">UI/UX Designer</div></div>
+      <div class="meta-cell"><div class="meta-label">Scope</div><div class="meta-value">Homepage redesign</div></div>
+      <div class="meta-cell"><div class="meta-label">Platform</div><div class="meta-value">iOS &amp; Android</div></div>
+      <div class="meta-cell"><div class="meta-label">Timeline</div><div class="meta-value">2 months</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="case-img tall"><div class="device"></div></div>
+</div>
+
+<!-- ---------- Overview ---------- -->
+<section class="case-section" id="overview">
+  <div class="container prose">
+    <h2>Overview</h2>
+    <p>The app's homepage had become a negotiation table: every product team wanted a slot, and over time the screen accumulated banners, shortcuts, and cards until the essentials were crowded out.</p>
+    <p>Analytics told a blunt story — over 80% of sessions were for three tasks (check balance, transfer, pay), yet those tasks shared the screen with a dozen competing modules.</p>
+    <p><strong>The brief:</strong> redesign the homepage around what users actually do, while giving growth and product teams a fair, structured way to reach users.</p>
+  </div>
+</section>
+
+<!-- ---------- Problem ---------- -->
+<section class="case-section alt" id="problem">
+  <div class="container">
+    <h2>Problem Statement</h2>
+    <div class="prose">
+      <p>Session recordings, analytics, and user interviews pointed to the same failures:</p>
+    </div>
+    <ul class="dash-list" style="margin-top: 20px;">
+      <li>The three most common tasks required scrolling past promotional content</li>
+      <li>Balance was displayed ambiguously — users couldn't tell spendable from total</li>
+      <li>Every module shouted equally, so nothing had priority</li>
+      <li>Promotions were ignored precisely because they were everywhere</li>
+      <li>Each new feature launch made the screen — and the problem — bigger</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- How Might We ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>How Might We</h2>
+    <div class="hmw-grid">
+      <div class="hmw-card"><span class="hmw-num">1</span><p>How might we make the top three tasks reachable without any scrolling?</p></div>
+      <div class="hmw-card"><span class="hmw-num">2</span><p>How might we present balance so users instantly know what they can spend?</p></div>
+      <div class="hmw-card"><span class="hmw-num">3</span><p>How might we give promotions a home that earns attention instead of demanding it?</p></div>
+      <div class="hmw-card"><span class="hmw-num">4</span><p>How might we define rules so future features extend the layout instead of eroding it?</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Goals ---------- -->
+<section class="case-section alt">
+  <div class="container">
+    <h2>Goals</h2>
+    <ul class="check-list">
+      <li>Put balance, transfer, and pay above the fold for every user</li>
+      <li>Make spendable balance unambiguous at a glance</li>
+      <li>Consolidate promotions into one high-quality, rotating slot</li>
+      <li>Establish placement rules that survive future feature launches</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Strategy ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Design Strategy</h2>
+    <div class="prose">
+      <p>We designed from usage data outward: the screen's hierarchy mirrors task frequency, not organizational priority.</p>
+      <p><strong>Our approach was to:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Rank every homepage module by real task frequency and revenue impact</li>
+      <li>Give the top tasks a fixed, untouchable zone</li>
+      <li>Design one promotional surface with strict content standards</li>
+      <li>Write layout governance so the hierarchy outlives this redesign</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Solution ---------- -->
+<section class="case-section alt" id="solution">
+  <div class="container">
+    <h2>Solution</h2>
+
+    <div class="solution-item">
+      <h3>1. Fixed Action Zone</h3>
+      <p>Balance, transfer, and pay live in a fixed zone at the top of the screen — no module can displace them.</p>
+      <ul class="dash-list">
+        <li>Zero scrolling for 80% of sessions</li>
+        <li>Predictable placement builds muscle memory</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>2. Spendable-First Balance</h3>
+      <p>The balance card leads with spendable balance; holds and totals sit one tap behind it.</p>
+      <ul class="dash-list">
+        <li>Answers the real question: "how much can I use?"</li>
+        <li>Detail on demand, never in the way</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>3. Single Promotional Stage</h3>
+      <p>All promotions consolidated into one card slot with rotation rules and mandatory relevance targeting.</p>
+      <ul class="dash-list">
+        <li>One well-placed promo outperforms five scattered banners</li>
+        <li>Teams compete on relevance, not screen real estate</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>4. Layout Governance Rules</h3>
+      <p>Documented placement criteria: what qualifies for the homepage, where it can appear, and what it must displace to enter.</p>
+      <ul class="dash-list">
+        <li>Future launches extend the layout instead of eroding it</li>
+        <li>Design debates resolved by rules, not seniority</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Validation ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Validation &amp; Iteration</h2>
+    <div class="two-col">
+      <div>
+        <h4>Usability testing revealed:</h4>
+        <ul class="dash-list">
+          <li>Users found the fixed action zone immediately, with no learning curve</li>
+          <li>Some users initially thought spendable balance was their total</li>
+          <li>The single promo slot got more taps than any previous banner</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Based on this:</h4>
+        <ul class="dash-list">
+          <li>Kept the action zone unchanged through every iteration</li>
+          <li>Added a one-line label clarifying spendable vs. total</li>
+          <li>Formalized the promo relevance rules before launch</li>
+        </ul>
+      </div>
+    </div>
+    <div class="case-img" style="margin-top: 56px;"><div class="device"></div></div>
+  </div>
+</section>
+
+<!-- ---------- Impact ---------- -->
+<section class="case-section alt" id="results">
+  <div class="container">
+    <h2>Impact &amp; Results</h2>
+    <ul class="check-list">
+      <li>Primary tasks completed without scrolling in nearly all sessions</li>
+      <li>Balance-related confusion queries dropped after the spendable-first card</li>
+      <li>Promotion engagement rose despite fewer promotional surfaces</li>
+      <li>Two feature launches since shipped within the governance rules</li>
+    </ul>
+    <div class="benefits-card">
+      <h4>Business Benefits</h4>
+      <ul class="dash-list">
+        <li>Higher promo conversion from a single, relevant slot</li>
+        <li>Reduced support volume around balance confusion</li>
+        <li>A homepage that scales with the roadmap instead of fighting it</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Reflection ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Reflection</h2>
+    <div class="prose">
+      <p>The redesign's most durable deliverable wasn't the screen — it was the rules that keep the screen honest.</p>
+      <p><strong>Key learnings:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Usage data is the strongest argument in any stakeholder negotiation</li>
+      <li>Scarcity makes promotions more valuable, not less</li>
+      <li>A layout without governance is a layout on borrowed time</li>
+    </ul>
+    <p class="pull-quote">A homepage isn't a billboard — it's a front door, and front doors work best when they <span class="em">open straight to where you're going.</span></p>
+  </div>
+</section>
+
+<!-- ---------- CTA ---------- -->
+<section class="case-cta">
+  <div class="container">
+    <h2>Interested in working together?</h2>
+    <p>Let's discuss your next project</p>
+    <a class="btn btn-dark" href="index.html#contact">Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 Reza Ramdhan. All rights reserved.</span>
+    <span class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>·</span>
+      <a href="#">Terms of Service</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

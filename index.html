@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reza Ramdhan — Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --bg-alt: #F7F8FA;
+    --ink: #0E1116;
+    --gray: #6B7280;
+    --gray-light: #9CA3AF;
+    --accent: #2563EB;
+    --green: #22C55E;
+    --border: #E5E7EB;
+    --radius-card: 16px;
+    --container: 1160px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  a { text-decoration: none; color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+
+  /* ---------- Buttons & pills ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover { transform: translateY(-3px) scale(1.02); }
+  .btn-dark { background: var(--ink); color: #fff; }
+  .btn-dark:hover { box-shadow: 0 14px 30px rgba(14, 17, 22, 0.28); }
+  .btn-outline { background: #fff; color: var(--ink); border-color: var(--border); }
+  .btn-outline:hover { box-shadow: 0 14px 30px rgba(14, 17, 22, 0.10); }
+  .btn-sm { padding: 10px 22px; font-size: 14px; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    padding: 18px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 72px 0 110px; }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 4.2vw, 49px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+  .hero h1 .role { display: block; color: var(--accent); margin-top: 6px; }
+  .hero p {
+    margin-top: 26px;
+    font-size: 16px;
+    color: var(--gray);
+    max-width: 440px;
+  }
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 34px;
+  }
+  .socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .social-btn {
+    width: 42px; height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    transition: color .15s ease, border-color .15s ease;
+  }
+  .social-btn:hover { color: var(--ink); border-color: var(--gray-light); }
+  .social-btn svg { width: 18px; height: 18px; }
+
+  .hero-portrait { position: relative; }
+  .portrait-card {
+    background: #E8E9EC;
+    border-radius: 24px;
+    aspect-ratio: 0.92;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .portrait-card svg { width: 78%; height: auto; }
+  .identity-chip {
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    bottom: -26px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(14,17,22,0.10);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .identity-chip .avatar {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .identity-chip .name { font-size: 14px; font-weight: 700; line-height: 1.3; }
+  .identity-chip .title { font-size: 12px; color: var(--gray); line-height: 1.3; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 130px 0; scroll-margin-top: 76px; }
+  .section-alt { background: var(--bg-alt); }
+
+  .section-heading {
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .section-sub {
+    margin-top: 12px;
+    font-size: 16px;
+    color: var(--gray);
+  }
+
+  /* ---------- Featured Work ---------- */
+  .work { padding-top: 40px; }
+  .work-grid {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .project-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow .2s ease, transform .2s ease;
+  }
+  .project-card:hover {
+    box-shadow: 0 12px 40px rgba(14,17,22,0.08);
+    transform: translateY(-2px);
+  }
+  .project-thumb {
+    aspect-ratio: 16 / 10.5;
+    overflow: hidden;
+    position: relative;
+  }
+  .project-thumb svg { width: 100%; height: 100%; }
+  .thumb-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 17, 22, 0.45);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+    padding-bottom: 36px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+  .thumb-overlay svg { width: 18px; height: 18px; }
+  .project-card:hover .thumb-overlay { opacity: 1; }
+  .project-body { padding: 20px 24px 24px; }
+  .project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+  }
+  .project-title {
+    margin-top: 8px;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color .2s ease;
+  }
+  .project-card:hover .project-title { color: var(--accent); }
+
+  /* ---------- What I Do ---------- */
+  .services-header { text-align: center; }
+  .services-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .service-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 32px 28px;
+    transition: box-shadow .25s ease, transform .25s ease;
+  }
+  .service-card:hover {
+    box-shadow: 0 16px 44px rgba(14, 17, 22, 0.10);
+    transform: translateY(-4px);
+  }
+  .service-icon {
+    width: 48px; height: 48px;
+    border-radius: 13px;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .service-card:hover .service-icon {
+    transform: rotate(-8deg) scale(1.06);
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
+  }
+  .service-icon svg { width: 22px; height: 22px; }
+  .service-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .service-card p { font-size: 14px; color: var(--gray); }
+
+  /* ---------- Experience ---------- */
+  .exp-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 90px;
+    align-items: start;
+  }
+  .exp-statement h2 {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .exp-statement h2 .love { color: var(--accent); }
+  .exp-statement p {
+    margin-top: 28px;
+    font-size: 15px;
+    color: var(--gray);
+    max-width: 420px;
+  }
+  .exp-timeline h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+  .timeline { list-style: none; position: relative; }
+  .timeline li {
+    position: relative;
+    padding-left: 30px;
+    padding-bottom: 38px;
+  }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 20px;
+    bottom: -4px;
+    width: 2px;
+    background: var(--border);
+    transition: background .25s ease;
+  }
+  .timeline li:last-child::before { display: none; }
+  .timeline li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .timeline li:hover::before { background: var(--accent); }
+  .timeline li:hover::after {
+    transform: scale(1.35);
+    box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.15);
+  }
+  .timeline .period {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+  }
+  .timeline .role {
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .timeline .company {
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .timeline .desc {
+    margin-top: 6px;
+    font-size: 13.5px;
+    color: var(--gray);
+  }
+
+  /* ---------- CTA ---------- */
+  .cta { text-align: center; padding: 150px 0; }
+  .cta h2 {
+    font-size: 54px;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+  .cta h2 .great { color: var(--accent); }
+  .cta p {
+    margin-top: 18px;
+    font-size: 16px;
+    color: var(--gray);
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-actions {
+    margin-top: 38px;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--bg-alt);
+    border-top: 1px solid var(--border);
+    padding: 26px 0;
+    font-size: 13px;
+    color: var(--gray-light);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-links { display: flex; gap: 8px; align-items: center; }
+  .footer-links a:hover { color: var(--ink); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .hero h1 { font-size: clamp(30px, 6.5vw, 44px); white-space: normal; }
+    .hero-inner, .exp-inner { grid-template-columns: 1fr; gap: 56px; }
+    .work-grid, .services-grid { grid-template-columns: 1fr; }
+    section { padding: 90px 0; }
+    .cta h2 { font-size: 40px; }
+    .section-heading { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav>
+  <div class="container nav-inner">
+    <a class="logo" href="#">RR</a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="btn btn-dark btn-sm" href="resume.pdf" download>Download Resume</a>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="container hero-inner">
+    <div>
+      <h1>Hi, I'm Reza Ramdhan<span class="role">Product Designer.</span></h1>
+      <p>I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.</p>
+      <div class="hero-actions">
+        <a class="btn btn-dark" href="#work">View My Work
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a class="btn btn-outline" href="#contact">Let's Talk</a>
+      </div>
+      <div class="socials">
+        <a class="social-btn" href="https://www.linkedin.com/in/rezamramdhan/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+        <a class="social-btn" href="https://www.instagram.com/rezamrmdhn/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a class="social-btn" href="mailto:rezamramdhan@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-portrait">
+      <div class="portrait-card">
+        <!-- Portrait placeholder silhouette -->
+        <svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="150" cy="110" r="58" fill="#C9CCD2"/>
+          <path d="M150 180c-62 0-104 44-104 140h208c0-96-42-140-104-140z" fill="#C9CCD2"/>
+          <path d="M150 52c-30 0-52 24-52 56 0 8 24-18 52-18s52 26 52 18c0-32-22-56-52-56z" fill="#B01E3C"/>
+        </svg>
+      </div>
+      <div class="identity-chip">
+        <span class="avatar">R</span>
+        <span>
+          <span class="name">Reza Ramdhan</span><br>
+          <span class="title">Product Designer at Figma</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== FEATURED WORK ===================== -->
+<section class="work" id="work">
+  <div class="container">
+    <h2 class="section-heading">Featured Work</h2>
+    <p class="section-sub">A selection of projects I'm proud of</p>
+
+    <div class="work-grid">
+      <!-- 1. Bank Saqu Homepage Revamp -->
+      <a class="project-card" href="bank-saqu-homepage-revamp.html">
+        <div class="project-thumb">
+          <svg viewBox="0 0 560 368" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#3A3D44"/><stop offset="1" stop-color="#181A1F"/>
+              </linearGradient>
+            </defs>
+            <rect width="560" height="368" fill="url(#g1)"/>
+            <rect x="200" y="60" width="150" height="290" rx="26" fill="#0E1116" transform="rotate(-14 275 205)"/>
+            <rect x="210" y="70" width="130" height="270" rx="18" fill="#F4F5F7" transform="rotate(-14 275 205)"/>
+            <rect x="252" y="82" width="44" height="8" rx="4" fill="#0E1116" transform="rotate(-14 275 205)"/>
+          </svg>
+          <div class="thumb-overlay">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span>Product Design</span><span>2026</span></div>
+          <div class="project-title">Bank Saqu Homepage Revamp</div>
+        </div>
+      </a>
+
+      <!-- 2. Mobile Banking App -->
+      <a class="project-card" href="mobile-banking-app.html">
+        <div class="project-thumb">
+          <svg viewBox="0 0 560 368" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#8B6B45"/><stop offset="1" stop-color="#5C4630"/>
+              </linearGradient>
+              <linearGradient id="g2s" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#6D28D9"/><stop offset="1" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+            <rect width="560" height="368" fill="url(#g2)"/>
+            <path d="M0 330 Q80 260 40 368 Z" fill="#3E5C34"/>
+            <rect x="180" y="30" width="200" height="380" rx="30" fill="#111" transform="rotate(9 280 220)"/>
+            <rect x="190" y="42" width="180" height="356" rx="22" fill="url(#g2s)" transform="rotate(9 280 220)"/>
+            <text x="286" y="120" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(9 280 220)">Unveiling Insights,</text>
+            <text x="286" y="148" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(9 280 220)">One Thought at a Time</text>
+            <rect x="236" y="180" width="104" height="26" rx="13" fill="rgba(255,255,255,0.25)" transform="rotate(9 280 220)"/>
+            <circle cx="240" cy="260" r="18" fill="#F3D6C2" transform="rotate(9 280 220)"/>
+            <circle cx="288" cy="260" r="18" fill="#D8B48F" transform="rotate(9 280 220)"/>
+            <circle cx="336" cy="260" r="18" fill="#B98A62" transform="rotate(9 280 220)"/>
+          </svg>
+          <div class="thumb-overlay">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span>UI/UX Design</span><span>2025</span></div>
+          <div class="project-title">Mobile Banking App</div>
+        </div>
+      </a>
+
+      <!-- 3. SaaS Platform Redesign -->
+      <a class="project-card" href="saas-platform-redesign.html">
+        <div class="project-thumb">
+          <svg viewBox="0 0 560 368" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="560" height="368" fill="#EDEDEA"/>
+            <!-- wireframe sketch grid -->
+            <g stroke="#8A8A85" stroke-width="1.5" fill="#FAFAF8">
+              <rect x="18" y="18" width="120" height="150" rx="4"/>
+              <rect x="152" y="18" width="120" height="150" rx="4"/>
+              <rect x="286" y="18" width="120" height="150" rx="4"/>
+              <rect x="420" y="18" width="120" height="150" rx="4"/>
+              <rect x="18" y="184" width="120" height="150" rx="4"/>
+              <rect x="152" y="184" width="120" height="150" rx="4"/>
+              <rect x="286" y="184" width="120" height="150" rx="4"/>
+              <rect x="420" y="184" width="120" height="150" rx="4"/>
+            </g>
+            <g stroke="#A9A9A4" stroke-width="1.2" fill="none">
+              <rect x="30" y="32" width="96" height="34" rx="2"/><line x1="30" y1="84" x2="126" y2="84"/><line x1="30" y1="96" x2="110" y2="96"/><line x1="30" y1="108" x2="118" y2="108"/>
+              <circle cx="212" cy="56" r="18"/><line x1="164" y1="92" x2="260" y2="92"/><line x1="164" y1="104" x2="244" y2="104"/>
+              <rect x="298" y="32" width="42" height="42" rx="2"/><rect x="352" y="32" width="42" height="42" rx="2"/><line x1="298" y1="92" x2="394" y2="92"/>
+              <rect x="432" y="32" width="96" height="18" rx="9"/><rect x="432" y="58" width="96" height="18" rx="9"/><line x1="432" y1="96" x2="528" y2="96"/>
+              <rect x="30" y="198" width="96" height="34" rx="2"/><line x1="30" y1="250" x2="126" y2="250"/><line x1="30" y1="262" x2="112" y2="262"/>
+              <circle cx="212" cy="222" r="18"/><line x1="164" y1="258" x2="260" y2="258"/><line x1="164" y1="270" x2="248" y2="270"/>
+              <rect x="298" y="198" width="96" height="50" rx="2"/><line x1="298" y1="266" x2="394" y2="266"/>
+              <rect x="432" y="198" width="42" height="42" rx="2"/><rect x="486" y="198" width="42" height="42" rx="2"/><line x1="432" y1="258" x2="528" y2="258"/>
+            </g>
+          </svg>
+          <div class="thumb-overlay">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span>Product Design</span><span>2025</span></div>
+          <div class="project-title">SaaS Platform Redesign</div>
+        </div>
+      </a>
+
+      <!-- 4. Design System -->
+      <a class="project-card" href="design-system.html">
+        <div class="project-thumb">
+          <svg viewBox="0 0 560 368" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#23262C"/><stop offset="1" stop-color="#101216"/>
+              </linearGradient>
+            </defs>
+            <rect width="560" height="368" fill="url(#g4)"/>
+            <rect x="60" y="50" width="300" height="200" rx="8" fill="#15181D" stroke="#3A3F47" stroke-width="2"/>
+            <g fill="#2E3440">
+              <rect x="76" y="66" width="130" height="168"/>
+            </g>
+            <g fill="#4C566A">
+              <rect x="84" y="76" width="114" height="8" rx="2"/><rect x="84" y="92" width="90" height="8" rx="2"/><rect x="84" y="108" width="104" height="8" rx="2"/>
+            </g>
+            <rect x="216" y="66" width="128" height="80" fill="#1F3D2B"/>
+            <rect x="224" y="74" width="50" height="30" fill="#34D399" opacity=".7"/>
+            <rect x="282" y="74" width="52" height="30" fill="#F59E0B" opacity=".6"/>
+            <rect x="224" y="112" width="110" height="26" fill="#EF4444" opacity=".45"/>
+            <rect x="216" y="154" width="128" height="80" fill="#252A32"/>
+            <g fill="#5E81AC"><rect x="224" y="162" width="112" height="6" rx="2"/><rect x="224" y="174" width="88" height="6" rx="2"/><rect x="224" y="186" width="100" height="6" rx="2"/></g>
+            <rect x="380" y="90" width="130" height="180" rx="8" fill="#15181D" stroke="#3A3F47" stroke-width="2"/>
+            <g fill="#88C0D0"><rect x="392" y="104" width="106" height="8" rx="2"/><rect x="392" y="120" width="80" height="8" rx="2"/><rect x="392" y="136" width="96" height="8" rx="2"/></g>
+            <rect x="140" y="278" width="280" height="14" rx="4" fill="#2E333B"/>
+          </svg>
+          <div class="thumb-overlay">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span>System Design</span><span>2025</span></div>
+          <div class="project-title">Design System</div>
+        </div>
+      </a>
+
+      <!-- 5. Mobile Banking App Homepage Redesign -->
+      <a class="project-card" href="mobile-banking-homepage-redesign.html">
+        <div class="project-thumb">
+          <svg viewBox="0 0 560 368" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g5" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#7C5A3C"/><stop offset="1" stop-color="#4E3A26"/>
+              </linearGradient>
+              <linearGradient id="g5s" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#5B21B6"/><stop offset="1" stop-color="#7C3AED"/>
+              </linearGradient>
+            </defs>
+            <rect width="560" height="368" fill="url(#g5)"/>
+            <rect x="170" y="20" width="210" height="400" rx="32" fill="#111" transform="rotate(-7 275 220)"/>
+            <rect x="181" y="32" width="188" height="376" rx="24" fill="url(#g5s)" transform="rotate(-7 275 220)"/>
+            <text x="278" y="116" font-family="Inter, sans-serif" font-size="23" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(-7 275 220)">Unveiling Insights,</text>
+            <text x="278" y="146" font-family="Inter, sans-serif" font-size="23" font-weight="700" fill="#fff" text-anchor="middle" transform="rotate(-7 275 220)">One Thought at a Time</text>
+            <rect x="226" y="176" width="110" height="28" rx="14" fill="rgba(255,255,255,0.25)" transform="rotate(-7 275 220)"/>
+            <circle cx="230" cy="262" r="19" fill="#F3D6C2" transform="rotate(-7 275 220)"/>
+            <circle cx="280" cy="262" r="19" fill="#D8B48F" transform="rotate(-7 275 220)"/>
+            <circle cx="330" cy="262" r="19" fill="#B98A62" transform="rotate(-7 275 220)"/>
+          </svg>
+          <div class="thumb-overlay">
+            View Case Study
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="project-body">
+          <div class="project-meta"><span>UI/UX Design</span><span>2025</span></div>
+          <div class="project-title">Mobile Banking App Homepage Redesign</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHAT I DO ===================== -->
+<section class="section-alt" id="services">
+  <div class="container">
+    <div class="services-header">
+      <h2 class="section-heading">What I Do</h2>
+      <p class="section-sub">I specialize in transforming complex problems into simple, beautiful solutions</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
+        </div>
+        <h3>Product Design</h3>
+        <p>Creating intuitive and engaging user experiences that delight users and drive business results.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <h3>Design Systems</h3>
+        <p>Building scalable component libraries and design tokens for consistent, efficient product development.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.4 1 2.3h6c0-.9.4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
+        </div>
+        <h3>Strategy</h3>
+        <p>Guiding product vision through user research, competitive analysis, and strategic design thinking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERIENCE ===================== -->
+<section class="section-alt" id="about">
+  <div class="container exp-inner">
+    <div class="exp-statement">
+      <h2>I design products that people <span class="love">love to use.</span></h2>
+      <p>With over 6 years of experience in product design, I've had the privilege of working with some of the most innovative companies in tech.</p>
+      <p>My approach combines strategic thinking with meticulous attention to detail, ensuring every design decision is both beautiful and purposeful.</p>
+    </div>
+    <div class="exp-timeline">
+      <h3>Experience</h3>
+      <ul class="timeline">
+        <li>
+          <div class="period">2022 – Present</div>
+          <div class="role">Product Designer</div>
+          <a class="company" href="#">Bank Saqu</a>
+          <div class="desc">Leading design initiatives for banking products and digital experiences.</div>
+        </li>
+        <li>
+          <div class="period">2021 – 2022</div>
+          <div class="role">Product Designer</div>
+          <a class="company" href="#">PT Bank Rakyat Indonesia</a>
+          <div class="desc">Designed core features for banking services and customer experiences.</div>
+        </li>
+        <li>
+          <div class="period">2020 – 2020</div>
+          <div class="role">Product Development – Internship</div>
+          <a class="company" href="#">Waste4Change</a>
+          <div class="desc">Contributed to product development and user experience improvements.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="cta" id="contact">
+  <div class="container">
+    <h2>Let's build something <span class="great">great</span></h2>
+    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
+    <div class="cta-actions">
+      <a class="btn btn-dark" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        WhatsApp Me
+      </a>
+      <a class="btn btn-outline" href="mailto:rezamramdhan@gmail.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        Send Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 Reza Ramdhan. All rights reserved.</span>
+    <span class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>·</span>
+      <a href="#">Terms of Service</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

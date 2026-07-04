@@ -1,0 +1,5 @@
+node_modules
+.next
+payload.db
+media
+.env

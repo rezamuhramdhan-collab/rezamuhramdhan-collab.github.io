@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System — Reza Ramdhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#results">Results</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ---------- Header ---------- -->
+<header class="case-header">
+  <div class="container">
+    <h1>Design System</h1>
+    <p class="lede">Building a token-based design system that lets four product teams ship consistent interfaces across web and mobile — without a design review bottleneck.</p>
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="meta-label">Role</div><div class="meta-value">Design Systems Designer</div></div>
+      <div class="meta-cell"><div class="meta-label">Scope</div><div class="meta-value">Tokens, components, docs</div></div>
+      <div class="meta-cell"><div class="meta-label">Platform</div><div class="meta-value">Web &amp; Mobile</div></div>
+      <div class="meta-cell"><div class="meta-label">Timeline</div><div class="meta-value">6 months</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="case-img tall"><div class="device"></div></div>
+</div>
+
+<!-- ---------- Overview ---------- -->
+<section class="case-section" id="overview">
+  <div class="container prose">
+    <h2>Overview</h2>
+    <p>Four product teams were shipping into the same product family with four diverging visual languages. Every squad maintained its own button, its own modal, and its own opinion about spacing — and every inconsistency eventually became a support ticket or a design-review debate.</p>
+    <p>An audit found 23 button variants, 14 shades of the primary color, and no shared source of truth between design files and code.</p>
+    <p><strong>The mission:</strong> build a design system that teams adopt because it makes them faster — not because a mandate forces them to.</p>
+  </div>
+</section>
+
+<!-- ---------- Problem ---------- -->
+<section class="case-section alt" id="problem">
+  <div class="container">
+    <h2>Problem Statement</h2>
+    <div class="prose">
+      <p>The audit and team interviews surfaced structural problems behind the visual drift:</p>
+    </div>
+    <ul class="dash-list" style="margin-top: 20px;">
+      <li>No shared tokens — colors, spacing, and type were hard-coded per team</li>
+      <li>Design files and shipped code disagreed, so neither could be trusted</li>
+      <li>Accessibility fixes were re-solved (or missed) team by team</li>
+      <li>Simple UI changes required touching every product separately</li>
+      <li>New designers and engineers had no canonical reference to learn from</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- How Might We ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>How Might We</h2>
+    <div class="hmw-grid">
+      <div class="hmw-card"><span class="hmw-num">1</span><p>How might we define one source of truth that both design files and code consume?</p></div>
+      <div class="hmw-card"><span class="hmw-num">2</span><p>How might we make adopting the system faster than building custom UI?</p></div>
+      <div class="hmw-card"><span class="hmw-num">3</span><p>How might we bake accessibility into components so it can't be skipped?</p></div>
+      <div class="hmw-card"><span class="hmw-num">4</span><p>How might we govern contributions so the system evolves without fragmenting again?</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Goals ---------- -->
+<section class="case-section alt">
+  <div class="container">
+    <h2>Goals</h2>
+    <ul class="check-list">
+      <li>Establish a token architecture shared by design tools and code</li>
+      <li>Ship a core component library covering 80% of everyday UI needs</li>
+      <li>Meet WCAG AA by default in every component</li>
+      <li>Stand up documentation and governance that outlive the initial build</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Strategy ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Design Strategy</h2>
+    <div class="prose">
+      <p>We built the system inside real product work rather than beside it: every component was extracted from a live screen a team was actually shipping, so the library never drifted into theory.</p>
+      <p><strong>Our approach was to:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Start with tokens — name the decisions before drawing the components</li>
+      <li>Extract components from the highest-traffic screens first</li>
+      <li>Pilot with one friendly team, then scale to the other three</li>
+      <li>Treat documentation as part of the component, not a follow-up task</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Solution ---------- -->
+<section class="case-section alt" id="solution">
+  <div class="container">
+    <h2>Solution</h2>
+
+    <div class="solution-item">
+      <h3>1. Token Foundation</h3>
+      <p>Defined a three-tier token architecture — primitives, semantic roles, and component tokens — published to both Figma variables and code.</p>
+      <ul class="dash-list">
+        <li>One rename propagates everywhere</li>
+        <li>Theming (including dark mode) became a token swap, not a redesign</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>2. Core Component Library</h3>
+      <p>Shipped 42 components across forms, navigation, feedback, and data display — each with states, sizes, and platform variants.</p>
+      <ul class="dash-list">
+        <li>Covers the 80% of UI teams rebuild most often</li>
+        <li>23 button variants consolidated into one component with props</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>3. Accessibility by Default</h3>
+      <p>Contrast, focus states, hit areas, and screen-reader behavior were built into components and verified in CI.</p>
+      <ul class="dash-list">
+        <li>AA compliance without per-team effort</li>
+        <li>Accessibility regressions fail the build, not the audit</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>4. Documentation &amp; Governance</h3>
+      <p>Every component ships with usage guidance, do/don't examples, and code snippets; a lightweight contribution process lets teams propose additions.</p>
+      <ul class="dash-list">
+        <li>New joiners onboard from one canonical reference</li>
+        <li>The system grows through contributions, not forks</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Validation ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Validation &amp; Iteration</h2>
+    <div class="two-col">
+      <div>
+        <h4>The pilot rollout revealed:</h4>
+        <ul class="dash-list">
+          <li>Teams bypassed components that lacked a variant they needed</li>
+          <li>Docs were read far more inside Figma than on the docs site</li>
+          <li>Strict governance early on discouraged contributions</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Based on this:</h4>
+        <ul class="dash-list">
+          <li>Added an escape-hatch pattern and a fast-track variant request flow</li>
+          <li>Embedded usage guidance directly into component descriptions</li>
+          <li>Simplified contribution to a proposal-and-pair model</li>
+        </ul>
+      </div>
+    </div>
+    <div class="case-img" style="margin-top: 56px;"><div class="device"></div></div>
+  </div>
+</section>
+
+<!-- ---------- Impact ---------- -->
+<section class="case-section alt" id="results">
+  <div class="container">
+    <h2>Impact &amp; Results</h2>
+    <ul class="check-list">
+      <li>All four teams shipping on shared tokens and components</li>
+      <li>UI build time for standard screens cut roughly in half</li>
+      <li>AA contrast and focus compliance across the component library</li>
+      <li>Design-code drift eliminated for systemized components</li>
+    </ul>
+    <div class="benefits-card">
+      <h4>Business Benefits</h4>
+      <ul class="dash-list">
+        <li>Faster delivery across every product team</li>
+        <li>Consistent brand experience across web and mobile</li>
+        <li>Lower rework and support cost from UI inconsistencies</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Reflection ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Reflection</h2>
+    <div class="prose">
+      <p>A design system is a product whose users are teams — and it lives or dies on adoption, not completeness.</p>
+      <p><strong>Key learnings:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Tokens before components: naming decisions is the real system</li>
+      <li>Adoption follows speed — make the right way the fast way</li>
+      <li>Escape hatches prevent forks better than rules do</li>
+    </ul>
+    <p class="pull-quote">The best design system isn't the most complete one — it's the one teams <span class="em">reach for by default.</span></p>
+  </div>
+</section>
+
+<!-- ---------- CTA ---------- -->
+<section class="case-cta">
+  <div class="container">
+    <h2>Interested in working together?</h2>
+    <p>Let's discuss your next project</p>
+    <a class="btn btn-dark" href="index.html#contact">Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 Reza Ramdhan. All rights reserved.</span>
+    <span class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>·</span>
+      <a href="#">Terms of Service</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

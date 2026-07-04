@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaS Platform Redesign — Reza Ramdhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#results">Results</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ---------- Header ---------- -->
+<header class="case-header">
+  <div class="container">
+    <h1>SaaS Platform Redesign</h1>
+    <p class="lede">Restructuring a fast-growing B2B platform whose interface had grown feature by feature — into a coherent product that new users can learn and power users can fly through.</p>
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="meta-label">Role</div><div class="meta-value">Product Designer</div></div>
+      <div class="meta-cell"><div class="meta-label">Scope</div><div class="meta-value">Platform redesign</div></div>
+      <div class="meta-cell"><div class="meta-label">Platform</div><div class="meta-value">Web</div></div>
+      <div class="meta-cell"><div class="meta-label">Timeline</div><div class="meta-value">5 months</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="case-img tall"><div class="device"></div></div>
+</div>
+
+<!-- ---------- Overview ---------- -->
+<section class="case-section" id="overview">
+  <div class="container prose">
+    <h2>Overview</h2>
+    <p>After three years of rapid feature development, the platform's interface reflected its release history rather than its users' mental model. Related tools lived in unrelated menus, and every team had added its own patterns for tables, filters, and forms.</p>
+    <p>Churn analysis pointed at onboarding: trial users who didn't reach their first meaningful outcome within two sessions rarely converted.</p>
+    <p><strong>The mandate:</strong> redesign the platform's structure and core workflows without freezing feature development — and without alienating the power users who had memorized the old layout.</p>
+  </div>
+</section>
+
+<!-- ---------- Problem ---------- -->
+<section class="case-section alt" id="problem">
+  <div class="container">
+    <h2>Problem Statement</h2>
+    <div class="prose">
+      <p>Interviews with trial users, long-time customers, and support staff converged on the same issues:</p>
+    </div>
+    <ul class="dash-list" style="margin-top: 20px;">
+      <li>Navigation mirrored internal team structure, not user workflows</li>
+      <li>New users couldn't find the path from signup to first result</li>
+      <li>The same concept had different names in different modules</li>
+      <li>Tables, filters, and forms behaved differently across the product</li>
+      <li>Power users relied on bookmarks because navigation couldn't be trusted</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- How Might We ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>How Might We</h2>
+    <div class="hmw-grid">
+      <div class="hmw-card"><span class="hmw-num">1</span><p>How might we reorganize navigation around user workflows instead of internal team boundaries?</p></div>
+      <div class="hmw-card"><span class="hmw-num">2</span><p>How might we get trial users to their first meaningful outcome within one session?</p></div>
+      <div class="hmw-card"><span class="hmw-num">3</span><p>How might we unify interaction patterns without pausing feature development?</p></div>
+      <div class="hmw-card"><span class="hmw-num">4</span><p>How might we migrate power users without breaking the muscle memory they depend on?</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Goals ---------- -->
+<section class="case-section alt">
+  <div class="container">
+    <h2>Goals</h2>
+    <ul class="check-list">
+      <li>Rebuild the information architecture around jobs, not modules</li>
+      <li>Cut time-to-first-outcome for trial users</li>
+      <li>Standardize core patterns — tables, filters, forms, empty states</li>
+      <li>Ship incrementally so the redesign never blocks the roadmap</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Strategy ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Design Strategy</h2>
+    <div class="prose">
+      <p>We treated the redesign as re-architecture, not repainting. Visual refresh came last; structure and consistency came first.</p>
+      <p><strong>Our approach was to:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Run a card-sorting study to derive the navigation from user mental models</li>
+      <li>Define one canonical pattern for each recurring interaction before touching screens</li>
+      <li>Redesign the highest-traffic workflow first as the reference implementation</li>
+      <li>Roll out per-module behind a toggle, with the old layout one click away</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Solution ---------- -->
+<section class="case-section alt" id="solution">
+  <div class="container">
+    <h2>Solution</h2>
+
+    <div class="solution-item">
+      <h3>1. Workflow-Based Navigation</h3>
+      <p>Replaced the module menu with five workflow areas derived from the card-sort, plus a global search that understands old terminology.</p>
+      <ul class="dash-list">
+        <li>Users locate features by what they're trying to do</li>
+        <li>Search bridges the vocabulary gap during migration</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>2. Guided First-Run Path</h3>
+      <p>Designed a setup path that walks trial users to their first real result using their own data, not sample content.</p>
+      <ul class="dash-list">
+        <li>First outcome now reachable in a single session</li>
+        <li>Progress is resumable, never modal-locked</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>3. Unified Pattern Library</h3>
+      <p>Consolidated eleven table variants and seven filter patterns into one of each, documented and componentized for every team.</p>
+      <ul class="dash-list">
+        <li>Consistent behavior across every module</li>
+        <li>Teams ship faster by assembling, not reinventing</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>4. Power-User Continuity</h3>
+      <p>Preserved every deep link, added keyboard shortcuts, and shipped a "where did it go?" map from old paths to new ones.</p>
+      <ul class="dash-list">
+        <li>Bookmarks and muscle memory keep working</li>
+        <li>Shortcuts made the new layout faster than the old one</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Validation ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Validation &amp; Iteration</h2>
+    <div class="two-col">
+      <div>
+        <h4>Usability testing revealed:</h4>
+        <ul class="dash-list">
+          <li>New navigation labels tested well with new users but confused veterans</li>
+          <li>The guided path was skipped by users who arrived with a specific goal</li>
+          <li>Unified tables surfaced feature gaps some teams had papered over</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Based on this:</h4>
+        <ul class="dash-list">
+          <li>Added legacy-term aliases to search and the migration map</li>
+          <li>Made the guided path dismissible with a persistent re-entry point</li>
+          <li>Closed the gaps in the canonical table before rollout</li>
+        </ul>
+      </div>
+    </div>
+    <div class="case-img" style="margin-top: 56px;"><div class="device"></div></div>
+  </div>
+</section>
+
+<!-- ---------- Impact ---------- -->
+<section class="case-section alt" id="results">
+  <div class="container">
+    <h2>Impact &amp; Results</h2>
+    <ul class="check-list">
+      <li>Trial users reach their first outcome in one session instead of three</li>
+      <li>Navigation-related support tickets dropped sharply after rollout</li>
+      <li>Power users adopted the new layout without a churn spike</li>
+      <li>New features now ship on shared patterns by default</li>
+    </ul>
+    <div class="benefits-card">
+      <h4>Business Benefits</h4>
+      <ul class="dash-list">
+        <li>Improved trial-to-paid conversion via faster first outcomes</li>
+        <li>Lower support cost from consistent, predictable UI</li>
+        <li>Faster feature delivery on the unified pattern library</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Reflection ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Reflection</h2>
+    <div class="prose">
+      <p>The hardest part of this redesign wasn't the new design — it was earning the trust of users who were productive in the old one.</p>
+      <p><strong>Key learnings:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Information architecture is the redesign; visuals are the finish</li>
+      <li>Migration paths deserve as much design effort as the destination</li>
+      <li>Canonical patterns multiply every team's output, not just design's</li>
+    </ul>
+    <p class="pull-quote">A redesign succeeds when existing users feel it was built <span class="em">for them, not at them.</span></p>
+  </div>
+</section>
+
+<!-- ---------- CTA ---------- -->
+<section class="case-cta">
+  <div class="container">
+    <h2>Interested in working together?</h2>
+    <p>Let's discuss your next project</p>
+    <a class="btn btn-dark" href="index.html#contact">Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 Reza Ramdhan. All rights reserved.</span>
+    <span class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>·</span>
+      <a href="#">Terms of Service</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

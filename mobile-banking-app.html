@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Banking App — Reza Ramdhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="case-study.css">
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="back-link" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to Home
+    </a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#results">Results</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ---------- Header ---------- -->
+<header class="case-header">
+  <div class="container">
+    <h1>Mobile Banking App</h1>
+    <p class="lede">Designing an end-to-end mobile banking experience that turns raw account data into insights people can actually act on — one thought at a time.</p>
+    <div class="meta-grid">
+      <div class="meta-cell"><div class="meta-label">Role</div><div class="meta-value">UI/UX Designer</div></div>
+      <div class="meta-cell"><div class="meta-label">Scope</div><div class="meta-value">End-to-end app design</div></div>
+      <div class="meta-cell"><div class="meta-label">Platform</div><div class="meta-value">iOS &amp; Android</div></div>
+      <div class="meta-cell"><div class="meta-label">Timeline</div><div class="meta-value">4 months</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="case-img tall"><div class="device"></div></div>
+</div>
+
+<!-- ---------- Overview ---------- -->
+<section class="case-section" id="overview">
+  <div class="container prose">
+    <h2>Overview</h2>
+    <p>Most banking apps are transactional by nature: they show numbers, but leave interpretation entirely to the user. Balances rise and fall without explanation, and spending patterns stay invisible until problems appear.</p>
+    <p>This project set out to design a mobile banking app where insight is a first-class feature — surfacing what changed, why it changed, and what to do next, without turning the app into a dashboard only analysts could love.</p>
+    <p><strong>The core challenge:</strong> deliver meaningful financial insight inside everyday banking flows, without slowing down the transactions people open the app to complete.</p>
+  </div>
+</section>
+
+<!-- ---------- Problem ---------- -->
+<section class="case-section alt" id="problem">
+  <div class="container">
+    <h2>Problem Statement</h2>
+    <div class="prose">
+      <p>Research with existing banking app users surfaced a consistent set of frustrations:</p>
+    </div>
+    <ul class="dash-list" style="margin-top: 20px;">
+      <li>Users saw their balance but couldn't explain why it changed week to week</li>
+      <li>Spending categories were either missing or too generic to be useful</li>
+      <li>Insights, where they existed, lived in a separate tab users never visited</li>
+      <li>Notifications were noisy and transactional, not informative</li>
+      <li>Users juggled a second budgeting app because the bank's own app told them nothing</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- How Might We ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>How Might We</h2>
+    <div class="hmw-grid">
+      <div class="hmw-card"><span class="hmw-num">1</span><p>How might we surface spending insights inside the flows users already visit daily?</p></div>
+      <div class="hmw-card"><span class="hmw-num">2</span><p>How might we explain balance changes in plain language rather than raw numbers?</p></div>
+      <div class="hmw-card"><span class="hmw-num">3</span><p>How might we make insights glanceable so they inform without interrupting?</p></div>
+      <div class="hmw-card"><span class="hmw-num">4</span><p>How might we build trust so users act on the app's recommendations?</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Goals ---------- -->
+<section class="case-section alt">
+  <div class="container">
+    <h2>Goals</h2>
+    <ul class="check-list">
+      <li>Integrate insights into the primary banking flows, not a separate tab</li>
+      <li>Keep core transactions (transfer, pay, top-up) as fast as before</li>
+      <li>Translate financial data into plain, actionable language</li>
+      <li>Design a visual system for insights that scales across account types</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Strategy ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Design Strategy</h2>
+    <div class="prose">
+      <p>We anchored the design on a single principle: one thought at a time. Rather than presenting a wall of charts, the app delivers one clear, contextual insight at each decision point.</p>
+      <p><strong>Our approach was to:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Attach insights to moments — after a transaction, at month end, before a large payment</li>
+      <li>Write insights as sentences first, charts second</li>
+      <li>Limit each screen to a single primary insight to protect focus</li>
+      <li>Let users drill down when curious, never force depth on them</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ---------- Solution ---------- -->
+<section class="case-section alt" id="solution">
+  <div class="container">
+    <h2>Solution</h2>
+
+    <div class="solution-item">
+      <h3>1. Insight-Led Home Screen</h3>
+      <p>The home screen leads with one headline insight above the balance — what changed and why.</p>
+      <ul class="dash-list">
+        <li>Gives users an immediate answer to "how am I doing?"</li>
+        <li>Keeps transfer and pay actions one tap away</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>2. Contextual Transaction Stories</h3>
+      <p>Each transaction expands into context: category trend, merchant history, and impact on the monthly budget.</p>
+      <ul class="dash-list">
+        <li>Turns a line item into an explanation</li>
+        <li>Reduces "what was this charge?" support queries</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>3. Glanceable Spending Digest</h3>
+      <p>A weekly digest summarizes spending in three short statements with a single supporting chart.</p>
+      <ul class="dash-list">
+        <li>Digestible in under ten seconds</li>
+        <li>Replaces the abandoned analytics tab</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+
+    <div class="solution-item">
+      <h3>4. Quiet, Useful Notifications</h3>
+      <p>Notifications were redesigned around usefulness thresholds — only insights that warrant action get pushed.</p>
+      <ul class="dash-list">
+        <li>Fewer, better notifications rebuilt user trust</li>
+        <li>Every push deep-links to its full context</li>
+      </ul>
+      <div class="case-img"><div class="device"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Validation ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Validation &amp; Iteration</h2>
+    <div class="two-col">
+      <div>
+        <h4>Usability testing revealed:</h4>
+        <ul class="dash-list">
+          <li>Users trusted insights more when the underlying data was one tap away</li>
+          <li>Sentence-first insights outperformed chart-first layouts in comprehension</li>
+          <li>Too many insights per session felt like nagging</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Based on this:</h4>
+        <ul class="dash-list">
+          <li>Added a "see the numbers" expander to every insight</li>
+          <li>Standardized the sentence-first insight pattern app-wide</li>
+          <li>Capped insights at one per screen, three per session</li>
+        </ul>
+      </div>
+    </div>
+    <div class="case-img" style="margin-top: 56px;"><div class="device"></div></div>
+  </div>
+</section>
+
+<!-- ---------- Impact ---------- -->
+<section class="case-section alt" id="results">
+  <div class="container">
+    <h2>Impact &amp; Results</h2>
+    <ul class="check-list">
+      <li>Users could explain their own spending patterns after one week of use</li>
+      <li>Core transaction speed preserved — no added steps to transfer or pay</li>
+      <li>Weekly digest became the most revisited screen after home</li>
+      <li>Notification opt-out rate dropped significantly in testing</li>
+    </ul>
+    <div class="benefits-card">
+      <h4>Business Benefits</h4>
+      <ul class="dash-list">
+        <li>Higher session frequency driven by the weekly digest</li>
+        <li>Reduced support load around unexplained charges</li>
+        <li>A reusable insight pattern for future product lines</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- Reflection ---------- -->
+<section class="case-section">
+  <div class="container">
+    <h2>Reflection</h2>
+    <div class="prose">
+      <p>This project proved that insight is a writing problem as much as a design problem — the best chart loses to one honest sentence.</p>
+      <p><strong>Key learnings:</strong></p>
+    </div>
+    <ul class="dash-list" style="margin-top: 16px;">
+      <li>Context beats dashboards: insights belong where decisions happen</li>
+      <li>Restraint builds trust — fewer insights were consistently rated more valuable</li>
+      <li>Plain language is a design material, not an afterthought</li>
+    </ul>
+    <p class="pull-quote">People don't want more data about their money — they want <span class="em">one clear thought at the right time.</span></p>
+  </div>
+</section>
+
+<!-- ---------- CTA ---------- -->
+<section class="case-cta">
+  <div class="container">
+    <h2>Interested in working together?</h2>
+    <p>Let's discuss your next project</p>
+    <a class="btn btn-dark" href="index.html#contact">Back to Home</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 Reza Ramdhan. All rights reserved.</span>
+    <span class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <span>·</span>
+      <a href="#">Terms of Service</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
