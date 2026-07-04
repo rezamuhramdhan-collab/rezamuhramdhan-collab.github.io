@@ -42,6 +42,7 @@ export interface Hero {
   primaryCta: ButtonItem;
   secondaryCta: ButtonItem;
   socialLinks: SocialLink[];
+  portrait?: ImageRef; // uploaded photo; built-in silhouette when placeholder
   profileCard: { name: string; subtitle: string; avatarInitial: string };
 }
 

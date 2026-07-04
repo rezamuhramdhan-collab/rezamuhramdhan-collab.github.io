@@ -45,7 +45,18 @@ export function Hero({ hero }: { hero: HeroData }) {
           </div>
         </div>
         <div className="hero-portrait">
-          <div className="portrait-card" dangerouslySetInnerHTML={{ __html: portraitSvg }} />
+          {hero.portrait && hero.portrait.src !== "placeholder" ? (
+            <div className="portrait-card">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={hero.portrait.src}
+                alt={hero.portrait.alt}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+          ) : (
+            <div className="portrait-card" dangerouslySetInnerHTML={{ __html: portraitSvg }} />
+          )}
           <div className="identity-chip">
             <span className="avatar">{hero.profileCard.avatarInitial}</span>
             <span>

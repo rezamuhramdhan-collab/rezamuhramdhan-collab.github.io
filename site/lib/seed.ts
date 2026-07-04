@@ -118,7 +118,10 @@ export async function seed(payload: Payload): Promise<void> {
   payload.logger.info("Seeding database from content modules…");
 
   await payload.updateGlobal({ slug: "site-settings", data: siteSettings as never });
-  await payload.updateGlobal({ slug: "hero", data: hero as never });
+  await payload.updateGlobal({
+    slug: "hero",
+    data: { ...hero, portrait: { showPlaceholder: true } } as never,
+  });
   await payload.updateGlobal({
     slug: "about",
     data: { ...about, paragraphs: toTextArray(about.paragraphs) } as never,

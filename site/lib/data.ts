@@ -142,7 +142,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
 export async function getHero(): Promise<Hero> {
   const payload = await payloadClient();
-  return (await payload.findGlobal({ slug: "hero" })) as unknown as Hero;
+  const doc: any = await payload.findGlobal({ slug: "hero", depth: 1 });
+  return { ...doc, portrait: fromImageSlot(doc.portrait) } as Hero;
 }
 
 export async function getAbout(): Promise<About> {

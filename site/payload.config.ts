@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import { buildConfig, type Field, type Block } from "payload";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { seed } from "./lib/seed";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -175,6 +176,17 @@ export default buildConfig({
   admin: { user: "users" },
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },
 
+  // Uploads persist to Vercel Blob when the token is present (hosted);
+  // locally they fall back to the media/ directory on disk.
+  plugins: process.env.BLOB_READ_WRITE_TOKEN
+    ? [
+        vercelBlobStorage({
+          collections: { media: true },
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        }),
+      ]
+    : [],
+
   collections: [
     {
       slug: "users",
@@ -322,6 +334,7 @@ export default buildConfig({
             { name: "label", type: "text", required: true },
           ],
         },
+        imageSlot("portrait"),
         {
           name: "profileCard",
           type: "group",
