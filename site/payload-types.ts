@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    categories: Category;
     services: Service;
     experience: Experience;
     projects: Project;
@@ -81,6 +82,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
@@ -179,6 +181,16 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
 export interface Service {
@@ -214,9 +226,22 @@ export interface Project {
   id: number;
   _order?: string | null;
   title: string;
+  /**
+   * URL path (/work/<slug>) — auto-formatted from the title if left empty
+   */
   slug: string;
-  category: string;
+  /**
+   * Pick a category or create a new one from here
+   */
+  category: number | Category;
   year: string;
+  summary: string;
+  meta: {
+    role: string;
+    scope: string;
+    platform: string;
+    timeline: string;
+  };
   thumbnail?: {
     media?: (number | null) | Media;
     /**
@@ -224,15 +249,6 @@ export interface Project {
      */
     placeholderKey?: ('bank-saqu' | 'banking-app' | 'saas-wireframes' | 'design-system' | 'banking-homepage') | null;
   };
-  featured?: boolean | null;
-  summary: string;
-  metaGrid?:
-    | {
-        label: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
   heroImage?: {
     media?: (number | null) | Media;
     alt?: string | null;
@@ -265,6 +281,19 @@ export interface Project {
                   id?: string | null;
                 }[]
               | null;
+            images?:
+              | {
+                  media?: (number | null) | Media;
+                  alt?: string | null;
+                  caption?: string | null;
+                  showPlaceholder?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * full = stacked full-width · left/right = beside the text · grid = two-up
+             */
+            imageLayout?: ('full' | 'left' | 'right' | 'grid') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'richText';
@@ -283,6 +312,19 @@ export interface Project {
                   id?: string | null;
                 }[]
               | null;
+            images?:
+              | {
+                  media?: (number | null) | Media;
+                  alt?: string | null;
+                  caption?: string | null;
+                  showPlaceholder?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * full = stacked full-width · left/right = beside the text · grid = two-up
+             */
+            imageLayout?: ('full' | 'left' | 'right' | 'grid') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'bulletList';
@@ -321,12 +363,19 @@ export interface Project {
                   id?: string | null;
                 }[]
               | null;
-            image?: {
-              media?: (number | null) | Media;
-              alt?: string | null;
-              caption?: string | null;
-              showPlaceholder?: boolean | null;
-            };
+            images?:
+              | {
+                  media?: (number | null) | Media;
+                  alt?: string | null;
+                  caption?: string | null;
+                  showPlaceholder?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * full = stacked full-width · left/right = beside the text · grid = two-up
+             */
+            imageLayout?: ('full' | 'left' | 'right' | 'grid') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'stepBlock';
@@ -351,12 +400,19 @@ export interface Project {
                   id?: string | null;
                 }[]
               | null;
-            image?: {
-              media?: (number | null) | Media;
-              alt?: string | null;
-              caption?: string | null;
-              showPlaceholder?: boolean | null;
-            };
+            images?:
+              | {
+                  media?: (number | null) | Media;
+                  alt?: string | null;
+                  caption?: string | null;
+                  showPlaceholder?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * full = stacked full-width · left/right = beside the text · grid = two-up
+             */
+            imageLayout?: ('full' | 'left' | 'right' | 'grid') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'twoColumn';
@@ -414,18 +470,32 @@ export interface Project {
              * Optional section anchor (used by the case-study tab nav)
              */
             anchor?: string | null;
-            image?: {
-              media?: (number | null) | Media;
-              alt?: string | null;
-              caption?: string | null;
-              showPlaceholder?: boolean | null;
-            };
+            images?:
+              | {
+                  media?: (number | null) | Media;
+                  alt?: string | null;
+                  caption?: string | null;
+                  showPlaceholder?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * full = stacked full-width · grid = 2 columns · grid3 = 3 columns
+             */
+            imageLayout?: ('full' | 'grid' | 'grid3') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'image';
           }
       )[]
     | null;
+  /**
+   * Show on the homepage Featured Work grid
+   */
+  featured?: boolean | null;
+  /**
+   * Related-project link (auto-picks the next one if empty)
+   */
   nextProjectSlug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -462,6 +532,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
       } | null)
     | ({
         relationTo: 'services';
@@ -559,6 +633,15 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services_select".
  */
 export interface ServicesSelect<T extends boolean = true> {
@@ -594,20 +677,20 @@ export interface ProjectsSelect<T extends boolean = true> {
   slug?: T;
   category?: T;
   year?: T;
+  summary?: T;
+  meta?:
+    | T
+    | {
+        role?: T;
+        scope?: T;
+        platform?: T;
+        timeline?: T;
+      };
   thumbnail?:
     | T
     | {
         media?: T;
         placeholderKey?: T;
-      };
-  featured?: T;
-  summary?: T;
-  metaGrid?:
-    | T
-    | {
-        label?: T;
-        value?: T;
-        id?: T;
       };
   heroImage?:
     | T
@@ -643,6 +726,16 @@ export interface ProjectsSelect<T extends boolean = true> {
                     text?: T;
                     id?: T;
                   };
+              images?:
+                | T
+                | {
+                    media?: T;
+                    alt?: T;
+                    caption?: T;
+                    showPlaceholder?: T;
+                    id?: T;
+                  };
+              imageLayout?: T;
               id?: T;
               blockName?: T;
             };
@@ -659,6 +752,16 @@ export interface ProjectsSelect<T extends boolean = true> {
                     text?: T;
                     id?: T;
                   };
+              images?:
+                | T
+                | {
+                    media?: T;
+                    alt?: T;
+                    caption?: T;
+                    showPlaceholder?: T;
+                    id?: T;
+                  };
+              imageLayout?: T;
               id?: T;
               blockName?: T;
             };
@@ -690,14 +793,16 @@ export interface ProjectsSelect<T extends boolean = true> {
                     text?: T;
                     id?: T;
                   };
-              image?:
+              images?:
                 | T
                 | {
                     media?: T;
                     alt?: T;
                     caption?: T;
                     showPlaceholder?: T;
+                    id?: T;
                   };
+              imageLayout?: T;
               id?: T;
               blockName?: T;
             };
@@ -720,14 +825,16 @@ export interface ProjectsSelect<T extends boolean = true> {
                     text?: T;
                     id?: T;
                   };
-              image?:
+              images?:
                 | T
                 | {
                     media?: T;
                     alt?: T;
                     caption?: T;
                     showPlaceholder?: T;
+                    id?: T;
                   };
+              imageLayout?: T;
               id?: T;
               blockName?: T;
             };
@@ -779,18 +886,21 @@ export interface ProjectsSelect<T extends boolean = true> {
           | T
           | {
               anchor?: T;
-              image?:
+              images?:
                 | T
                 | {
                     media?: T;
                     alt?: T;
                     caption?: T;
                     showPlaceholder?: T;
+                    id?: T;
                   };
+              imageLayout?: T;
               id?: T;
               blockName?: T;
             };
       };
+  featured?: T;
   nextProjectSlug?: T;
   updatedAt?: T;
   createdAt?: T;

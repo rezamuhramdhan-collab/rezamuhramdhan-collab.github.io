@@ -26,12 +26,12 @@ export function Hero({ hero }: { hero: HeroData }) {
             <Btn button={hero.secondaryCta} />
           </div>
           <div className="socials">
-            {hero.socialLinks.map((social) => {
+            {hero.socialLinks.map((social, i) => {
               const Icon = socialIcons[social.platform];
               const external = social.href.startsWith("http");
               return (
                 <a
-                  key={social.platform}
+                  key={`${social.platform}-${i}`}
                   className="social-btn"
                   href={social.href}
                   aria-label={social.label}
@@ -150,8 +150,8 @@ export function AboutExperience({
           <h2>
             {about.headline} <span className="love">{about.headlineAccent}</span>
           </h2>
-          {about.paragraphs.map((p) => (
-            <p key={p.slice(0, 24)}>{p.replace("{years}", String(about.yearsExperience))}</p>
+          {about.paragraphs.map((p, i) => (
+            <p key={i}>{p.replace("{years}", String(about.yearsExperience))}</p>
           ))}
         </div>
         <div className="exp-timeline">

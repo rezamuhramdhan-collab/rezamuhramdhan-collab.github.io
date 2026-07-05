@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
-import { getPublishedProjects, getProjectBySlug, getSiteSettings } from "@/lib/data";
+import { getPublishedProjects, getProjectBySlug, getNextProject, getSiteSettings } from "@/lib/data";
 import { CaseStudy } from "@/components/case/CaseStudy";
 
 // Case study route: /work/[slug] (PRD §6). Published projects are statically
-// generated; drafts render only via Next draft mode (preview).
-// Under STATIC_EXPORT there is no server: only generated params exist and
-// draft mode is unavailable.
+// generated; new ones render on demand so admin-created projects go live
+// without a redeploy. Under STATIC_EXPORT there is no server: only generated
+// params exist as files and draft mode is unavailable.
 
 const isStaticExport = Boolean(process.env.STATIC_EXPORT);
-
-// Only slugs from generateStaticParams exist; in dev the params are
-// recomputed per request, so newly created projects still resolve.
-export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const projects = await getPublishedProjects();
@@ -50,6 +46,9 @@ export default async function CaseStudyPage({
     notFound();
   }
 
-  const settings = await getSiteSettings();
-  return <CaseStudy project={project} settings={settings} />;
+  const [settings, nextProject] = await Promise.all([
+    getSiteSettings(),
+    getNextProject(project),
+  ]);
+  return <CaseStudy project={project} settings={settings} nextProject={nextProject} />;
 }

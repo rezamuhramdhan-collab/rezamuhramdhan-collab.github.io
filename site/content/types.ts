@@ -87,7 +87,20 @@ export interface ExperienceEntry {
 
 export type ListStyle = "bullet" | "check" | "arrow";
 
-export interface RichTextBlock {
+// Where a section's images sit relative to its text.
+// "grid3" applies to the standalone gallery block only.
+export type ImageLayout = "full" | "left" | "right" | "grid" | "grid3";
+
+// Shared by content blocks that can carry images.
+// `image` is the legacy single slot (still accepted in seed content);
+// the renderer and CMS work with `images` + `imageLayout`.
+export interface SectionImages {
+  image?: ImageRef;
+  images?: ImageRef[];
+  imageLayout?: ImageLayout;
+}
+
+export interface RichTextBlock extends SectionImages {
   type: "richText";
   anchor?: string;
   heading?: string;
@@ -96,7 +109,7 @@ export interface RichTextBlock {
   closingParagraphs?: string[];
 }
 
-export interface BulletListBlock {
+export interface BulletListBlock extends SectionImages {
   type: "bulletList";
   anchor?: string;
   heading?: string;
@@ -112,7 +125,7 @@ export interface HmwGridBlock {
   cards: string[]; // numbered by position
 }
 
-export interface StepBlock {
+export interface StepBlock extends SectionImages {
   type: "stepBlock";
   anchor?: string;
   sectionHeading?: string; // h2 for the group; consecutive stepBlocks share one section
@@ -120,10 +133,9 @@ export interface StepBlock {
   title: string;
   description?: string;
   bullets: string[];
-  image?: ImageRef;
 }
 
-export interface TwoColumnBlock {
+export interface TwoColumnBlock extends SectionImages {
   type: "twoColumn";
   anchor?: string;
   heading: string;
@@ -131,7 +143,6 @@ export interface TwoColumnBlock {
   leftItems: string[];
   rightTitle: string;
   rightItems: string[];
-  image?: ImageRef;
 }
 
 export interface ImpactCalloutBlock {
@@ -153,10 +164,9 @@ export interface ReflectionBlock {
   pullQuote?: { text: string; accent: string };
 }
 
-export interface ImageBlock {
+export interface ImageBlock extends SectionImages {
   type: "image";
   anchor?: string;
-  image: ImageRef;
 }
 
 export type SectionBlock =

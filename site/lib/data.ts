@@ -33,8 +33,19 @@ function fromImageSlot(slot: any): ImageRef | undefined {
   return undefined;
 }
 
+function fromImages(rows: any[] | null | undefined): ImageRef[] | undefined {
+  const images = (rows ?? [])
+    .map(fromImageSlot)
+    .filter((img): img is ImageRef => Boolean(img));
+  return images.length ? images : undefined;
+}
+
 function fromBlock(block: any): SectionBlock {
-  const base = { anchor: block.anchor ?? undefined };
+  const base = {
+    anchor: block.anchor ?? undefined,
+    images: fromImages(block.images),
+    imageLayout: block.imageLayout ?? "full",
+  };
   switch (block.blockType) {
     case "richText":
       return {
@@ -67,7 +78,6 @@ function fromBlock(block: any): SectionBlock {
         title: block.title,
         description: block.description ?? undefined,
         bullets: fromTextArray(block.bullets),
-        image: fromImageSlot(block.image),
       };
     case "twoColumn":
       return {
@@ -78,7 +88,6 @@ function fromBlock(block: any): SectionBlock {
         leftItems: fromTextArray(block.leftItems),
         rightTitle: block.rightTitle,
         rightItems: fromTextArray(block.rightItems),
-        image: fromImageSlot(block.image),
       };
     case "impactCallout":
       return {
@@ -105,7 +114,7 @@ function fromBlock(block: any): SectionBlock {
       return {
         ...base,
         type: "image",
-        image: fromImageSlot(block.image) ?? { src: "placeholder", alt: "" },
+        images: base.images ?? [{ src: "placeholder", alt: "" }],
       };
   }
 }
@@ -116,7 +125,8 @@ function fromProjectDoc(doc: any, index: number): Project {
     id: String(doc.id),
     slug: doc.slug,
     title: doc.title,
-    category: doc.category,
+    category:
+      typeof doc.category === "object" && doc.category ? doc.category.name : String(doc.category ?? ""),
     year: doc.year,
     thumbnail:
       thumbMedia && typeof thumbMedia === "object" && thumbMedia.url
@@ -125,7 +135,12 @@ function fromProjectDoc(doc: any, index: number): Project {
     featured: Boolean(doc.featured),
     order: index + 1,
     summary: doc.summary,
-    metaGrid: (doc.metaGrid ?? []).map((pair: any) => ({ label: pair.label, value: pair.value })),
+    metaGrid: [
+      { label: "Role", value: doc.meta?.role },
+      { label: "Scope", value: doc.meta?.scope },
+      { label: "Platform", value: doc.meta?.platform },
+      { label: "Timeline", value: doc.meta?.timeline },
+    ].filter((pair): pair is { label: string; value: string } => Boolean(pair.value)),
     heroImage: fromImageSlot(doc.heroImage) ?? { src: "placeholder", alt: doc.title },
     sections: (doc.sections ?? []).map(fromBlock),
     status: doc._status === "draft" ? "draft" : "published",
@@ -148,13 +163,19 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     ...doc,
     logoImage: fromUpload(doc.logoImage),
     favicon: fromUpload(doc.favicon),
+    navLinks: doc.navLinks ?? [],
+    footerLinks: doc.footerLinks ?? [],
   } as SiteSettings;
 }
 
 export async function getHero(): Promise<Hero> {
   const payload = await payloadClient();
   const doc: any = await payload.findGlobal({ slug: "hero", depth: 1 });
-  return { ...doc, portrait: fromImageSlot(doc.portrait) } as Hero;
+  return {
+    ...doc,
+    portrait: fromImageSlot(doc.portrait),
+    socialLinks: doc.socialLinks ?? [],
+  } as Hero;
 }
 
 export async function getAbout(): Promise<About> {
@@ -165,7 +186,8 @@ export async function getAbout(): Promise<About> {
 
 export async function getCta(): Promise<CtaSection> {
   const payload = await payloadClient();
-  return (await payload.findGlobal({ slug: "cta" })) as unknown as CtaSection;
+  const doc: any = await payload.findGlobal({ slug: "cta" });
+  return { ...doc, buttons: doc.buttons ?? [] } as CtaSection;
 }
 
 // ---------- Collections ----------
@@ -211,6 +233,18 @@ export async function getPublishedProjects(): Promise<Project[]> {
 
 export async function getFeaturedProjects(): Promise<Project[]> {
   return (await getPublishedProjects()).filter((p) => p.featured);
+}
+
+// Related-project link: explicit nextProjectSlug wins, else next published by order.
+export async function getNextProject(current: Project): Promise<Project | undefined> {
+  if (current.nextProjectSlug) {
+    const explicit = await getProjectBySlug(current.nextProjectSlug);
+    if (explicit && explicit.status === "published") return explicit;
+  }
+  const published = await getPublishedProjects();
+  if (published.length < 2) return undefined;
+  const idx = published.findIndex((p) => p.slug === current.slug);
+  return published[(idx + 1) % published.length];
 }
 
 export async function getProjectBySlug(slug: string, draft = false): Promise<Project | undefined> {

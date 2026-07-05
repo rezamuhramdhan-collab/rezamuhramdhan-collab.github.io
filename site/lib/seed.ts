@@ -16,6 +16,10 @@ const toImageSlot = (image?: ImageRef) =>
     ? { alt: image.alt, caption: image.caption ?? null, showPlaceholder: true }
     : { showPlaceholder: false };
 
+// Blocks may declare a legacy single `image` or the newer `images` array.
+const toImages = (section: { image?: ImageRef; images?: ImageRef[] }) =>
+  (section.images ?? (section.image ? [section.image] : [])).map(toImageSlot);
+
 function toBlock(section: SectionBlock): Record<string, unknown> {
   switch (section.type) {
     case "richText":
@@ -26,6 +30,8 @@ function toBlock(section: SectionBlock): Record<string, unknown> {
         paragraphs: toTextArray(section.paragraphs),
         items: toTextArray(section.items),
         closingParagraphs: toTextArray(section.closingParagraphs),
+        images: toImages(section),
+        imageLayout: section.imageLayout ?? "full",
       };
     case "bulletList":
       return {
@@ -35,6 +41,8 @@ function toBlock(section: SectionBlock): Record<string, unknown> {
         intro: section.intro,
         style: section.style,
         items: toTextArray(section.items),
+        images: toImages(section),
+        imageLayout: section.imageLayout ?? "full",
       };
     case "hmwGrid":
       return {
@@ -52,7 +60,8 @@ function toBlock(section: SectionBlock): Record<string, unknown> {
         title: section.title,
         description: section.description,
         bullets: toTextArray(section.bullets),
-        image: toImageSlot(section.image),
+        images: toImages(section),
+        imageLayout: section.imageLayout ?? "full",
       };
     case "twoColumn":
       return {
@@ -63,7 +72,8 @@ function toBlock(section: SectionBlock): Record<string, unknown> {
         leftItems: toTextArray(section.leftItems),
         rightTitle: section.rightTitle,
         rightItems: toTextArray(section.rightItems),
-        image: toImageSlot(section.image),
+        images: toImages(section),
+        imageLayout: section.imageLayout ?? "full",
       };
     case "impactCallout":
       return {
@@ -89,21 +99,29 @@ function toBlock(section: SectionBlock): Record<string, unknown> {
       return {
         blockType: "image",
         anchor: section.anchor,
-        image: toImageSlot(section.image),
+        images: toImages(section),
+        imageLayout: section.imageLayout ?? "full",
       };
   }
 }
 
-function toProjectDoc(project: Project) {
+function toProjectDoc(project: Project, categoryId: number | string) {
+  const metaValue = (label: string) =>
+    project.metaGrid.find((pair) => pair.label.toLowerCase() === label)?.value ?? "";
   return {
     title: project.title,
     slug: project.slug,
-    category: project.category,
+    category: categoryId,
     year: project.year,
     thumbnail: { placeholderKey: project.thumbnail },
     featured: project.featured,
     summary: project.summary,
-    metaGrid: project.metaGrid,
+    meta: {
+      role: metaValue("role"),
+      scope: metaValue("scope"),
+      platform: metaValue("platform"),
+      timeline: metaValue("timeline"),
+    },
     heroImage: toImageSlot(project.heroImage),
     sections: project.sections.map(toBlock),
     nextProjectSlug: project.nextProjectSlug,
@@ -111,7 +129,34 @@ function toProjectDoc(project: Project) {
   };
 }
 
+// Creates categories + projects only (idempotent-ish: skips if projects exist).
+// Reused by the standalone projects migration so schema changes don't require
+// wiping user-edited globals/media.
+export async function seedProjects(payload: Payload): Promise<void> {
+  const categoryIds = new Map<string, number | string>();
+  for (const name of [...new Set(getPublishedProjects().map((p) => p.category))]) {
+    const existing = await payload.find({
+      collection: "categories",
+      where: { name: { equals: name } },
+      limit: 1,
+    });
+    const id =
+      existing.docs[0]?.id ??
+      ((await payload.create({ collection: "categories", data: { name } as never })) as { id: number | string })
+        .id;
+    categoryIds.set(name, id);
+  }
+  for (const project of getPublishedProjects()) {
+    await payload.create({
+      collection: "projects",
+      draft: false,
+      data: toProjectDoc(project, categoryIds.get(project.category)!) as never,
+    });
+  }
+}
+
 export async function seed(payload: Payload): Promise<void> {
+  if (process.env.SKIP_SEED) return; // schema-push boots (migrations) skip seeding
   const { totalDocs } = await payload.count({ collection: "projects" });
   if (totalDocs > 0) return;
 
@@ -153,12 +198,19 @@ export async function seed(payload: Payload): Promise<void> {
     });
   }
 
-  for (const project of getPublishedProjects()) {
-    await payload.create({
-      collection: "projects",
-      draft: false,
-      data: toProjectDoc(project) as never,
-    });
+  await seedProjects(payload);
+
+  // Dev convenience only: a default local admin so a fresh local database
+  // is immediately usable. Never runs in production builds.
+  if (process.env.NODE_ENV !== "production") {
+    const { totalDocs: userCount } = await payload.count({ collection: "users" });
+    if (userCount === 0) {
+      await payload.create({
+        collection: "users",
+        data: { email: "reza@gmail.com", password: "admin123" } as never,
+      });
+      payload.logger.info("Seeded dev admin user: reza@gmail.com / admin123");
+    }
   }
 
   payload.logger.info("Seed complete.");

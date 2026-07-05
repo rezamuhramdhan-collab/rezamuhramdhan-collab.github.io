@@ -38,11 +38,23 @@ const buttonFields: Field[] = [
 
 // Image slot: uploaded media wins; otherwise the neutral placeholder renders
 // while showPlaceholder is on (case studies stay presentable without assets).
-const imageSlot = (name = "image"): Field => ({
+// With `requireImage`, publishing demands an upload or the placeholder.
+const imageSlot = (name = "image", opts: { requireImage?: boolean } = {}): Field => ({
   name,
   type: "group",
   fields: [
-    { name: "media", type: "upload", relationTo: "media" },
+    {
+      name: "media",
+      type: "upload",
+      relationTo: "media",
+      ...(opts.requireImage
+        ? {
+            validate: (value: unknown, { siblingData }: { siblingData?: { showPlaceholder?: boolean } }) =>
+              Boolean(value || siblingData?.showPlaceholder) ||
+              "Upload an image (or keep the placeholder enabled)",
+          }
+        : {}),
+    },
     { name: "alt", type: "text" },
     { name: "caption", type: "text" },
     { name: "showPlaceholder", type: "checkbox", defaultValue: true },
@@ -53,6 +65,38 @@ const anchorField: Field = {
   name: "anchor",
   type: "text",
   admin: { description: "Optional section anchor (used by the case-study tab nav)" },
+};
+
+// URL-safe slug: lowercase, hyphens, no leading/trailing dashes.
+const slugify = (value: string): string =>
+  value
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+// Multi-image slot: add/remove/reorder any number of images per section.
+const imagesField: Field = {
+  name: "images",
+  type: "array",
+  fields: [
+    { name: "media", type: "upload", relationTo: "media" },
+    { name: "alt", type: "text" },
+    { name: "caption", type: "text" },
+    { name: "showPlaceholder", type: "checkbox", defaultValue: true },
+  ],
+};
+
+const imageLayoutField: Field = {
+  name: "imageLayout",
+  type: "select",
+  options: ["full", "left", "right", "grid"],
+  defaultValue: "full",
+  admin: {
+    description:
+      "full = stacked full-width · left/right = beside the text · grid = two-up",
+  },
 };
 
 // ---------- Case study section blocks (PRD §4.3) ----------
@@ -66,6 +110,8 @@ const blocks: Block[] = [
       textArray("paragraphs", { required: true }),
       textArray("items", { label: "Arrow list (optional)" }),
       textArray("closingParagraphs", { label: "Closing paragraphs (optional)" }),
+      imagesField,
+      imageLayoutField,
     ],
   },
   {
@@ -82,6 +128,8 @@ const blocks: Block[] = [
         required: true,
       },
       textArray("items", { required: true }),
+      imagesField,
+      imageLayoutField,
     ],
   },
   {
@@ -105,7 +153,8 @@ const blocks: Block[] = [
       { name: "title", type: "text", required: true },
       { name: "description", type: "textarea" },
       textArray("bullets"),
-      imageSlot(),
+      imagesField,
+      imageLayoutField,
     ],
   },
   {
@@ -117,7 +166,8 @@ const blocks: Block[] = [
       textArray("leftItems", { required: true }),
       { name: "rightTitle", type: "text", required: true },
       textArray("rightItems", { required: true }),
-      imageSlot(),
+      imagesField,
+      imageLayoutField,
     ],
   },
   {
@@ -144,7 +194,18 @@ const blocks: Block[] = [
   },
   {
     slug: "image",
-    fields: [anchorField, imageSlot()],
+    labels: { singular: "Image Gallery", plural: "Image Galleries" },
+    fields: [
+      anchorField,
+      imagesField,
+      {
+        name: "imageLayout",
+        type: "select",
+        options: ["full", "grid", "grid3"],
+        defaultValue: "full",
+        admin: { description: "full = stacked full-width · grid = 2 columns · grid3 = 3 columns" },
+      },
+    ],
   },
 ];
 
@@ -162,6 +223,10 @@ const revalidateSite = () => {
 const publicRead = { read: () => true };
 
 // ---------- Config ----------
+
+if (!process.env.PAYLOAD_SECRET && process.env.NODE_ENV === "production") {
+  throw new Error("PAYLOAD_SECRET is required in production");
+}
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "dev-secret-change-me",
@@ -201,6 +266,14 @@ export default buildConfig({
       fields: [{ name: "alt", type: "text" }],
     },
     {
+      slug: "categories",
+      labels: { singular: "Category", plural: "Categories" },
+      access: publicRead,
+      admin: { useAsTitle: "name" },
+      hooks: { afterChange: [revalidateSite], afterDelete: [revalidateSite] },
+      fields: [{ name: "name", type: "text", required: true, unique: true }],
+    },
+    {
       slug: "services",
       labels: { singular: "Service", plural: "What I Do" },
       access: publicRead,
@@ -237,7 +310,10 @@ export default buildConfig({
     },
     {
       slug: "projects",
-      access: publicRead,
+      // Anonymous API readers only see published docs; drafts require auth.
+      access: {
+        read: ({ req }) => (req.user ? true : { _status: { equals: "published" } }),
+      },
       orderable: true,
       versions: { drafts: true },
       admin: {
@@ -246,43 +322,126 @@ export default buildConfig({
       },
       hooks: { afterChange: [revalidateSite], afterDelete: [revalidateSite] },
       fields: [
-        // Card fields (homepage grid)
-        { name: "title", type: "text", required: true },
-        { name: "slug", type: "text", required: true, unique: true, index: true },
-        { name: "category", type: "text", required: true },
-        { name: "year", type: "text", required: true },
         {
-          name: "thumbnail",
-          type: "group",
-          fields: [
-            { name: "media", type: "upload", relationTo: "media" },
+          // Layout-only tabs (no name = no data shape change).
+          type: "tabs",
+          tabs: [
             {
-              name: "placeholderKey",
-              type: "select",
-              options: ["bank-saqu", "banking-app", "saas-wireframes", "design-system", "banking-homepage"],
-              admin: { description: "Built-in placeholder art used until media is uploaded" },
+              label: "Required Info",
+              description:
+                "Everything mandatory in one place — fill this tab and the project is publishable.",
+              fields: [
+                { name: "title", type: "text", required: true },
+                {
+                  name: "slug",
+                  type: "text",
+                  required: true,
+                  unique: true,
+                  index: true,
+                  admin: {
+                    description:
+                      "URL path (/work/<slug>) — auto-formatted from the title if left empty",
+                  },
+                  hooks: {
+                    beforeValidate: [
+                      ({ value, data }) => slugify(String(value || data?.title || "")),
+                    ],
+                  },
+                },
+                {
+                  type: "row",
+                  fields: [
+                    {
+                      name: "category",
+                      type: "relationship",
+                      relationTo: "categories",
+                      required: true,
+                      admin: {
+                        width: "50%",
+                        description: "Pick a category or create a new one from here",
+                      },
+                    },
+                    { name: "year", type: "text", required: true, admin: { width: "50%" } },
+                  ],
+                },
+                { name: "summary", type: "textarea", required: true },
+                {
+                  name: "meta",
+                  label: "Project Details",
+                  type: "group",
+                  fields: [
+                    {
+                      type: "row",
+                      fields: [
+                        { name: "role", type: "text", required: true, admin: { width: "50%" } },
+                        { name: "scope", type: "text", required: true, admin: { width: "50%" } },
+                      ],
+                    },
+                    {
+                      type: "row",
+                      fields: [
+                        { name: "platform", type: "text", required: true, admin: { width: "50%" } },
+                        { name: "timeline", type: "text", required: true, admin: { width: "50%" } },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: "thumbnail",
+                  label: "Thumbnail (homepage card)",
+                  type: "group",
+                  fields: [
+                    {
+                      name: "media",
+                      type: "upload",
+                      relationTo: "media",
+                      validate: (
+                        value: unknown,
+                        { siblingData }: { siblingData?: { placeholderKey?: string } },
+                      ) =>
+                        Boolean(value || siblingData?.placeholderKey) ||
+                        "Upload a thumbnail image (or pick a placeholder)",
+                    },
+                    {
+                      name: "placeholderKey",
+                      type: "select",
+                      options: [
+                        "bank-saqu",
+                        "banking-app",
+                        "saas-wireframes",
+                        "design-system",
+                        "banking-homepage",
+                      ],
+                      admin: { description: "Built-in placeholder art used until media is uploaded" },
+                    },
+                  ],
+                },
+                imageSlot("heroImage", { requireImage: true }),
+              ],
+            },
+            {
+              label: "Case Study Sections",
+              description: "The detail page body — add, reorder, and lay out sections freely",
+              fields: [{ name: "sections", type: "blocks", blocks }],
+            },
+            {
+              label: "Settings",
+              fields: [
+                {
+                  name: "featured",
+                  type: "checkbox",
+                  defaultValue: true,
+                  admin: { description: "Show on the homepage Featured Work grid" },
+                },
+                {
+                  name: "nextProjectSlug",
+                  type: "text",
+                  admin: { description: "Related-project link (auto-picks the next one if empty)" },
+                },
+              ],
             },
           ],
         },
-        { name: "featured", type: "checkbox", defaultValue: true },
-
-        // Detail header
-        { name: "summary", type: "textarea", required: true },
-        {
-          name: "metaGrid",
-          type: "array",
-          fields: [
-            { name: "label", type: "text", required: true },
-            { name: "value", type: "text", required: true },
-          ],
-        },
-        imageSlot("heroImage"),
-
-        // Detail body — ordered, typed section blocks
-        { name: "sections", type: "blocks", blocks },
-
-        // Meta
-        { name: "nextProjectSlug", type: "text" },
       ],
     },
   ],

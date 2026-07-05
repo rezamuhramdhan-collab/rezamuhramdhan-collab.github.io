@@ -110,6 +110,7 @@ export const bankSaquHomepageRevamp: Project = {
         "Promotions",
       ],
       image: { src: "placeholder", alt: "Information hierarchy" },
+      imageLayout: "right",
     },
     {
       type: "stepBlock",
@@ -128,7 +129,11 @@ export const bankSaquHomepageRevamp: Project = {
       title: "Highlighting Promotions Strategically",
       description: "Placed promo section in a visible but non-disruptive position.",
       bullets: ["Increases engagement", "Avoids interfering with primary tasks"],
-      image: { src: "placeholder", alt: "Promotions placement" },
+      images: [
+        { src: "placeholder", alt: "Promo section before", caption: "Before" },
+        { src: "placeholder", alt: "Promo section after", caption: "After" },
+      ],
+      imageLayout: "grid",
     },
     {
       type: "stepBlock",
