@@ -349,7 +349,7 @@ export function CaseStudy({
           className={`case-section${i % 2 === 1 ? " alt" : ""}`}
           id={group.anchor}
         >
-          <div className="container">
+          <div className="container" data-reveal>
             {group.kind === "steps" ? (
               <StepGroup steps={group.steps} />
             ) : (
@@ -360,7 +360,7 @@ export function CaseStudy({
       ))}
 
       <section className="case-cta">
-        <div className="container">
+        <div className="container" data-reveal>
           <h2>{ctaFooter.headline}</h2>
           <p>{ctaFooter.subtext}</p>
           <div className="cta-row">

@@ -82,11 +82,11 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
   return (
     <section className="work" id="work">
       <div className="container">
-        <h2 className="section-heading">Featured Work</h2>
-        <p className="section-sub">A selection of projects I&rsquo;m proud of</p>
+        <h2 className="section-heading" data-reveal>Featured Work</h2>
+        <p className="section-sub" data-reveal>A selection of projects I&rsquo;m proud of</p>
         <div className="work-grid">
           {projects.map((project) => (
-            <Link key={project.id} className="project-card" href={`/work/${project.slug}`}>
+            <Link key={project.id} className="project-card" href={`/work/${project.slug}`} data-reveal>
               <div className="project-thumb">
                 <Thumb value={project.thumbnail} />
                 <div className="thumb-overlay">
@@ -113,7 +113,7 @@ export function Services({ services }: { services: ServiceCard[] }) {
   return (
     <section className="section-alt" id="services">
       <div className="container">
-        <div className="services-header">
+        <div className="services-header" data-reveal>
           <h2 className="section-heading">What I Do</h2>
           <p className="section-sub">
             I specialize in transforming complex problems into simple, beautiful solutions
@@ -123,7 +123,7 @@ export function Services({ services }: { services: ServiceCard[] }) {
           {services.map((card) => {
             const Icon = serviceIcons[card.icon];
             return (
-              <div key={card.id} className="service-card">
+              <div key={card.id} className="service-card" data-reveal>
                 <div className="service-icon"><Icon /></div>
                 <h3>{card.title}</h3>
                 <p>{card.description}</p>
@@ -146,7 +146,7 @@ export function AboutExperience({
   return (
     <section className="section-alt" id="about">
       <div className="container exp-inner">
-        <div className="exp-statement">
+        <div className="exp-statement" data-reveal>
           <h2>
             {about.headline} <span className="love">{about.headlineAccent}</span>
           </h2>
@@ -155,10 +155,10 @@ export function AboutExperience({
           ))}
         </div>
         <div className="exp-timeline">
-          <h3>Experience</h3>
+          <h3 data-reveal>Experience</h3>
           <ul className="timeline">
             {experience.map((entry) => (
-              <li key={entry.id}>
+              <li key={entry.id} data-reveal>
                 <div className="period">{entry.period}</div>
                 <div className="role">{entry.role}</div>
                 <a className="company" href={entry.companyLink}>{entry.company}</a>
@@ -176,11 +176,11 @@ export function CtaSection({ cta }: { cta: CtaData }) {
   return (
     <section className="cta" id="contact">
       <div className="container">
-        <h2>
+        <h2 data-reveal>
           {cta.headline} <span className="great">{cta.headlineAccent}</span>
         </h2>
-        <p>{cta.subtext}</p>
-        <div className="cta-actions">
+        <p data-reveal>{cta.subtext}</p>
+        <div className="cta-actions" data-reveal>
           {cta.buttons.map((button) => (
             <Btn key={button.label} button={button} />
           ))}

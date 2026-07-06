@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SiteFooter } from "@/components/shared";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { getSiteSettings } from "@/lib/data";
 import "../globals.css";
 
@@ -27,6 +28,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <body>
         {children}
         <SiteFooter settings={settings} />
+        <ScrollReveal />
       </body>
     </html>
   );
