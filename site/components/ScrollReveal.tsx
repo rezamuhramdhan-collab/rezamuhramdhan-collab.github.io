@@ -19,29 +19,49 @@ export function ScrollReveal() {
       return;
     }
 
+    const reveal = (el: Element) => {
+      el.classList.add("is-visible");
+      io.unobserve(el);
+    };
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            io.unobserve(entry.target);
-          }
+          if (entry.isIntersecting) reveal(entry.target);
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
+      // threshold 0: any pixel entering the trigger area reveals the element.
+      // (A higher threshold never fires for elements taller than ~6x the
+      // viewport — common in single-column mobile layouts — leaving them hidden.)
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" },
     );
 
-    const vh = window.innerHeight;
+    const inView = (el: Element) => el.getBoundingClientRect().top < window.innerHeight * 0.9;
+
+    // Reveal anything already in/above view on load; observe the rest.
     for (const el of els) {
-      // Already visible on load → show immediately (same tick = no animation, no flash).
-      if (el.getBoundingClientRect().top < vh * 0.9) {
-        el.classList.add("is-visible");
-      } else {
-        io.observe(el);
-      }
+      if (inView(el)) el.classList.add("is-visible");
+      else io.observe(el);
     }
 
-    return () => io.disconnect();
+    // Safety net for breakpoint / orientation changes: a reflow can move a
+    // still-hidden element into view — reveal any that are now visible.
+    let raf = 0;
+    const onResize = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        for (const el of els) {
+          if (!el.classList.contains("is-visible") && inView(el)) reveal(el);
+        }
+      });
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   return null;

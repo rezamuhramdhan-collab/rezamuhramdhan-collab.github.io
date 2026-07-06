@@ -970,12 +970,9 @@ export interface SiteSetting {
     | null;
   ctaButton: {
     label: string;
+    href: string;
     /**
-     * Link URL — used when no file is uploaded
-     */
-    href?: string | null;
-    /**
-     * Optional file (e.g. résumé PDF). Overrides the link when set.
+     * Optional file (e.g. résumé PDF). Overrides the link URL when set.
      */
     file?: (number | null) | Media;
     variant: 'dark' | 'outline';
@@ -1000,12 +997,9 @@ export interface SiteSetting {
     subtext?: string | null;
     button: {
       label: string;
+      href: string;
       /**
-       * Link URL — used when no file is uploaded
-       */
-      href?: string | null;
-      /**
-       * Optional file (e.g. résumé PDF). Overrides the link when set.
+       * Optional file (e.g. résumé PDF). Overrides the link URL when set.
        */
       file?: (number | null) | Media;
       variant: 'dark' | 'outline';
@@ -1027,12 +1021,9 @@ export interface Hero {
   bio?: string | null;
   primaryCta: {
     label: string;
+    href: string;
     /**
-     * Link URL — used when no file is uploaded
-     */
-    href?: string | null;
-    /**
-     * Optional file (e.g. résumé PDF). Overrides the link when set.
+     * Optional file (e.g. résumé PDF). Overrides the link URL when set.
      */
     file?: (number | null) | Media;
     variant: 'dark' | 'outline';
@@ -1041,12 +1032,9 @@ export interface Hero {
   };
   secondaryCta: {
     label: string;
+    href: string;
     /**
-     * Link URL — used when no file is uploaded
-     */
-    href?: string | null;
-    /**
-     * Optional file (e.g. résumé PDF). Overrides the link when set.
+     * Optional file (e.g. résumé PDF). Overrides the link URL when set.
      */
     file?: (number | null) | Media;
     variant: 'dark' | 'outline';
@@ -1108,12 +1096,9 @@ export interface Cta {
   buttons?:
     | {
         label: string;
+        href: string;
         /**
-         * Link URL — used when no file is uploaded
-         */
-        href?: string | null;
-        /**
-         * Optional file (e.g. résumé PDF). Overrides the link when set.
+         * Optional file (e.g. résumé PDF). Overrides the link URL when set.
          */
         file?: (number | null) | Media;
         variant: 'dark' | 'outline';
