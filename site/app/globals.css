@@ -670,7 +670,7 @@ footer {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  padding: 24px;
+  padding: 16px;
 }
 .benefits-card h4 {
   font-size: 16px;
