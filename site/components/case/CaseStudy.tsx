@@ -8,6 +8,8 @@ import type {
   ListStyle,
   SiteSettings,
 } from "@/content/types";
+import { RichText } from "@payloadcms/richtext-lexical/react";
+import { hasLexical } from "@/lib/lexical";
 import { Btn } from "../shared";
 import { ArrowLeft, ArrowRight as ArrowRightSmall } from "../icons";
 
@@ -108,22 +110,30 @@ function BlockBody({ block }: { block: SectionBlock }) {
       return (
         <WithImages images={block.images} layout={block.imageLayout}>
           {block.heading && <h2>{block.heading}</h2>}
-          <div className="prose">
-            {block.paragraphs.map((p, i) => (
-              <p key={i}><Rich text={p} /></p>
-            ))}
-          </div>
-          {block.items && (
-            <ul className="dash-list block-gap">
-              {block.items.map((item, i) => <li key={i}>{item}</li>)}
-            </ul>
-          )}
-          {block.closingParagraphs && (
-            <div className="prose block-gap-lg">
-              {block.closingParagraphs.map((p, i) => (
-                <p key={i}><Rich text={p} /></p>
-              ))}
+          {hasLexical(block.content) ? (
+            <div className="prose rich">
+              <RichText data={block.content as never} />
             </div>
+          ) : (
+            <>
+              <div className="prose">
+                {block.paragraphs.map((p, i) => (
+                  <p key={i}><Rich text={p} /></p>
+                ))}
+              </div>
+              {block.items && (
+                <ul className="dash-list block-gap">
+                  {block.items.map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+              )}
+              {block.closingParagraphs && (
+                <div className="prose block-gap-lg">
+                  {block.closingParagraphs.map((p, i) => (
+                    <p key={i}><Rich text={p} /></p>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </WithImages>
       );

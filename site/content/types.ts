@@ -104,9 +104,10 @@ export interface RichTextBlock extends SectionImages {
   type: "richText";
   anchor?: string;
   heading?: string;
-  paragraphs: string[]; // "**bold**" spans render as ink-colored strong text
-  items?: string[]; // optional arrow list between paragraph groups
-  closingParagraphs?: string[];
+  content?: unknown; // Lexical editor state; when present, replaces the legacy fields below
+  paragraphs: string[]; // "**bold**" spans render as ink-colored strong text (legacy)
+  items?: string[]; // optional arrow list between paragraph groups (legacy)
+  closingParagraphs?: string[]; // (legacy)
 }
 
 export interface BulletListBlock extends SectionImages {

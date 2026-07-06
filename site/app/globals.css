@@ -536,6 +536,19 @@ footer {
 }
 .prose p strong { color: var(--ink); font-weight: 600; }
 .prose p:last-child { margin-bottom: 0; }
+
+/* Rich-text (Lexical) output within .prose */
+.prose.rich strong { color: var(--ink); font-weight: 600; }
+.prose.rich em { font-style: italic; }
+.prose.rich a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.prose.rich h3 { font-size: 20px; font-weight: 700; color: var(--ink); margin: 26px 0 10px; letter-spacing: -0.01em; }
+.prose.rich h4 { font-size: 17px; font-weight: 700; color: var(--ink); margin: 22px 0 8px; }
+.prose.rich ul,
+.prose.rich ol { margin: 4px 0 18px; padding-left: 22px; color: var(--gray); }
+.prose.rich li { font-size: 16px; margin-bottom: 6px; }
+.prose.rich ul { list-style: disc; }
+.prose.rich ol { list-style: decimal; }
+.prose.rich > :last-child { margin-bottom: 0; }
 .block-gap { margin-top: 16px; }
 .block-gap-lg { margin-top: 24px; }
 

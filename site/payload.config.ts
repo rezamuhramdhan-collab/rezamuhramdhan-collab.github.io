@@ -5,17 +5,22 @@ import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { seed } from "./lib/seed";
+import { hasLexical } from "./lib/lexical";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ---------- Reusable field groups ----------
 
-const textArray = (name: string, opts: { label?: string; required?: boolean } = {}): Field => ({
+const textArray = (
+  name: string,
+  opts: { label?: string; required?: boolean; admin?: Record<string, unknown> } = {},
+): Field => ({
   name,
   type: "array",
   label: opts.label,
   fields: [{ name: "text", type: "textarea", required: true }],
   ...(opts.required ? { minRows: 1 } : {}),
+  ...(opts.admin ? { admin: opts.admin } : {}),
 });
 
 const linkFields: Field[] = [
@@ -115,9 +120,24 @@ const blocks: Block[] = [
     fields: [
       anchorField,
       { name: "heading", type: "text" },
-      textArray("paragraphs", { required: true }),
-      textArray("items", { label: "Arrow list (optional)" }),
-      textArray("closingParagraphs", { label: "Closing paragraphs (optional)" }),
+      {
+        name: "content",
+        type: "richText",
+        admin: { description: "Formatted text — bold, italic, headings, lists, links" },
+      },
+      // Legacy plain-text fields — used only when the editor above is empty.
+      textArray("paragraphs", {
+        label: "Paragraphs (legacy — used if the editor above is empty)",
+        admin: { condition: (_: unknown, s: { content?: unknown }) => !hasLexical(s?.content) },
+      }),
+      textArray("items", {
+        label: "Arrow list (legacy)",
+        admin: { condition: (_: unknown, s: { content?: unknown }) => !hasLexical(s?.content) },
+      }),
+      textArray("closingParagraphs", {
+        label: "Closing paragraphs (legacy)",
+        admin: { condition: (_: unknown, s: { content?: unknown }) => !hasLexical(s?.content) },
+      }),
       imagesField,
       imageLayoutField,
     ],

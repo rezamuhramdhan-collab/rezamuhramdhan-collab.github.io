@@ -52,6 +52,7 @@ function fromBlock(block: any): SectionBlock {
         ...base,
         type: "richText",
         heading: block.heading ?? undefined,
+        content: block.content ?? undefined,
         paragraphs: fromTextArray(block.paragraphs),
         items: block.items?.length ? fromTextArray(block.items) : undefined,
         closingParagraphs: block.closingParagraphs?.length
