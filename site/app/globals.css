@@ -605,6 +605,8 @@ footer {
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
+/* A lone card spans the full row; 2 split; 3+ wrap 2-per-row */
+.hmw-card:only-child { grid-column: 1 / -1; }
 .hmw-card {
   background: #fff;
   border: 1px solid var(--border);
