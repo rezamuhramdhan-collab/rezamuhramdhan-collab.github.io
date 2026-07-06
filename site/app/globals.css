@@ -730,3 +730,31 @@ footer {
   .meta-cell:nth-child(n+3) { border-top: 1px solid var(--border); }
   .case-cta h2 { font-size: 30px; }
 }
+
+/* ---------- Phones ---------- */
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+
+  /* Nav collapses to logo + primary action (matches mobile target) */
+  .nav-links { display: none; }
+
+  /* Tighter vertical rhythm on small screens */
+  section { padding: 64px 0; }
+  .hero { padding: 40px 0 72px; }
+  .cta { padding: 72px 0; }
+  .work { padding-top: 24px; }
+
+  /* Buttons stack full-width instead of crowding in a row */
+  .hero-actions,
+  .cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-actions .btn,
+  .cta-actions .btn { justify-content: center; }
+
+  /* Headings scale down to avoid overflow on narrow widths */
+  .section-heading { font-size: 32px; }
+  .exp-statement h2 { font-size: 32px; }
+  .cta h2 { font-size: 34px; }
+}
