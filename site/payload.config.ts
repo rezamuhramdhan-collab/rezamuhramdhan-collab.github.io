@@ -24,7 +24,18 @@ const linkFields: Field[] = [
 ];
 
 const buttonFields: Field[] = [
-  ...linkFields,
+  { name: "label", type: "text", required: true },
+  {
+    name: "href",
+    type: "text",
+    admin: { description: "Link URL — used when no file is uploaded" },
+  },
+  {
+    name: "file",
+    type: "upload",
+    relationTo: "media",
+    admin: { description: "Optional file (e.g. résumé PDF). Overrides the link when set." },
+  },
   {
     name: "variant",
     type: "select",

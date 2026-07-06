@@ -970,7 +970,14 @@ export interface SiteSetting {
     | null;
   ctaButton: {
     label: string;
-    href: string;
+    /**
+     * Link URL — used when no file is uploaded
+     */
+    href?: string | null;
+    /**
+     * Optional file (e.g. résumé PDF). Overrides the link when set.
+     */
+    file?: (number | null) | Media;
     variant: 'dark' | 'outline';
     icon?: ('arrow' | 'whatsapp' | 'email') | null;
     download?: boolean | null;
@@ -993,7 +1000,14 @@ export interface SiteSetting {
     subtext?: string | null;
     button: {
       label: string;
-      href: string;
+      /**
+       * Link URL — used when no file is uploaded
+       */
+      href?: string | null;
+      /**
+       * Optional file (e.g. résumé PDF). Overrides the link when set.
+       */
+      file?: (number | null) | Media;
       variant: 'dark' | 'outline';
       icon?: ('arrow' | 'whatsapp' | 'email') | null;
       download?: boolean | null;
@@ -1013,14 +1027,28 @@ export interface Hero {
   bio?: string | null;
   primaryCta: {
     label: string;
-    href: string;
+    /**
+     * Link URL — used when no file is uploaded
+     */
+    href?: string | null;
+    /**
+     * Optional file (e.g. résumé PDF). Overrides the link when set.
+     */
+    file?: (number | null) | Media;
     variant: 'dark' | 'outline';
     icon?: ('arrow' | 'whatsapp' | 'email') | null;
     download?: boolean | null;
   };
   secondaryCta: {
     label: string;
-    href: string;
+    /**
+     * Link URL — used when no file is uploaded
+     */
+    href?: string | null;
+    /**
+     * Optional file (e.g. résumé PDF). Overrides the link when set.
+     */
+    file?: (number | null) | Media;
     variant: 'dark' | 'outline';
     icon?: ('arrow' | 'whatsapp' | 'email') | null;
     download?: boolean | null;
@@ -1080,7 +1108,14 @@ export interface Cta {
   buttons?:
     | {
         label: string;
-        href: string;
+        /**
+         * Link URL — used when no file is uploaded
+         */
+        href?: string | null;
+        /**
+         * Optional file (e.g. résumé PDF). Overrides the link when set.
+         */
+        file?: (number | null) | Media;
         variant: 'dark' | 'outline';
         icon?: ('arrow' | 'whatsapp' | 'email') | null;
         download?: boolean | null;
@@ -1110,6 +1145,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
+        file?: T;
         variant?: T;
         icon?: T;
         download?: T;
@@ -1139,6 +1175,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
           | {
               label?: T;
               href?: T;
+              file?: T;
               variant?: T;
               icon?: T;
               download?: T;
@@ -1161,6 +1198,7 @@ export interface HeroSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
+        file?: T;
         variant?: T;
         icon?: T;
         download?: T;
@@ -1170,6 +1208,7 @@ export interface HeroSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
+        file?: T;
         variant?: T;
         icon?: T;
         download?: T;
@@ -1232,6 +1271,7 @@ export interface CtaSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
+        file?: T;
         variant?: T;
         icon?: T;
         download?: T;

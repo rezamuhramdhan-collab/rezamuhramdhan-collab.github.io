@@ -156,6 +156,13 @@ function fromUpload(media: any): ImageRef | undefined {
     : undefined;
 }
 
+// A button's destination can be a typed link or an uploaded file; the file wins.
+function resolveButton(b: any) {
+  if (!b) return b;
+  const fileUrl = b.file && typeof b.file === "object" ? b.file.url : undefined;
+  return { ...b, href: fileUrl || b.href || "#" };
+}
+
 export async function getSiteSettings(): Promise<SiteSettings> {
   const payload = await payloadClient();
   const doc: any = await payload.findGlobal({ slug: "site-settings", depth: 1 });
@@ -165,6 +172,10 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     favicon: fromUpload(doc.favicon),
     navLinks: doc.navLinks ?? [],
     footerLinks: doc.footerLinks ?? [],
+    ctaButton: resolveButton(doc.ctaButton),
+    ctaFooter: doc.ctaFooter
+      ? { ...doc.ctaFooter, button: resolveButton(doc.ctaFooter.button) }
+      : doc.ctaFooter,
   } as SiteSettings;
 }
 
@@ -175,6 +186,8 @@ export async function getHero(): Promise<Hero> {
     ...doc,
     portrait: fromImageSlot(doc.portrait),
     socialLinks: doc.socialLinks ?? [],
+    primaryCta: resolveButton(doc.primaryCta),
+    secondaryCta: resolveButton(doc.secondaryCta),
   } as Hero;
 }
 
@@ -186,8 +199,8 @@ export async function getAbout(): Promise<About> {
 
 export async function getCta(): Promise<CtaSection> {
   const payload = await payloadClient();
-  const doc: any = await payload.findGlobal({ slug: "cta" });
-  return { ...doc, buttons: doc.buttons ?? [] } as CtaSection;
+  const doc: any = await payload.findGlobal({ slug: "cta", depth: 1 });
+  return { ...doc, buttons: (doc.buttons ?? []).map(resolveButton) } as CtaSection;
 }
 
 // ---------- Collections ----------
