@@ -105,7 +105,7 @@ function toBlock(section: SectionBlock): Record<string, unknown> {
   }
 }
 
-function toProjectDoc(project: Project, categoryId: number | string) {
+export function toProjectDoc(project: Project, categoryId: number | string) {
   const metaValue = (label: string) =>
     project.metaGrid.find((pair) => pair.label.toLowerCase() === label)?.value ?? "";
   return {
