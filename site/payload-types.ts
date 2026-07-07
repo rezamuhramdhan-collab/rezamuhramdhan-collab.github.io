@@ -283,19 +283,73 @@ export interface Project {
             } | null;
             paragraphs?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
             items?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
             closingParagraphs?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -326,7 +380,25 @@ export interface Project {
             style: 'bullet' | 'check' | 'arrow';
             items?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -355,7 +427,25 @@ export interface Project {
             heading: string;
             cards?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -377,7 +467,25 @@ export interface Project {
             description?: string | null;
             bullets?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -407,14 +515,50 @@ export interface Project {
             leftTitle: string;
             leftItems?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
             rightTitle: string;
             rightItems?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -443,14 +587,50 @@ export interface Project {
             heading: string;
             items?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
             calloutTitle: string;
             calloutItems?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -466,14 +646,50 @@ export interface Project {
             heading: string;
             paragraphs?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
             learningsTitle?: string | null;
             learnings?:
               | {
-                  text: string;
+                  /**
+                   * Plain text — used if the editor below is empty
+                   */
+                  text?: string | null;
+                  content?: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  } | null;
                   id?: string | null;
                 }[]
               | null;
@@ -731,18 +947,21 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               items?:
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               closingParagraphs?:
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               images?:
@@ -769,6 +988,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               images?:
@@ -793,6 +1013,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               id?: T;
@@ -810,6 +1031,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               images?:
@@ -835,6 +1057,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               rightTitle?: T;
@@ -842,6 +1065,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               images?:
@@ -866,6 +1090,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               calloutTitle?: T;
@@ -873,6 +1098,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               id?: T;
@@ -887,6 +1113,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               learningsTitle?: T;
@@ -894,6 +1121,7 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     text?: T;
+                    content?: T;
                     id?: T;
                   };
               pullQuoteText?: T;
@@ -1092,7 +1320,25 @@ export interface About {
   headlineAccent?: string | null;
   paragraphs?:
     | {
-        text: string;
+        /**
+         * Plain text — used if the editor below is empty
+         */
+        text?: string | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
         id?: string | null;
       }[]
     | null;
@@ -1255,6 +1501,7 @@ export interface AboutSelect<T extends boolean = true> {
     | T
     | {
         text?: T;
+        content?: T;
         id?: T;
       };
   yearsExperience?: T;

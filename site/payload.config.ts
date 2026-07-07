@@ -11,6 +11,10 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ---------- Reusable field groups ----------
 
+// Each item has a legacy plain-text field plus a rich-text editor. The editor
+// wins when used; the plain field is hidden once the editor has content or when
+// there's no legacy text. (Editor is defined last so the DB change stays purely
+// additive — a column reorder would force a fragile SQLite table rebuild.)
 const textArray = (
   name: string,
   opts: { label?: string; required?: boolean; admin?: Record<string, unknown> } = {},
@@ -18,7 +22,18 @@ const textArray = (
   name,
   type: "array",
   label: opts.label,
-  fields: [{ name: "text", type: "textarea", required: true }],
+  fields: [
+    {
+      name: "text",
+      type: "textarea",
+      admin: {
+        description: "Plain text — used if the editor below is empty",
+        condition: (_: unknown, s: { text?: string; content?: unknown }) =>
+          Boolean(s?.text) && !hasLexical(s?.content),
+      },
+    },
+    { name: "content", type: "richText" },
+  ],
   ...(opts.required ? { minRows: 1 } : {}),
   ...(opts.admin ? { admin: opts.admin } : {}),
 });

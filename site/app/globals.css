@@ -549,6 +549,13 @@ footer {
 .prose.rich ul { list-style: disc; }
 .prose.rich ol { list-style: decimal; }
 .prose.rich > :last-child { margin-bottom: 0; }
+
+/* Rich content inside a list item / card renders inline (no block <p> gaps) */
+.rich-inline p { display: inline; margin: 0; }
+.rich-inline strong { color: var(--ink); font-weight: 600; }
+.rich-inline em { font-style: italic; }
+.rich-inline a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.step-desc { font-size: 15px; color: var(--gray); margin-bottom: 14px; }
 .block-gap { margin-top: 16px; }
 .block-gap-lg { margin-top: 24px; }
 

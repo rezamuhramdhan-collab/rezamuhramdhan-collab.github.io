@@ -100,14 +100,19 @@ export interface SectionImages {
   imageLayout?: ImageLayout;
 }
 
+// A list entry: a plain string (seed content) or an object carrying an optional
+// rich-text editor state plus its legacy plain text (from the CMS). The renderer
+// normalizes both.
+export type RichItem = string | { text?: string; content?: unknown };
+
 export interface RichTextBlock extends SectionImages {
   type: "richText";
   anchor?: string;
   heading?: string;
   content?: unknown; // Lexical editor state; when present, replaces the legacy fields below
-  paragraphs: string[]; // "**bold**" spans render as ink-colored strong text (legacy)
-  items?: string[]; // optional arrow list between paragraph groups (legacy)
-  closingParagraphs?: string[]; // (legacy)
+  paragraphs: RichItem[]; // "**bold**" spans render as ink-colored strong text (legacy)
+  items?: RichItem[]; // optional arrow list between paragraph groups (legacy)
+  closingParagraphs?: RichItem[]; // (legacy)
 }
 
 export interface BulletListBlock extends SectionImages {
@@ -115,7 +120,7 @@ export interface BulletListBlock extends SectionImages {
   anchor?: string;
   heading?: string;
   intro?: string;
-  items: string[];
+  items: RichItem[];
   style: ListStyle;
 }
 
@@ -123,7 +128,7 @@ export interface HmwGridBlock {
   type: "hmwGrid";
   anchor?: string;
   heading: string;
-  cards: string[]; // numbered by position
+  cards: RichItem[]; // numbered by position
 }
 
 export interface StepBlock extends SectionImages {
@@ -133,7 +138,7 @@ export interface StepBlock extends SectionImages {
   stepNumber: number;
   title: string;
   description?: string;
-  bullets: string[];
+  bullets: RichItem[];
 }
 
 export interface TwoColumnBlock extends SectionImages {
@@ -141,27 +146,27 @@ export interface TwoColumnBlock extends SectionImages {
   anchor?: string;
   heading: string;
   leftTitle: string;
-  leftItems: string[];
+  leftItems: RichItem[];
   rightTitle: string;
-  rightItems: string[];
+  rightItems: RichItem[];
 }
 
 export interface ImpactCalloutBlock {
   type: "impactCallout";
   anchor?: string;
   heading: string;
-  items: string[];
+  items: RichItem[];
   calloutTitle: string;
-  calloutItems: string[];
+  calloutItems: RichItem[];
 }
 
 export interface ReflectionBlock {
   type: "reflection";
   anchor?: string;
   heading: string;
-  paragraphs: string[];
+  paragraphs: RichItem[];
   learningsTitle: string;
-  learnings: string[];
+  learnings: RichItem[];
   pullQuote?: { text: string; accent: string };
 }
 

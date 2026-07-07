@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
+import { hasLexical } from "./lexical";
 import type {
   SiteSettings,
   Hero,
@@ -21,6 +22,13 @@ const payloadClient = () => getPayload({ config });
 
 const fromTextArray = (rows?: { text: string }[] | null): string[] =>
   (rows ?? []).map((row) => row.text);
+
+// Each list item carries an optional rich-text editor state plus legacy text.
+const fromRichArray = (rows?: { text?: string; content?: unknown }[] | null) =>
+  (rows ?? []).map((row) => ({
+    text: row.text ?? "",
+    content: hasLexical(row.content) ? row.content : undefined,
+  }));
 
 function fromImageSlot(slot: any): ImageRef | undefined {
   if (!slot) return undefined;
@@ -53,10 +61,10 @@ function fromBlock(block: any): SectionBlock {
         type: "richText",
         heading: block.heading ?? undefined,
         content: block.content ?? undefined,
-        paragraphs: fromTextArray(block.paragraphs),
-        items: block.items?.length ? fromTextArray(block.items) : undefined,
+        paragraphs: fromRichArray(block.paragraphs),
+        items: block.items?.length ? fromRichArray(block.items) : undefined,
         closingParagraphs: block.closingParagraphs?.length
-          ? fromTextArray(block.closingParagraphs)
+          ? fromRichArray(block.closingParagraphs)
           : undefined,
       };
     case "bulletList":
@@ -66,10 +74,10 @@ function fromBlock(block: any): SectionBlock {
         heading: block.heading ?? undefined,
         intro: block.intro ?? undefined,
         style: block.style,
-        items: fromTextArray(block.items),
+        items: fromRichArray(block.items),
       };
     case "hmwGrid":
-      return { ...base, type: "hmwGrid", heading: block.heading, cards: fromTextArray(block.cards) };
+      return { ...base, type: "hmwGrid", heading: block.heading, cards: fromRichArray(block.cards) };
     case "stepBlock":
       return {
         ...base,
@@ -78,7 +86,7 @@ function fromBlock(block: any): SectionBlock {
         stepNumber: block.stepNumber,
         title: block.title,
         description: block.description ?? undefined,
-        bullets: fromTextArray(block.bullets),
+        bullets: fromRichArray(block.bullets),
       };
     case "twoColumn":
       return {
@@ -86,27 +94,27 @@ function fromBlock(block: any): SectionBlock {
         type: "twoColumn",
         heading: block.heading,
         leftTitle: block.leftTitle,
-        leftItems: fromTextArray(block.leftItems),
+        leftItems: fromRichArray(block.leftItems),
         rightTitle: block.rightTitle,
-        rightItems: fromTextArray(block.rightItems),
+        rightItems: fromRichArray(block.rightItems),
       };
     case "impactCallout":
       return {
         ...base,
         type: "impactCallout",
         heading: block.heading,
-        items: fromTextArray(block.items),
+        items: fromRichArray(block.items),
         calloutTitle: block.calloutTitle,
-        calloutItems: fromTextArray(block.calloutItems),
+        calloutItems: fromRichArray(block.calloutItems),
       };
     case "reflection":
       return {
         ...base,
         type: "reflection",
         heading: block.heading,
-        paragraphs: fromTextArray(block.paragraphs),
+        paragraphs: fromRichArray(block.paragraphs),
         learningsTitle: block.learningsTitle ?? "Key learnings:",
-        learnings: fromTextArray(block.learnings),
+        learnings: fromRichArray(block.learnings),
         pullQuote: block.pullQuoteText
           ? { text: block.pullQuoteText, accent: block.pullQuoteAccent ?? "" }
           : undefined,

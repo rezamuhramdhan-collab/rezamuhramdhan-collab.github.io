@@ -1,5 +1,5 @@
 import type { Payload } from "payload";
-import type { Project, SectionBlock, ImageRef } from "@/content/types";
+import type { Project, SectionBlock, ImageRef, RichItem } from "@/content/types";
 import { siteSettings, hero, about, cta } from "@/content/site";
 import { services } from "@/content/services";
 import { experience } from "@/content/experience";
@@ -9,7 +9,8 @@ import { getPublishedProjects } from "@/content/projects";
 // from the static content modules. After seeding, the database is the source
 // of truth and the content files are only a fixture.
 
-const toTextArray = (items?: string[]) => (items ?? []).map((text) => ({ text }));
+const toTextArray = (items?: RichItem[]) =>
+  (items ?? []).map((item) => (typeof item === "string" ? { text: item } : { text: item.text ?? "" }));
 
 const toImageSlot = (image?: ImageRef) =>
   image

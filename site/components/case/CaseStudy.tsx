@@ -6,6 +6,7 @@ import type {
   ImageRef,
   ImageLayout,
   ListStyle,
+  RichItem,
   SiteSettings,
 } from "@/content/types";
 import { RichText } from "@payloadcms/richtext-lexical/react";
@@ -24,6 +25,33 @@ function Rich({ text }: { text: string }) {
     </>
   );
 }
+
+// A list entry (string or {text, content}): rich content rendered inline, else
+// the legacy plain text with **bold** support.
+function Cell({ item }: { item: RichItem }) {
+  if (typeof item !== "string" && hasLexical(item.content)) {
+    return <span className="rich-inline"><RichText data={item.content as never} /></span>;
+  }
+  return <Rich text={typeof item === "string" ? item : item.text ?? ""} />;
+}
+
+// Paragraphs (richText legacy / reflection): each entry as its own block.
+function Paras({ items }: { items: RichItem[] }) {
+  return (
+    <>
+      {items.map((item, i) =>
+        typeof item !== "string" && hasLexical(item.content) ? (
+          <RichText key={i} data={item.content as never} />
+        ) : (
+          <p key={i}>
+            <Rich text={typeof item === "string" ? item : item.text ?? ""} />
+          </p>
+        ),
+      )}
+    </>
+  );
+}
+
 
 const listClass: Record<ListStyle, string> = {
   bullet: "bullet-list",
@@ -116,22 +144,14 @@ function BlockBody({ block }: { block: SectionBlock }) {
             </div>
           ) : (
             <>
-              <div className="prose">
-                {block.paragraphs.map((p, i) => (
-                  <p key={i}><Rich text={p} /></p>
-                ))}
-              </div>
+              <div className="prose"><Paras items={block.paragraphs} /></div>
               {block.items && (
                 <ul className="dash-list block-gap">
-                  {block.items.map((item, i) => <li key={i}>{item}</li>)}
+                  {block.items.map((item, i) => <li key={i}><Cell item={item} /></li>)}
                 </ul>
               )}
               {block.closingParagraphs && (
-                <div className="prose block-gap-lg">
-                  {block.closingParagraphs.map((p, i) => (
-                    <p key={i}><Rich text={p} /></p>
-                  ))}
-                </div>
+                <div className="prose block-gap-lg"><Paras items={block.closingParagraphs} /></div>
               )}
             </>
           )}
@@ -143,12 +163,10 @@ function BlockBody({ block }: { block: SectionBlock }) {
         <WithImages images={block.images} layout={block.imageLayout}>
           {block.heading && <h2>{block.heading}</h2>}
           {block.intro && (
-            <div className="prose">
-              <p><Rich text={block.intro} /></p>
-            </div>
+            <div className="prose"><p><Rich text={block.intro} /></p></div>
           )}
           <ul className={`${listClass[block.style]}${block.intro ? " block-gap-lg" : ""}`}>
-            {block.items.map((item, i) => <li key={i}>{item}</li>)}
+            {block.items.map((item, i) => <li key={i}><Cell item={item} /></li>)}
           </ul>
         </WithImages>
       );
@@ -161,7 +179,7 @@ function BlockBody({ block }: { block: SectionBlock }) {
             {block.cards.map((card, i) => (
               <div key={i} className="hmw-card">
                 <span className="hmw-num">{i + 1}</span>
-                <p>{card}</p>
+                <p><Cell item={card} /></p>
               </div>
             ))}
           </div>
@@ -176,13 +194,13 @@ function BlockBody({ block }: { block: SectionBlock }) {
             <div>
               <h4>{block.leftTitle}</h4>
               <ul className="dash-list">
-                {block.leftItems.map((item, i) => <li key={i}>{item}</li>)}
+                {block.leftItems.map((item, i) => <li key={i}><Cell item={item} /></li>)}
               </ul>
             </div>
             <div>
               <h4>{block.rightTitle}</h4>
               <ul className="dash-list">
-                {block.rightItems.map((item, i) => <li key={i}>{item}</li>)}
+                {block.rightItems.map((item, i) => <li key={i}><Cell item={item} /></li>)}
               </ul>
             </div>
           </div>
@@ -194,12 +212,12 @@ function BlockBody({ block }: { block: SectionBlock }) {
         <>
           <h2>{block.heading}</h2>
           <ul className="check-list">
-            {block.items.map((item, i) => <li key={i}>{item}</li>)}
+            {block.items.map((item, i) => <li key={i}><Cell item={item} /></li>)}
           </ul>
           <div className="benefits-card">
             <h4>{block.calloutTitle}</h4>
             <ul className="dash-list">
-              {block.calloutItems.map((item, i) => <li key={i}>{item}</li>)}
+              {block.calloutItems.map((item, i) => <li key={i}><Cell item={item} /></li>)}
             </ul>
           </div>
         </>
@@ -210,13 +228,11 @@ function BlockBody({ block }: { block: SectionBlock }) {
         <>
           <h2>{block.heading}</h2>
           <div className="prose">
-            {block.paragraphs.map((p, i) => (
-              <p key={i}><Rich text={p} /></p>
-            ))}
+            <Paras items={block.paragraphs} />
             <p><strong>{block.learningsTitle}</strong></p>
           </div>
           <ul className="dash-list block-gap">
-            {block.learnings.map((item, i) => <li key={i}>{item}</li>)}
+            {block.learnings.map((item, i) => <li key={i}><Cell item={item} /></li>)}
           </ul>
           {block.pullQuote && (
             <p className="pull-quote">
@@ -242,9 +258,9 @@ function StepGroup({ steps }: { steps: StepBlock[] }) {
         <div key={i} className="solution-item">
           <WithImages images={step.images} layout={step.imageLayout}>
             <h3>{step.stepNumber}. {step.title}</h3>
-            {step.description && <p>{step.description}</p>}
+            {step.description && <p className="step-desc">{step.description}</p>}
             <ul className="dash-list">
-              {step.bullets.map((item, i) => <li key={i}>{item}</li>)}
+              {step.bullets.map((item, i) => <li key={i}><Cell item={item} /></li>)}
             </ul>
           </WithImages>
         </div>
