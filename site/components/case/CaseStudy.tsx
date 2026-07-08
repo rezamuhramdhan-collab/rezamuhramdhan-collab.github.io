@@ -9,8 +9,42 @@ import type {
   RichItem,
   SiteSettings,
 } from "@/content/types";
-import { RichText } from "@payloadcms/richtext-lexical/react";
+import { RichText, type JSXConvertersFunction } from "@payloadcms/richtext-lexical/react";
 import { hasLexical } from "@/lib/lexical";
+
+// Editor-inserted uploads: images styled to the design system, honoring the
+// editor's align control (left/center/right); non-image files become links.
+const richConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
+  ...defaultConverters,
+  upload: ({ node }) => {
+    const media = node.value as {
+      url?: string;
+      alt?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filename?: string;
+    } | null;
+    if (!media?.url) return null;
+    if (media.mimeType && !media.mimeType.startsWith("image/")) {
+      return (
+        <a href={media.url} target="_blank" rel="noopener">
+          {media.filename ?? media.url}
+        </a>
+      );
+    }
+    return (
+      <figure className={`rich-img align-${node.format || "center"}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={media.url} alt={media.alt ?? ""} width={media.width} height={media.height} />
+      </figure>
+    );
+  },
+});
+
+function RichBody({ data }: { data: unknown }) {
+  return <RichText data={data as never} converters={richConverters} />;
+}
 import { Btn } from "../shared";
 import { ArrowLeft, ArrowRight as ArrowRightSmall } from "../icons";
 
@@ -30,7 +64,7 @@ function Rich({ text }: { text: string }) {
 // the legacy plain text with **bold** support.
 function Cell({ item }: { item: RichItem }) {
   if (typeof item !== "string" && hasLexical(item.content)) {
-    return <span className="rich-inline"><RichText data={item.content as never} /></span>;
+    return <span className="rich-inline"><RichBody data={item.content} /></span>;
   }
   return <Rich text={typeof item === "string" ? item : item.text ?? ""} />;
 }
@@ -41,7 +75,7 @@ function Paras({ items }: { items: RichItem[] }) {
     <>
       {items.map((item, i) =>
         typeof item !== "string" && hasLexical(item.content) ? (
-          <RichText key={i} data={item.content as never} />
+          <RichBody key={i} data={item.content} />
         ) : (
           <p key={i}>
             <Rich text={typeof item === "string" ? item : item.text ?? ""} />
@@ -140,7 +174,7 @@ function BlockBody({ block }: { block: SectionBlock }) {
           {block.heading && <h2>{block.heading}</h2>}
           {hasLexical(block.content) ? (
             <div className="prose rich">
-              <RichText data={block.content as never} />
+              <RichBody data={block.content} />
             </div>
           ) : (
             <>

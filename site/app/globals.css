@@ -550,6 +550,22 @@ footer {
 .prose.rich ol { list-style: decimal; }
 .prose.rich > :last-child { margin-bottom: 0; }
 
+/* Editor-inserted images: design-system styling + editor alignment */
+.rich-img {
+  margin: 32px 0;
+}
+.rich-img img {
+  display: inline-block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+.rich-img.align-left { text-align: left; }
+.rich-img.align-center { text-align: center; }
+.rich-img.align-right { text-align: right; }
+
 /* Rich content inside a list item / card renders inline (no block <p> gaps) */
 .rich-inline p { display: inline; margin: 0; }
 .rich-inline strong { color: var(--ink); font-weight: 600; }
