@@ -401,11 +401,11 @@ section { padding: 130px 0; scroll-margin-top: 76px; }
 
 /* ---------- Footer ---------- */
 footer {
-  background: var(--bg-alt);
+  background: var(--bg);
   border-top: 1px solid var(--border);
   padding: 26px 0;
   font-size: 13px;
-  color: var(--bg);
+  color: var(--ink);
 }
 .footer-inner {
   display: flex;
