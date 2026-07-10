@@ -3,7 +3,10 @@
 // stays byte-identical to the static site. Swapping a project to a real image
 // is a data change: point Project.thumbnail at an uploaded asset instead.
 
-export const thumbnails: Record<string, string> = {
+import type { ThumbnailKey } from "@/content/registry";
+
+// A key listed in content/registry.ts without art here is a compile error.
+export const thumbnails: Record<ThumbnailKey, string> = {
   "bank-saqu": `<svg viewBox="0 0 560 368" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
     <defs>
       <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
@@ -106,6 +109,12 @@ export const thumbnails: Record<string, string> = {
     <circle cx="330" cy="262" r="19" fill="#B98A62" transform="rotate(-7 275 220)"/>
   </svg>`,
 };
+
+// Project.thumbnail holds either a registry key or an uploaded-media URL;
+// this resolves the key case without widening the record above.
+export function thumbnailSvg(value: string): string | undefined {
+  return (thumbnails as Record<string, string | undefined>)[value];
+}
 
 // Hero portrait placeholder silhouette
 export const portraitSvg = `<svg viewBox="0 0 300 320" xmlns="http://www.w3.org/2000/svg">

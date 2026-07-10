@@ -405,7 +405,7 @@ footer {
   border-top: 1px solid var(--border);
   padding: 26px 0;
   font-size: 13px;
-  color: var(--gray-light);
+  color: var(--bg);
 }
 .footer-inner {
   display: flex;
