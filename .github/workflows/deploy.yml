@@ -31,7 +31,8 @@ jobs:
         run: npm ci
 
       # Pages is static hosting — the Payload admin/API can't run there.
-      # Content comes from the committed payload.db; the admin stays local.
+      # Content comes from the hosted database (DATABASE_URI secret), the
+      # same source the admin edits; the admin itself runs on Vercel.
       - name: Remove server-only Payload routes
         working-directory: site
         run: rm -rf 'app/(payload)'
