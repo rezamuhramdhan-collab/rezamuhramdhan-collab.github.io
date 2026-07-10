@@ -201,6 +201,16 @@ export interface MetaPair {
   value: string;
 }
 
+// Encrypted sections of a password-locked project: AES-256-GCM ciphertext
+// (auth tag appended), key derived from the password via PBKDF2-SHA256.
+// Produced at build time (lib/lock.ts), decrypted in the browser (ProjectLock).
+export interface ProjectLockBox {
+  salt: string; // base64
+  iv: string; // base64
+  data: string; // base64 ciphertext + GCM auth tag
+  iterations: number;
+}
+
 export interface Project {
   // Card fields (homepage grid)
   id: string;
@@ -217,8 +227,10 @@ export interface Project {
   metaGrid: MetaPair[];
   heroImage: ImageRef;
 
-  // Detail body
+  // Detail body. For locked projects, sections is empty and lock carries the
+  // encrypted payload instead — the raw content never reaches the page.
   sections: SectionBlock[];
+  lock?: ProjectLockBox;
 
   // Meta
   status: "draft" | "published";

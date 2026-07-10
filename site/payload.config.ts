@@ -465,7 +465,18 @@ export default buildConfig({
             {
               label: "Case Study Sections",
               description: "The detail page body — add, reorder, and lay out sections freely",
-              fields: [{ name: "sections", type: "blocks", blocks }],
+              fields: [
+                {
+                  name: "sections",
+                  type: "blocks",
+                  blocks,
+                  // Locked projects: anonymous API readers never see the raw
+                  // sections (the site serves them encrypted; see lib/data.ts).
+                  access: {
+                    read: ({ req, doc }) => Boolean(req.user) || !doc?.locked,
+                  },
+                },
+              ],
             },
             {
               label: "Settings",
@@ -480,6 +491,31 @@ export default buildConfig({
                   name: "nextProjectSlug",
                   type: "text",
                   admin: { description: "Related-project link (auto-picks the next one if empty)" },
+                },
+                {
+                  name: "locked",
+                  type: "checkbox",
+                  defaultValue: false,
+                  admin: {
+                    description:
+                      "Password-protect this case study — visitors must enter the password to read the sections",
+                  },
+                },
+                {
+                  name: "password",
+                  type: "text",
+                  // Never exposed to anonymous API readers; the build reads it
+                  // via the local API (overrideAccess) to encrypt the sections.
+                  access: { read: ({ req }) => Boolean(req.user) },
+                  validate: (
+                    value: unknown,
+                    { siblingData }: { siblingData?: { locked?: boolean } },
+                  ) =>
+                    !siblingData?.locked || Boolean(value) || "Set a password (or turn off the lock)",
+                  admin: {
+                    condition: (data: { locked?: boolean }) => Boolean(data?.locked),
+                    description: "The password visitors must enter",
+                  },
                 },
               ],
             },

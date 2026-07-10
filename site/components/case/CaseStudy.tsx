@@ -1,37 +1,14 @@
 import Link from "next/link";
-import type { Project, SectionBlock, StepBlock, SiteSettings } from "@/content/types";
+import type { Project, SiteSettings } from "@/content/types";
 import { Btn } from "../shared";
 import { ArrowLeft, ArrowRight as ArrowRightSmall } from "../icons";
 import { Placeholder } from "./images";
-import { BlockBody, StepGroup, type SingleBlock } from "./blocks";
+import { CaseSections } from "./sections";
+import { ProjectLock } from "./ProjectLock";
 
-// Case-study page assembly: section grouping, tab nav, header, and shell.
-// Block presentation lives in blocks.tsx / images.tsx / rich-text.tsx.
-
-// ---------- Section grouping ----------
-// Consecutive stepBlocks share one page section (e.g. "Solution").
-// Backgrounds alternate white / alt per section group.
-
-type SectionGroup =
-  | { kind: "single"; block: SingleBlock; anchor?: string }
-  | { kind: "steps"; steps: StepBlock[]; anchor?: string };
-
-function groupSections(sections: SectionBlock[]): SectionGroup[] {
-  const groups: SectionGroup[] = [];
-  for (const block of sections) {
-    const last = groups[groups.length - 1];
-    if (block.type === "stepBlock") {
-      if (last?.kind === "steps") {
-        last.steps.push(block);
-      } else {
-        groups.push({ kind: "steps", steps: [block], anchor: block.anchor });
-      }
-    } else {
-      groups.push({ kind: "single", block, anchor: block.anchor });
-    }
-  }
-  return groups;
-}
+// Case-study page assembly: tab nav, header, and shell. Section grouping and
+// block presentation live in sections.tsx / blocks.tsx / images.tsx /
+// rich-text.tsx; password-locked projects render through ProjectLock.
 
 // ---------- Case study page ----------
 
@@ -70,7 +47,6 @@ export function CaseStudy({
   settings: SiteSettings;
   nextProject?: Project;
 }) {
-  const groups = groupSections(project.sections);
   const { ctaFooter } = settings;
   // Tab nav auto-derived from anchored blocks (PRD §6)
   const anchors = project.sections
@@ -102,21 +78,11 @@ export function CaseStudy({
         <Placeholder image={project.heroImage} tall />
       </div>
 
-      {groups.map((group, i) => (
-        <section
-          key={i}
-          className={`case-section${i % 2 === 1 ? " alt" : ""}`}
-          id={group.anchor}
-        >
-          <div className="container" data-reveal>
-            {group.kind === "steps" ? (
-              <StepGroup steps={group.steps} />
-            ) : (
-              <BlockBody block={group.block} />
-            )}
-          </div>
-        </section>
-      ))}
+      {project.lock ? (
+        <ProjectLock slug={project.slug} lock={project.lock} />
+      ) : (
+        <CaseSections sections={project.sections} />
+      )}
 
       <section className="case-cta">
         <div className="container" data-reveal>

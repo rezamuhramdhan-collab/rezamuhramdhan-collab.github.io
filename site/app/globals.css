@@ -399,6 +399,66 @@ section { padding: 130px 0; scroll-margin-top: 76px; }
   justify-content: center;
 }
 
+/* ---------- Locked case study ---------- */
+.lock-card {
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 44px 36px;
+}
+.lock-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--ink);
+}
+.lock-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.lock-card h2 {
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+.lock-card p {
+  font-size: 14px;
+  color: var(--gray);
+}
+.lock-input {
+  width: 100%;
+  padding: 12px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--bg);
+  text-align: center;
+}
+.lock-input:focus {
+  outline: 2px solid var(--ink);
+  outline-offset: -1px;
+}
+.lock-error {
+  font-size: 13px;
+  color: #b01e3c;
+}
+.lock-card .btn {
+  width: 100%;
+  justify-content: center;
+}
+
 /* ---------- Footer ---------- */
 footer {
   background: var(--bg);

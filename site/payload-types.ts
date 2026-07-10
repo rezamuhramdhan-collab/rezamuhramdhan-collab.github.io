@@ -731,6 +731,14 @@ export interface Project {
    * Related-project link (auto-picks the next one if empty)
    */
   nextProjectSlug?: string | null;
+  /**
+   * Password-protect this case study — visitors must enter the password to read the sections
+   */
+  locked?: boolean | null;
+  /**
+   * The password visitors must enter
+   */
+  password?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1149,6 +1157,8 @@ export interface ProjectsSelect<T extends boolean = true> {
       };
   featured?: T;
   nextProjectSlug?: T;
+  locked?: T;
+  password?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

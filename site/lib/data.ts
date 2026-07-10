@@ -1,6 +1,7 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { hasLexical } from "./lexical";
+import { encryptSections } from "./lock";
 import type { Project as ProjectDoc, Media } from "@/payload-types";
 import type {
   SiteSettings,
@@ -162,6 +163,9 @@ function fromBlock(block: SectionBlockDoc): SectionBlock {
 
 function fromProjectDoc(doc: ProjectDoc, index: number): Project {
   const thumbMedia = doc.thumbnail?.media;
+  const sections = (doc.sections ?? []).map(fromBlock);
+  // Locked projects ship only ciphertext; the raw sections never leave here.
+  const locked = Boolean(doc.locked && doc.password);
   return {
     id: String(doc.id),
     slug: doc.slug,
@@ -183,7 +187,8 @@ function fromProjectDoc(doc: ProjectDoc, index: number): Project {
       { label: "Timeline", value: doc.meta?.timeline },
     ].filter((pair): pair is { label: string; value: string } => Boolean(pair.value)),
     heroImage: fromImageSlot(doc.heroImage) ?? { src: "placeholder", alt: doc.title },
-    sections: (doc.sections ?? []).map(fromBlock),
+    sections: locked ? [] : sections,
+    lock: locked ? encryptSections(JSON.stringify(sections), doc.password!) : undefined,
     status: doc._status === "draft" ? "draft" : "published",
     nextProjectSlug: doc.nextProjectSlug ?? undefined,
   };
