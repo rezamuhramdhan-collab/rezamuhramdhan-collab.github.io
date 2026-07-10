@@ -9,7 +9,7 @@ import type {
 } from "@/content/types";
 import { Btn } from "../shared";
 import { serviceIcons, socialIcons, ArrowRight } from "../icons";
-import { thumbnails, portraitSvg } from "../thumbs";
+import { thumbnailSvg, portraitSvg } from "../thumbs";
 
 export function Hero({ hero }: { hero: HeroData }) {
   return (
@@ -72,7 +72,7 @@ export function Hero({ hero }: { hero: HeroData }) {
 }
 
 function Thumb({ value }: { value: string }) {
-  const svg = thumbnails[value];
+  const svg = thumbnailSvg(value);
   if (svg) return <div dangerouslySetInnerHTML={{ __html: svg }} />;
   // eslint-disable-next-line @next/next/no-img-element
   return <img src={value} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />;

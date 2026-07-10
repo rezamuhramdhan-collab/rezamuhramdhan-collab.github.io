@@ -3,6 +3,8 @@
 // Phase 1 stores records as typed TS modules; the same shapes map 1:1 onto a
 // CMS schema (Sanity/Payload) or SQL tables when the backend is chosen.
 
+import type { ServiceIconKey, SocialPlatformKey, ButtonIconKey } from "./registry";
+
 // ---------- Shared ----------
 
 export interface LinkItem {
@@ -12,12 +14,12 @@ export interface LinkItem {
 
 export interface ButtonItem extends LinkItem {
   variant: "dark" | "outline";
-  icon?: "arrow" | "whatsapp" | "email";
+  icon?: ButtonIconKey;
   download?: boolean;
 }
 
 export interface SocialLink {
-  platform: "linkedin" | "instagram" | "email";
+  platform: SocialPlatformKey;
   href: string;
   label: string;
 }
@@ -66,7 +68,7 @@ export interface CtaSection {
 
 export interface ServiceCard {
   id: string;
-  icon: "pen" | "grid" | "bulb";
+  icon: ServiceIconKey;
   title: string;
   description: string;
   order: number;

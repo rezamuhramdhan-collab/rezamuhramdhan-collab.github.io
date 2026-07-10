@@ -103,6 +103,12 @@ function toBlock(section: SectionBlock): Record<string, unknown> {
         images: toImages(section),
         imageLayout: section.imageLayout ?? "full",
       };
+    default: {
+      // Exhaustiveness guard: a new SectionBlock member without a seed
+      // mapping is a compile error instead of an undefined document.
+      const exhausted: never = section;
+      throw new Error(`Unknown section block type: ${JSON.stringify(exhausted)}`);
+    }
   }
 }
 

@@ -1,5 +1,8 @@
 // Small UI icons. Stroke-style, sized by parent containers.
 
+import type { ComponentType } from "react";
+import type { ServiceIconKey, SocialPlatformKey, ButtonIconKey } from "@/content/registry";
+
 export function ArrowRight() {
   return (
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -80,20 +83,22 @@ export function BulbIcon() {
   );
 }
 
-export const serviceIcons = {
+// Keys come from content/registry.ts; the Record types make a key added there
+// a compile error here until its icon exists (and vice versa).
+export const serviceIcons: Record<ServiceIconKey, ComponentType> = {
   pen: PenIcon,
   grid: GridIcon,
   bulb: BulbIcon,
-} as const;
+};
 
-export const socialIcons = {
+export const socialIcons: Record<SocialPlatformKey, ComponentType> = {
   linkedin: LinkedInIcon,
   instagram: InstagramIcon,
   email: EmailIcon,
-} as const;
+};
 
-export const buttonIcons = {
+export const buttonIcons: Record<ButtonIconKey, ComponentType> = {
   arrow: ArrowRight,
   whatsapp: WhatsAppIcon,
   email: EmailIcon,
-} as const;
+};

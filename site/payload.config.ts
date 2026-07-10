@@ -6,6 +6,12 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { seed } from "./lib/seed";
 import { hasLexical } from "./lib/lexical";
+import {
+  serviceIconKeys,
+  buttonIconKeys,
+  socialPlatformKeys,
+  thumbnailKeys,
+} from "./content/registry";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -60,7 +66,7 @@ const buttonFields: Field[] = [
     defaultValue: "dark",
     required: true,
   },
-  { name: "icon", type: "select", options: ["arrow", "whatsapp", "email"] },
+  { name: "icon", type: "select", options: [...buttonIconKeys] },
   { name: "download", type: "checkbox", defaultValue: false },
 ];
 
@@ -327,7 +333,7 @@ export default buildConfig({
         {
           name: "icon",
           type: "select",
-          options: ["pen", "grid", "bulb"],
+          options: [...serviceIconKeys],
           defaultValue: "pen",
           required: true,
         },
@@ -448,13 +454,7 @@ export default buildConfig({
                     {
                       name: "placeholderKey",
                       type: "select",
-                      options: [
-                        "bank-saqu",
-                        "banking-app",
-                        "saas-wireframes",
-                        "design-system",
-                        "banking-homepage",
-                      ],
+                      options: [...thumbnailKeys],
                       admin: { description: "Built-in placeholder art used until media is uploaded" },
                     },
                   ],
@@ -541,7 +541,7 @@ export default buildConfig({
             {
               name: "platform",
               type: "select",
-              options: ["linkedin", "instagram", "email"],
+              options: [...socialPlatformKeys],
               required: true,
             },
             { name: "href", type: "text", required: true },

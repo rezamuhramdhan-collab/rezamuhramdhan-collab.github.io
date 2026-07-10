@@ -1,6 +1,7 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { hasLexical } from "./lexical";
+import type { Project as ProjectDoc, Media } from "@/payload-types";
 import type {
   SiteSettings,
   Hero,
@@ -11,26 +12,42 @@ import type {
   Project,
   SectionBlock,
   ImageRef,
+  ImageLayout,
 } from "@/content/types";
 
 // Read path over the Payload local API. Components keep consuming the
-// original content types; only this module knows about CMS document shapes.
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// original content types; only this module knows about CMS document shapes,
+// and those shapes come from the generated payload-types.ts so schema drift
+// is a compile error here rather than a runtime surprise.
 
 const payloadClient = () => getPayload({ config });
 
-const fromTextArray = (rows?: { text: string }[] | null): string[] =>
-  (rows ?? []).map((row) => row.text);
+// ---------- Generated-shape aliases (the CMS side of the boundary) ----------
+
+type SectionBlockDoc = NonNullable<ProjectDoc["sections"]>[number];
+type ImageRowsDoc = Extract<SectionBlockDoc, { blockType: "image" }>["images"];
+
+// Upload relations stay ids unless populated (depth >= 1 resolves them).
+type UploadRef = (number | null) | Media | undefined;
+
+interface ImageSlotDoc {
+  media?: UploadRef;
+  alt?: string | null;
+  caption?: string | null;
+  showPlaceholder?: boolean | null;
+}
+
+const fromTextArray = (rows?: { text?: string | null }[] | null): string[] =>
+  (rows ?? []).map((row) => row.text ?? "");
 
 // Each list item carries an optional rich-text editor state plus legacy text.
-const fromRichArray = (rows?: { text?: string; content?: unknown }[] | null) =>
+const fromRichArray = (rows?: { text?: string | null; content?: unknown }[] | null) =>
   (rows ?? []).map((row) => ({
     text: row.text ?? "",
     content: hasLexical(row.content) ? row.content : undefined,
   }));
 
-function fromImageSlot(slot: any): ImageRef | undefined {
+function fromImageSlot(slot: ImageSlotDoc | null | undefined): ImageRef | undefined {
   if (!slot) return undefined;
   if (slot.media && typeof slot.media === "object" && slot.media.url) {
     return { src: slot.media.url, alt: slot.alt ?? slot.media.alt ?? "", caption: slot.caption ?? undefined };
@@ -41,23 +58,33 @@ function fromImageSlot(slot: any): ImageRef | undefined {
   return undefined;
 }
 
-function fromImages(rows: any[] | null | undefined): ImageRef[] | undefined {
+function fromImages(rows: ImageRowsDoc): ImageRef[] | undefined {
   const images = (rows ?? [])
     .map(fromImageSlot)
     .filter((img): img is ImageRef => Boolean(img));
   return images.length ? images : undefined;
 }
 
-function fromBlock(block: any): SectionBlock {
-  const base = {
-    anchor: block.anchor ?? undefined,
-    images: fromImages(block.images),
-    imageLayout: block.imageLayout ?? "full",
-  };
+// Fields shared by blocks that carry images / only an anchor.
+const mediaBase = (block: {
+  anchor?: string | null;
+  images?: ImageRowsDoc;
+  imageLayout?: ImageLayout | null;
+}) => ({
+  anchor: block.anchor ?? undefined,
+  images: fromImages(block.images),
+  imageLayout: block.imageLayout ?? ("full" as const),
+});
+
+const anchorBase = (block: { anchor?: string | null }) => ({
+  anchor: block.anchor ?? undefined,
+});
+
+function fromBlock(block: SectionBlockDoc): SectionBlock {
   switch (block.blockType) {
     case "richText":
       return {
-        ...base,
+        ...mediaBase(block),
         type: "richText",
         heading: block.heading ?? undefined,
         content: block.content ?? undefined,
@@ -69,7 +96,7 @@ function fromBlock(block: any): SectionBlock {
       };
     case "bulletList":
       return {
-        ...base,
+        ...mediaBase(block),
         type: "bulletList",
         heading: block.heading ?? undefined,
         intro: block.intro ?? undefined,
@@ -77,10 +104,10 @@ function fromBlock(block: any): SectionBlock {
         items: fromRichArray(block.items),
       };
     case "hmwGrid":
-      return { ...base, type: "hmwGrid", heading: block.heading, cards: fromRichArray(block.cards) };
+      return { ...anchorBase(block), type: "hmwGrid", heading: block.heading, cards: fromRichArray(block.cards) };
     case "stepBlock":
       return {
-        ...base,
+        ...mediaBase(block),
         type: "stepBlock",
         sectionHeading: block.sectionHeading ?? undefined,
         stepNumber: block.stepNumber,
@@ -90,7 +117,7 @@ function fromBlock(block: any): SectionBlock {
       };
     case "twoColumn":
       return {
-        ...base,
+        ...mediaBase(block),
         type: "twoColumn",
         heading: block.heading,
         leftTitle: block.leftTitle,
@@ -100,7 +127,7 @@ function fromBlock(block: any): SectionBlock {
       };
     case "impactCallout":
       return {
-        ...base,
+        ...anchorBase(block),
         type: "impactCallout",
         heading: block.heading,
         items: fromRichArray(block.items),
@@ -109,7 +136,7 @@ function fromBlock(block: any): SectionBlock {
       };
     case "reflection":
       return {
-        ...base,
+        ...anchorBase(block),
         type: "reflection",
         heading: block.heading,
         paragraphs: fromRichArray(block.paragraphs),
@@ -119,16 +146,21 @@ function fromBlock(block: any): SectionBlock {
           ? { text: block.pullQuoteText, accent: block.pullQuoteAccent ?? "" }
           : undefined,
       };
-    default:
-      return {
-        ...base,
-        type: "image",
-        images: base.images ?? [{ src: "placeholder", alt: "" }],
-      };
+    case "image": {
+      const base = mediaBase(block);
+      return { ...base, type: "image", images: base.images ?? [{ src: "placeholder", alt: "" }] };
+    }
+    default: {
+      // Exhaustiveness guard: a new CMS block type is a compile error here,
+      // and runtime schema drift fails loudly instead of silently rendering
+      // an empty placeholder image.
+      const exhausted: never = block;
+      throw new Error(`Unknown section block type: ${JSON.stringify(exhausted)}`);
+    }
   }
 }
 
-function fromProjectDoc(doc: any, index: number): Project {
+function fromProjectDoc(doc: ProjectDoc, index: number): Project {
   const thumbMedia = doc.thumbnail?.media;
   return {
     id: String(doc.id),
@@ -159,14 +191,14 @@ function fromProjectDoc(doc: any, index: number): Project {
 
 // ---------- Globals ----------
 
-function fromUpload(media: any): ImageRef | undefined {
+function fromUpload(media: UploadRef): ImageRef | undefined {
   return media && typeof media === "object" && media.url
     ? { src: media.url, alt: media.alt ?? "" }
     : undefined;
 }
 
 // A button's destination can be a typed link or an uploaded file; the file wins.
-function resolveButton(b: any) {
+function resolveButton<B extends { href?: string | null; file?: UploadRef }>(b: B | null | undefined) {
   if (!b) return b;
   const fileUrl = b.file && typeof b.file === "object" ? b.file.url : undefined;
   return { ...b, href: fileUrl || b.href || "#" };
@@ -174,7 +206,7 @@ function resolveButton(b: any) {
 
 export async function getSiteSettings(): Promise<SiteSettings> {
   const payload = await payloadClient();
-  const doc: any = await payload.findGlobal({ slug: "site-settings", depth: 1 });
+  const doc = await payload.findGlobal({ slug: "site-settings", depth: 1 });
   return {
     ...doc,
     logoImage: fromUpload(doc.logoImage),
@@ -190,7 +222,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 
 export async function getHero(): Promise<Hero> {
   const payload = await payloadClient();
-  const doc: any = await payload.findGlobal({ slug: "hero", depth: 1 });
+  const doc = await payload.findGlobal({ slug: "hero", depth: 1 });
   return {
     ...doc,
     portrait: fromImageSlot(doc.portrait),
@@ -202,14 +234,14 @@ export async function getHero(): Promise<Hero> {
 
 export async function getAbout(): Promise<About> {
   const payload = await payloadClient();
-  const doc: any = await payload.findGlobal({ slug: "about" });
+  const doc = await payload.findGlobal({ slug: "about" });
   return { ...doc, paragraphs: fromTextArray(doc.paragraphs) } as About;
 }
 
 export async function getCta(): Promise<CtaSection> {
   const payload = await payloadClient();
-  const doc: any = await payload.findGlobal({ slug: "cta", depth: 1 });
-  return { ...doc, buttons: (doc.buttons ?? []).map(resolveButton) } as CtaSection;
+  const doc = await payload.findGlobal({ slug: "cta", depth: 1 });
+  return { ...doc, buttons: (doc.buttons ?? []).map((button) => resolveButton(button)) } as CtaSection;
 }
 
 // ---------- Collections ----------
@@ -217,7 +249,7 @@ export async function getCta(): Promise<CtaSection> {
 export async function getServices(): Promise<ServiceCard[]> {
   const payload = await payloadClient();
   const { docs } = await payload.find({ collection: "services", sort: "_order", limit: 100 });
-  return docs.map((doc: any, i: number) => ({
+  return docs.map((doc, i) => ({
     id: String(doc.id),
     icon: doc.icon,
     title: doc.title,
@@ -229,7 +261,7 @@ export async function getServices(): Promise<ServiceCard[]> {
 export async function getExperience(): Promise<ExperienceEntry[]> {
   const payload = await payloadClient();
   const { docs } = await payload.find({ collection: "experience", sort: "_order", limit: 100 });
-  return docs.map((doc: any, i: number) => ({
+  return docs.map((doc, i) => ({
     id: String(doc.id),
     period: doc.period,
     role: doc.role,
