@@ -46,6 +46,10 @@ jobs:
           # Build from the hosted database (same source as the Vercel admin)
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
           DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+          # Activates the Vercel Blob storage plugin so uploaded media URLs
+          # resolve to the blob store; without it the build emits
+          # /api/media/file/... URLs, which 404 on Pages (no API routes here).
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
 
       - uses: actions/configure-pages@v5
 
