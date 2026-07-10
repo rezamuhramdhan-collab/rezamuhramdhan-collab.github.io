@@ -30,6 +30,17 @@ jobs:
         working-directory: site
         run: npm ci
 
+      # Sync schema changes (new fields → columns) to the hosted database
+      # before the build queries them. Drizzle push runs here because
+      # NODE_ENV is unset; it is additive-safe and a no-op when in sync.
+      - name: Push schema to database
+        working-directory: site
+        run: npx tsx scripts/push-schema.mts
+        env:
+          PAYLOAD_SECRET: build-only-not-a-secret
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+
       # Pages is static hosting — the Payload admin/API can't run there.
       # Content comes from the hosted database (DATABASE_URI secret), the
       # same source the admin edits; the admin itself runs on Vercel.
