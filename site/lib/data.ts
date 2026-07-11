@@ -273,6 +273,7 @@ export async function getExperience(): Promise<ExperienceEntry[]> {
     company: doc.company,
     companyLink: doc.companyLink ?? "#",
     description: doc.description ?? "",
+    content: hasLexical(doc.content) ? doc.content : undefined,
     order: i + 1,
     isCurrent: Boolean(doc.isCurrent),
   }));

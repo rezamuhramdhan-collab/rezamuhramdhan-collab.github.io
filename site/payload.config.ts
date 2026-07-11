@@ -353,7 +353,23 @@ export default buildConfig({
         { name: "role", type: "text", required: true },
         { name: "company", type: "text", required: true },
         { name: "companyLink", type: "text", defaultValue: "#" },
-        { name: "description", type: "textarea" },
+        // Legacy plain text — used only while the editor below is empty
+        // (same convention as textArray / the richText block).
+        {
+          name: "description",
+          type: "textarea",
+          admin: {
+            description: "Plain text — used if the editor below is empty",
+            condition: (data: { description?: string; content?: unknown }) =>
+              Boolean(data?.description) && !hasLexical(data?.content),
+          },
+        },
+        {
+          name: "content",
+          type: "richText",
+          label: "Description (rich text)",
+          admin: { description: "Formatted description — bold, italic, links, lists" },
+        },
         { name: "isCurrent", type: "checkbox", defaultValue: false },
       ],
     },

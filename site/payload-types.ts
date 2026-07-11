@@ -213,7 +213,28 @@ export interface Experience {
   role: string;
   company: string;
   companyLink?: string | null;
+  /**
+   * Plain text — used if the editor below is empty
+   */
   description?: string | null;
+  /**
+   * Formatted description — bold, italic, links, lists
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   isCurrent?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -905,6 +926,7 @@ export interface ExperienceSelect<T extends boolean = true> {
   company?: T;
   companyLink?: T;
   description?: T;
+  content?: T;
   isCurrent?: T;
   updatedAt?: T;
   createdAt?: T;

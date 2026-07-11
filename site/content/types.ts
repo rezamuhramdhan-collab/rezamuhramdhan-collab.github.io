@@ -80,7 +80,8 @@ export interface ExperienceEntry {
   role: string;
   company: string;
   companyLink: string;
-  description: string;
+  description: string; // legacy plain text — used when content is absent
+  content?: unknown; // Lexical editor state; wins over description when present
   order: number;
   isCurrent: boolean;
 }

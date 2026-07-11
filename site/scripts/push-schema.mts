@@ -15,6 +15,8 @@ const MIGRATIONS: string[] = [
   "ALTER TABLE `projects` ADD COLUMN `password` text",
   "ALTER TABLE `_projects_v` ADD COLUMN `version_locked` integer DEFAULT false",
   "ALTER TABLE `_projects_v` ADD COLUMN `version_password` text",
+  // 2026-07: rich-text editor on experience descriptions
+  "ALTER TABLE `experience` ADD COLUMN `content` text",
 ];
 
 const url = process.env.DATABASE_URI;

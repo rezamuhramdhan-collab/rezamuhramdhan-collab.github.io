@@ -375,6 +375,19 @@ section { padding: 130px 0; scroll-margin-top: 76px; }
   font-size: 13.5px;
   color: var(--gray);
 }
+/* Rich-text experience descriptions: keep the .desc scale, light formatting */
+.timeline .desc.rich p { margin: 0 0 6px; }
+.timeline .desc.rich p:last-child { margin-bottom: 0; }
+.timeline .desc.rich strong { color: var(--ink); font-weight: 600; }
+.timeline .desc.rich a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.timeline .desc.rich ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
 /* ---------- CTA ---------- */
 .cta { text-align: center; padding: 150px 0; }

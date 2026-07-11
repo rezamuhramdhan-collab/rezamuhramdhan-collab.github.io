@@ -10,6 +10,7 @@ import type {
 import { Btn } from "../shared";
 import { serviceIcons, socialIcons, ArrowRight } from "../icons";
 import { thumbnailSvg, portraitSvg } from "../thumbs";
+import { RichBody } from "../case/rich-text";
 
 export function Hero({ hero }: { hero: HeroData }) {
   return (
@@ -162,7 +163,11 @@ export function AboutExperience({
                 <div className="period">{entry.period}</div>
                 <div className="role">{entry.role}</div>
                 <a className="company" href={entry.companyLink}>{entry.company}</a>
-                <div className="desc">{entry.description}</div>
+                {entry.content ? (
+                  <div className="desc rich"><RichBody data={entry.content} /></div>
+                ) : (
+                  <div className="desc">{entry.description}</div>
+                )}
               </li>
             ))}
           </ul>
