@@ -320,12 +320,14 @@ section { padding: 130px 0; scroll-margin-top: 76px; }
   margin-bottom: 30px;
 }
 .timeline { list-style: none; position: relative; }
-.timeline li {
+/* Direct children only: the dot/track treatment belongs to timeline entries,
+   not to list items nested inside a rich-text description. */
+.timeline > li {
   position: relative;
   padding-left: 30px;
   padding-bottom: 38px;
 }
-.timeline li::before {
+.timeline > li::before {
   content: "";
   position: absolute;
   left: 5px;
@@ -335,8 +337,8 @@ section { padding: 130px 0; scroll-margin-top: 76px; }
   background: var(--border);
   transition: background .25s ease;
 }
-.timeline li:last-child::before { display: none; }
-.timeline li::after {
+.timeline > li:last-child::before { display: none; }
+.timeline > li::after {
   content: "";
   position: absolute;
   left: 0;
@@ -346,8 +348,8 @@ section { padding: 130px 0; scroll-margin-top: 76px; }
   background: var(--accent);
   transition: transform .25s ease, box-shadow .25s ease;
 }
-.timeline li:hover::before { background: var(--accent); }
-.timeline li:hover::after {
+.timeline > li:hover::before { background: var(--accent); }
+.timeline > li:hover::after {
   transform: scale(1.35);
   box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.15);
 }
@@ -380,14 +382,16 @@ section { padding: 130px 0; scroll-margin-top: 76px; }
 .timeline .desc.rich p:last-child { margin-bottom: 0; }
 .timeline .desc.rich strong { color: var(--ink); font-weight: 600; }
 .timeline .desc.rich a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-.timeline .desc.rich ul {
+.timeline .desc.rich ul,
+.timeline .desc.rich ol {
   margin: 6px 0 0;
   padding-left: 18px;
-  list-style: disc;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
+.timeline .desc.rich ul { list-style: disc; }
+.timeline .desc.rich ol { list-style: decimal; }
 
 /* ---------- CTA ---------- */
 .cta { text-align: center; padding: 150px 0; }
