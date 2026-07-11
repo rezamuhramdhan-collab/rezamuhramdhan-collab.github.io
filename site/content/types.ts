@@ -236,4 +236,5 @@ export interface Project {
   // Meta
   status: "draft" | "published";
   nextProjectSlug?: string;
+  updatedAt?: string; // ISO timestamp from the CMS — sitemap lastmod / JSON-LD
 }

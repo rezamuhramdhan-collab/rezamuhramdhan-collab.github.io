@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { SiteFooter } from "@/components/shared";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { getSiteSettings } from "@/lib/data";
+import { getSiteSettings, getHero } from "@/lib/data";
+import { SITE_URL, IS_SECONDARY_DEPLOY } from "@/lib/seo";
 import "../globals.css";
 
 const inter = Inter({
@@ -11,12 +12,37 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+const SITE_TITLE = "Reza Ramdhan — Product Designer";
+const SITE_DESCRIPTION =
+  "I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.";
+
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getSiteSettings();
+  const [settings, hero] = await Promise.all([getSiteSettings(), getHero()]);
+  const portrait =
+    hero.portrait && hero.portrait.src !== "placeholder" ? hero.portrait.src : undefined;
   return {
-    title: "Reza Ramdhan — Product Designer",
-    description:
-      "I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.",
+    // All relative URLs below (canonical, OG) resolve against the canonical
+    // domain — on the secondary Pages copy this yields cross-domain
+    // canonicals back to the primary.
+    metadataBase: new URL(SITE_URL),
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    alternates: { canonical: "/" },
+    // The static Pages export is a copy: crawlable but not indexed.
+    robots: IS_SECONDARY_DEPLOY ? { index: false, follow: true } : undefined,
+    openGraph: {
+      type: "website",
+      siteName: SITE_TITLE,
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
+      url: "/",
+      ...(portrait ? { images: [portrait] } : {}),
+    },
+    twitter: {
+      card: portrait ? "summary_large_image" : "summary",
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
+    },
     icons: settings.favicon ? { icon: settings.favicon.src } : undefined,
   };
 }

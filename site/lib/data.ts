@@ -191,6 +191,7 @@ function fromProjectDoc(doc: ProjectDoc, index: number): Project {
     lock: locked ? encryptSections(JSON.stringify(sections), doc.password!) : undefined,
     status: doc._status === "draft" ? "draft" : "published",
     nextProjectSlug: doc.nextProjectSlug ?? undefined,
+    updatedAt: doc.updatedAt,
   };
 }
 
