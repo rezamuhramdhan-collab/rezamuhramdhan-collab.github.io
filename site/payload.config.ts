@@ -292,10 +292,13 @@ export default buildConfig({
 
   // Uploads persist to Vercel Blob when the token is present (hosted);
   // locally they fall back to the media/ directory on disk.
+  // disablePayloadAccessControl: media is public-read, and it makes doc URLs
+  // point directly at the blob CDN — required for the static Pages build,
+  // where the /api/media/file/... proxy route doesn't exist.
   plugins: process.env.BLOB_READ_WRITE_TOKEN
     ? [
         vercelBlobStorage({
-          collections: { media: true },
+          collections: { media: { disablePayloadAccessControl: true } },
           token: process.env.BLOB_READ_WRITE_TOKEN,
         }),
       ]
