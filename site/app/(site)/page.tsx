@@ -1,11 +1,11 @@
 import { HomeNav } from "@/components/shared";
 import {
   Hero,
-  FeaturedWork,
   Services,
   AboutExperience,
   CtaSection,
 } from "@/components/home/sections";
+import { FeaturedWork } from "@/components/home/FeaturedWork";
 import {
   getSiteSettings,
   getHero,

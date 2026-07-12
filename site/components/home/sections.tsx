@@ -1,15 +1,13 @@
-import Link from "next/link";
 import type {
   Hero as HeroData,
   About,
   CtaSection as CtaData,
   ServiceCard,
   ExperienceEntry,
-  Project,
 } from "@/content/types";
 import { Btn } from "../shared";
-import { serviceIcons, socialIcons, ArrowRight } from "../icons";
-import { thumbnailSvg, portraitSvg } from "../thumbs";
+import { serviceIcons, socialIcons } from "../icons";
+import { portraitSvg } from "../thumbs";
 import { RichBody } from "../case/rich-text";
 
 export function Hero({ hero }: { hero: HeroData }) {
@@ -69,44 +67,6 @@ export function Hero({ hero }: { hero: HeroData }) {
         </div>
       </div>
     </header>
-  );
-}
-
-function Thumb({ value }: { value: string }) {
-  const svg = thumbnailSvg(value);
-  if (svg) return <div dangerouslySetInnerHTML={{ __html: svg }} />;
-  // eslint-disable-next-line @next/next/no-img-element
-  return <img src={value} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />;
-}
-
-export function FeaturedWork({ projects }: { projects: Project[] }) {
-  return (
-    <section className="work" id="work">
-      <div className="container">
-        <h2 className="section-heading" data-reveal>Featured Work</h2>
-        <p className="section-sub" data-reveal>A selection of projects I&rsquo;m proud of</p>
-        <div className="work-grid">
-          {projects.map((project) => (
-            <Link key={project.id} className="project-card" href={`/work/${project.slug}`} data-reveal>
-              <div className="project-thumb">
-                <Thumb value={project.thumbnail} />
-                <div className="thumb-overlay">
-                  View Case Study
-                  <ArrowRight />
-                </div>
-              </div>
-              <div className="project-body">
-                <div className="project-meta">
-                  <span>{project.category}</span>
-                  <span>{project.year}</span>
-                </div>
-                <div className="project-title">{project.title}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
 
