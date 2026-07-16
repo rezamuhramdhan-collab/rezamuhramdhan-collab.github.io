@@ -1,6 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import { buildConfig, type Field, type Block } from "payload";
+import { postgresAdapter } from "@payloadcms/db-postgres";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
@@ -279,13 +280,20 @@ if (!process.env.PAYLOAD_SECRET && process.env.NODE_ENV === "production") {
 
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "dev-secret-change-me",
-  db: sqliteAdapter({
-    client: {
-      // Hosted (Turso/libSQL) when DATABASE_URI is set; local file otherwise.
-      url: process.env.DATABASE_URI || `file:${path.resolve(dirname, "payload.db")}`,
-      authToken: process.env.DATABASE_AUTH_TOKEN,
-    },
-  }),
+  // Hosted (Supabase Postgres) when DATABASE_URI is a postgres:// URI; local
+  // SQLite file otherwise. The libsql branch also still accepts a legacy
+  // Turso URL + DATABASE_AUTH_TOKEN so the export half of the Supabase
+  // migration (scripts/export-content.mts) can read the old database.
+  db: process.env.DATABASE_URI?.startsWith("postgres")
+    ? postgresAdapter({
+        pool: { connectionString: process.env.DATABASE_URI },
+      })
+    : sqliteAdapter({
+        client: {
+          url: process.env.DATABASE_URI || `file:${path.resolve(dirname, "payload.db")}`,
+          authToken: process.env.DATABASE_AUTH_TOKEN,
+        },
+      }),
   editor: lexicalEditor(),
   admin: { user: "users" },
   typescript: { outputFile: path.resolve(dirname, "payload-types.ts") },

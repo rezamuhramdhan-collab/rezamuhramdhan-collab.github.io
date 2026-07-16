@@ -1,6 +1,6 @@
 // Restore a single project by slug from the content modules (recovery tool).
 // Runs in production mode so Payload does not attempt a schema push.
-//   NODE_ENV=production DATABASE_URI=... DATABASE_AUTH_TOKEN=... PAYLOAD_SECRET=... \
+//   NODE_ENV=production DATABASE_URI=... PAYLOAD_SECRET=... \
 //     npx tsx scripts/restore-project.mts <slug>
 
 process.env.SKIP_SEED = "1";

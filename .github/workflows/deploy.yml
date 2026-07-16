@@ -39,7 +39,6 @@ jobs:
         env:
           PAYLOAD_SECRET: build-only-not-a-secret
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
-          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
 
       # Pages is static hosting — the Payload admin/API can't run there.
       # Content comes from the hosted database (DATABASE_URI secret), the
@@ -56,7 +55,6 @@ jobs:
           PAYLOAD_SECRET: build-only-not-a-secret
           # Build from the hosted database (same source as the Vercel admin)
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
-          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
           # Activates the Vercel Blob storage plugin so uploaded media URLs
           # resolve to the blob store; without it the build emits
           # /api/media/file/... URLs, which 404 on Pages (no API routes here).

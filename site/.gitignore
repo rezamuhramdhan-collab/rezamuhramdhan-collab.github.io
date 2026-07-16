@@ -8,3 +8,4 @@ media
 payload.db
 tsconfig.tsbuildinfo
 sitemap.xml
+content-export*.json

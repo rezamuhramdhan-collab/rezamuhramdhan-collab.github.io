@@ -1,47 +1,24 @@
-// Apply pending additive schema migrations to the target database.
-//   DATABASE_URI=... DATABASE_AUTH_TOKEN=... npx tsx scripts/push-schema.mts
+// Sync the Payload schema to the target database before a static build.
+//   DATABASE_URI=postgres://... PAYLOAD_SECRET=... npx tsx scripts/push-schema.mts
 //
-// Runs explicit idempotent ALTERs instead of drizzle push: push introspection
-// is unreliable against Turso (it tries to recreate indexes that already
-// exist). When adding fields to payload.config.ts, add the matching ALTERs
-// here (column names per the drizzle snake_case schema — check payload.db
-// with `.schema <table>` after a local dev boot).
+// Boots Payload in dev mode (NODE_ENV unset) so the adapter's drizzle push
+// creates/updates tables — additive-safe and a no-op when already in sync.
+// This replaced the hand-written ALTER list the Turso era needed: push
+// introspection is reliable against Postgres, unlike libSQL. Destructive
+// schema changes (dropped/renamed columns) should not ship through this
+// path — handle those manually against Supabase first.
 
-import { createClient } from "@libsql/client";
+process.env.SKIP_SEED = "1";
 
-const MIGRATIONS: string[] = [
-  // 2026-07: password-locked case studies (locked + password on projects)
-  "ALTER TABLE `projects` ADD COLUMN `locked` integer DEFAULT false",
-  "ALTER TABLE `projects` ADD COLUMN `password` text",
-  "ALTER TABLE `_projects_v` ADD COLUMN `version_locked` integer DEFAULT false",
-  "ALTER TABLE `_projects_v` ADD COLUMN `version_password` text",
-  // 2026-07: rich-text editor on experience descriptions
-  "ALTER TABLE `experience` ADD COLUMN `content` text",
-];
-
-const url = process.env.DATABASE_URI;
-if (!url) {
+if (!process.env.DATABASE_URI) {
   console.error("DATABASE_URI is required — refusing to guess a target database.");
   process.exit(1);
 }
 
-const client = createClient({ url, authToken: process.env.DATABASE_AUTH_TOKEN });
+const { getPayload } = await import("payload");
+const { default: config } = await import("@payload-config");
 
-for (const sql of MIGRATIONS) {
-  try {
-    await client.execute(sql);
-    console.log(`applied: ${sql}`);
-  } catch (err) {
-    const message = String(err);
-    if (message.includes("duplicate column name")) {
-      console.log(`already applied: ${sql}`);
-    } else {
-      console.error(`FAILED: ${sql}\n${message}`);
-      process.exit(1);
-    }
-  }
-}
-
-const check = await client.execute("SELECT COUNT(*) AS n FROM projects");
-console.log(`Done. Target DB reachable — ${check.rows[0].n} projects.`);
+const payload = await getPayload({ config });
+const { totalDocs } = await payload.count({ collection: "projects" });
+console.log(`Done. Target DB reachable — ${totalDocs} projects.`);
 process.exit(0);

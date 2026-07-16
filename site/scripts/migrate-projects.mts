@@ -3,7 +3,7 @@
 //
 // Prereq: the projects/categories tables have been dropped and recreated with
 // the new schema (boot once with SKIP_SEED=1 against the target DB). Then:
-//   DATABASE_URI=... DATABASE_AUTH_TOKEN=... npx tsx scripts/migrate-projects.mts
+//   DATABASE_URI=... npx tsx scripts/migrate-projects.mts
 //
 // Safe to run against an empty-projects DB only; it aborts if projects exist.
 
