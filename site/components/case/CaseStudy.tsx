@@ -75,7 +75,8 @@ export function CaseStudy({
       </header>
 
       <div className="container">
-        <Placeholder image={project.heroImage} tall />
+        {/* Above the fold — the LCP element on case pages */}
+        <Placeholder image={project.heroImage} tall priority />
       </div>
 
       {project.lock ? (

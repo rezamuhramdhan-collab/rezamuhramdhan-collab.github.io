@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type {
   Hero as HeroData,
   About,
@@ -46,11 +47,14 @@ export function Hero({ hero }: { hero: HeroData }) {
         <div className="hero-portrait">
           {hero.portrait && hero.portrait.src !== "placeholder" ? (
             <div className="portrait-card">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              {/* Above the fold — the LCP element when a portrait is uploaded */}
+              <Image
                 src={hero.portrait.src}
                 alt={hero.portrait.alt}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                fill
+                sizes="(max-width: 900px) 90vw, 440px"
+                priority
+                style={{ objectFit: "cover" }}
               />
             </div>
           ) : (

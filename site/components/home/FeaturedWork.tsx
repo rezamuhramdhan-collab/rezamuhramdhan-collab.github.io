@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { Project } from "@/content/types";
 import { ArrowLeft, ArrowRight } from "../icons";
 import { thumbnailSvg } from "../thumbs";
@@ -15,8 +16,16 @@ const PAGE_SIZE = 4;
 function Thumb({ value }: { value: string }) {
   const svg = thumbnailSvg(value);
   if (svg) return <div dangerouslySetInnerHTML={{ __html: svg }} />;
-  // eslint-disable-next-line @next/next/no-img-element
-  return <img src={value} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />;
+  // fill inside .project-thumb, which reserves space via aspect-ratio
+  return (
+    <Image
+      src={value}
+      alt=""
+      fill
+      sizes="(max-width: 700px) 100vw, 560px"
+      style={{ objectFit: "cover" }}
+    />
+  );
 }
 
 export function FeaturedWork({ projects }: { projects: Project[] }) {

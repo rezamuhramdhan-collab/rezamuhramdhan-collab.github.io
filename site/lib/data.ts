@@ -51,7 +51,13 @@ const fromRichArray = (rows?: { text?: string | null; content?: unknown }[] | nu
 function fromImageSlot(slot: ImageSlotDoc | null | undefined): ImageRef | undefined {
   if (!slot) return undefined;
   if (slot.media && typeof slot.media === "object" && slot.media.url) {
-    return { src: slot.media.url, alt: slot.alt ?? slot.media.alt ?? "", caption: slot.caption ?? undefined };
+    return {
+      src: slot.media.url,
+      alt: slot.alt ?? slot.media.alt ?? "",
+      caption: slot.caption ?? undefined,
+      width: slot.media.width ?? undefined,
+      height: slot.media.height ?? undefined,
+    };
   }
   if (slot.showPlaceholder) {
     return { src: "placeholder", alt: slot.alt ?? "", caption: slot.caption ?? undefined };
@@ -199,7 +205,12 @@ function fromProjectDoc(doc: ProjectDoc, index: number): Project {
 
 function fromUpload(media: UploadRef): ImageRef | undefined {
   return media && typeof media === "object" && media.url
-    ? { src: media.url, alt: media.alt ?? "" }
+    ? {
+        src: media.url,
+        alt: media.alt ?? "",
+        width: media.width ?? undefined,
+        height: media.height ?? undefined,
+      }
     : undefined;
 }
 

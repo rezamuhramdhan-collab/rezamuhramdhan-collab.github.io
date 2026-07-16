@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { RichItem } from "@/content/types";
 import { RichText, type JSXConvertersFunction } from "@payloadcms/richtext-lexical/react";
 import { hasLexical } from "@/lib/lexical";
@@ -28,8 +29,18 @@ const richConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
     }
     return (
       <figure className={`rich-img align-${node.format || "center"}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={media.url} alt={media.alt ?? ""} width={media.width} height={media.height} />
+        {media.width && media.height ? (
+          <Image
+            src={media.url}
+            alt={media.alt ?? ""}
+            width={media.width}
+            height={media.height}
+            sizes="(max-width: 1160px) 100vw, 1080px"
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={media.url} alt={media.alt ?? ""} />
+        )}
       </figure>
     );
   },

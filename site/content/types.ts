@@ -193,6 +193,10 @@ export interface ImageRef {
   src: "placeholder" | string;
   alt: string;
   caption?: string;
+  // Intrinsic dimensions from the media library — reserves layout space (CLS)
+  // and lets next/image generate sized variants.
+  width?: number;
+  height?: number;
 }
 
 // ---------- Project (★ core) ----------

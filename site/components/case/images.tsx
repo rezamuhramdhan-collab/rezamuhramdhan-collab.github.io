@@ -1,9 +1,20 @@
+import Image from "next/image";
 import type { ImageRef, ImageLayout } from "@/content/types";
 
 // Image layout system for case-study sections: single images (uploaded or
 // placeholder), grids/stacks, and text-beside-media splits.
 
-export function Placeholder({ image, tall, className }: { image: ImageRef; tall?: boolean; className?: string }) {
+export function Placeholder({
+  image,
+  tall,
+  className,
+  priority,
+}: {
+  image: ImageRef;
+  tall?: boolean;
+  className?: string;
+  priority?: boolean;
+}) {
   if (image.src === "placeholder") {
     return (
       <div className={className}>
@@ -16,8 +27,20 @@ export function Placeholder({ image, tall, className }: { image: ImageRef; tall?
   }
   return (
     <div className={className}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={image.src} alt={image.alt} style={{ borderRadius: 20, width: "100%" }} />
+      {image.width && image.height ? (
+        <Image
+          src={image.src}
+          alt={image.alt}
+          width={image.width}
+          height={image.height}
+          sizes="(max-width: 1160px) 100vw, 1080px"
+          priority={priority}
+          style={{ borderRadius: 20, width: "100%", height: "auto" }}
+        />
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={image.src} alt={image.alt} style={{ borderRadius: 20, width: "100%" }} />
+      )}
       {image.caption && <p className="img-caption">{image.caption}</p>}
     </div>
   );
