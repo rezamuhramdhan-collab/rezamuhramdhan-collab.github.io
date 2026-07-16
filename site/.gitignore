@@ -7,3 +7,4 @@ media
 .env*
 payload.db
 tsconfig.tsbuildinfo
+sitemap.xml
