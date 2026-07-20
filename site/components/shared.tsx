@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ButtonItem, SiteSettings } from "@/content/types";
 import { buttonIcons } from "./icons";
 
@@ -36,8 +37,23 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
       <div className="container nav-inner">
         <Link className="logo" href="/" aria-label={logoText}>
           {logoImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} />
+            // Through next/image so the optimizer serves a tiny variant sized to
+            // the 32px-tall display (sizes hint) instead of the full upload.
+            // The plain <img> fallback covers uploads missing intrinsic dims,
+            // which next/image needs to reserve space.
+            logoImage.width && logoImage.height ? (
+              <Image
+                className="logo-img"
+                src={logoImage.src}
+                alt={logoImage.alt || logoText}
+                width={logoImage.width}
+                height={logoImage.height}
+                sizes="32px"
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} />
+            )
           ) : (
             logoText
           )}
