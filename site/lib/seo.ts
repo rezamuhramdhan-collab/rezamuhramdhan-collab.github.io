@@ -1,11 +1,12 @@
 import type { Hero, Project } from "@/content/types";
 
 // SEO foundation (see docs/seo-best-practices-research.md §5).
-// The Vercel deployment is the canonical home; the GitHub Pages static
-// export is a secondary copy whose pages carry noindex + a cross-domain
-// canonical pointing here, so search consolidates onto one URL per page.
+// The custom-domain Vercel deployment is the canonical home; the GitHub
+// Pages static export is a secondary copy whose pages carry noindex + a
+// cross-domain canonical pointing here, so search consolidates onto one
+// URL per page. The old rezadesign.vercel.app host redirects here.
 
-export const SITE_URL = "https://rezadesign.vercel.app";
+export const SITE_URL = "https://designbyreza.com";
 
 // True for the GitHub Pages build (set by CI); the Vercel build never sets it.
 export const IS_SECONDARY_DEPLOY = Boolean(process.env.STATIC_EXPORT);
