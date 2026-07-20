@@ -394,7 +394,7 @@ export default buildConfig({
       versions: { drafts: true },
       admin: {
         useAsTitle: "title",
-        defaultColumns: ["title", "category", "year", "featured", "_status"],
+        defaultColumns: ["title", "category", "year", "featured", "position", "_status"],
       },
       hooks: { afterChange: [revalidateSite], afterDelete: [revalidateSite] },
       fields: [
@@ -513,6 +513,15 @@ export default buildConfig({
                   type: "checkbox",
                   defaultValue: true,
                   admin: { description: "Show on the homepage Featured Work grid" },
+                },
+                {
+                  name: "position",
+                  type: "number",
+                  min: 1,
+                  admin: {
+                    description:
+                      "Position in the Featured Work grid (1 = first). Projects without a number come after, in list drag order.",
+                  },
                 },
                 {
                   name: "nextProjectSlug",

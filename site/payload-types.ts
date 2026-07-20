@@ -749,6 +749,10 @@ export interface Project {
    */
   featured?: boolean | null;
   /**
+   * Position in the Featured Work grid (1 = first). Projects without a number come after, in list drag order.
+   */
+  position?: number | null;
+  /**
    * Related-project link (auto-picks the next one if empty)
    */
   nextProjectSlug?: string | null;
@@ -1178,6 +1182,7 @@ export interface ProjectsSelect<T extends boolean = true> {
             };
       };
   featured?: T;
+  position?: T;
   nextProjectSlug?: T;
   locked?: T;
   password?: T;
