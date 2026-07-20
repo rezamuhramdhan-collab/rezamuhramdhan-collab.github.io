@@ -300,6 +300,9 @@ export async function getPublishedProjects(): Promise<Project[]> {
     depth: 1,
     limit: 100,
   });
+  // Explicit position wins; unnumbered projects follow in list drag order
+  // (stable sort keeps the _order sequence for ties and missing positions).
+  docs.sort((a, b) => (a.position ?? Infinity) - (b.position ?? Infinity));
   return docs.map(fromProjectDoc);
 }
 
