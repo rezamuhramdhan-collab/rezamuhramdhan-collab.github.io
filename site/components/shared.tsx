@@ -30,7 +30,13 @@ export function Btn({ button, small }: { button: ButtonItem; small?: boolean }) 
   );
 }
 
-export function HomeNav({ settings }: { settings: SiteSettings }) {
+export function HomeNav({
+  settings,
+  secondaryCta,
+}: {
+  settings: SiteSettings;
+  secondaryCta?: ButtonItem;
+}) {
   const { logoText, logoImage, navLinks, ctaButton } = settings;
   return (
     <nav>
@@ -63,7 +69,10 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
             <Link key={link.label} href={link.href}>{link.label}</Link>
           ))}
         </div>
-        <Btn button={ctaButton} small />
+        <div className="nav-ctas">
+          {secondaryCta && <Btn button={secondaryCta} small />}
+          <Btn button={ctaButton} small />
+        </div>
       </div>
     </nav>
   );
