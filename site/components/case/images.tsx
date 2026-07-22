@@ -19,7 +19,7 @@ export function Placeholder({
     return (
       <div className={className}>
         <div className={`case-img${tall ? " tall" : ""}`} role="img" aria-label={image.alt}>
-          <div className="device" />
+          <div className="placeholder-icon" />
         </div>
         {image.caption && <p className="img-caption">{image.caption}</p>}
       </div>

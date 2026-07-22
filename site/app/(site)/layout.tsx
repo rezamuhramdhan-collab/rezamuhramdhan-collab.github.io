@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { SiteFooter } from "@/components/shared";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { getSiteSettings, getHero } from "@/lib/data";
 import { SITE_URL, IS_SECONDARY_DEPLOY } from "@/lib/seo";
 import "../globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-inter",
+// Anton: display face for headlines, the footer wordmark, and card titles —
+// always used uppercase. Archivo: body/UI text, variable weight 100–900.
+const anton = localFont({
+  src: "../fonts/anton.woff2",
+  weight: "400",
+  variable: "--font-anton",
+  display: "swap",
+});
+const archivo = localFont({
+  src: "../fonts/archivo.woff2",
+  weight: "100 900",
+  variable: "--font-archivo",
+  display: "swap",
 });
 
 const SITE_TITLE = "Reza Ramdhan — Product Designer";
@@ -50,7 +59,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${anton.variable} ${archivo.variable}`}>
       <body>
         {children}
         <SiteFooter settings={settings} />

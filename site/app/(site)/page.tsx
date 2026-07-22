@@ -40,7 +40,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString(websiteJsonLd(hero)) }}
       />
-      <HomeNav settings={settings} />
+      <HomeNav settings={settings} secondaryCta={hero.secondaryCta} />
       <Hero hero={hero} />
       <FeaturedWork projects={projects} />
       <Services services={services} />

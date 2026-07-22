@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/content/types";
+import { thumbnailKeys } from "@/content/registry";
 import { ArrowLeft, ArrowRight } from "../icons";
-import { thumbnailSvg } from "../thumbs";
 
 // Featured Work grid with client-side pagination: 4 projects per page,
 // controls appear only when there are more. Client-side because the site
@@ -13,9 +13,28 @@ import { thumbnailSvg } from "../thumbs";
 
 const PAGE_SIZE = 4;
 
+// A value matching a known placeholderKey (no upload yet) renders the
+// generic placeholder icon, per design.md, rather than a real image —
+// replaces the old per-key illustrated art (see components/thumbs.ts, removed).
 function Thumb({ value }: { value: string }) {
-  const svg = thumbnailSvg(value);
-  if (svg) return <div dangerouslySetInnerHTML={{ __html: svg }} />;
+  if ((thumbnailKeys as readonly string[]).includes(value)) {
+    return (
+      <svg
+        className="placeholder-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="3" y="4" width="18" height="16" rx="1.5" />
+        <circle cx="8.5" cy="9.5" r="1.5" />
+        <path d="M21 16.5 15.5 11 5 20" />
+      </svg>
+    );
+  }
   // fill inside .project-thumb, which reserves space via aspect-ratio
   return (
     <Image
@@ -43,17 +62,19 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
             <Link key={project.id} className="project-card" href={`/work/${project.slug}`} data-reveal>
               <div className="project-thumb">
                 <Thumb value={project.thumbnail} />
-                <div className="thumb-overlay">
-                  View Case Study
-                  <ArrowRight />
-                </div>
+                <span className="thumb-overlay" aria-hidden="true">+</span>
               </div>
               <div className="project-body">
-                <div className="project-meta">
-                  <span>{project.category}</span>
-                  <span>{project.year}</span>
-                </div>
+                <span className="project-category">{project.category}</span>
                 <div className="project-title">{project.title}</div>
+                <p className="project-summary">{project.summary}</p>
+                <div className="project-bottom">
+                  <span className="project-link">
+                    View case study
+                    <ArrowRight />
+                  </span>
+                  <span className="project-year">{project.year}</span>
+                </div>
               </div>
             </Link>
           ))}
