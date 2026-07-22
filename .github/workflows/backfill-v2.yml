@@ -1,0 +1,33 @@
+name: Backfill v2 content
+
+# One-off, manually triggered. Populates the CMS fields added by the v2
+# redesign (hero name, contact block, per-role type/location, About skills,
+# service tags) with real values on the hosted database, so the live site
+# renders complete after the schema push. Idempotent — safe to re-run.
+# Runs in production mode so it only updates data (no schema push).
+on:
+  workflow_dispatch:
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Run backfill
+        working-directory: site
+        run: npx tsx scripts/backfill-v2.mts
+        env:
+          NODE_ENV: production
+          PAYLOAD_SECRET: build-only-not-a-secret
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
