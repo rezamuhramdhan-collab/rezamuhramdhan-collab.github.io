@@ -12,11 +12,32 @@
 process.env.SKIP_SEED = "1";
 import { getPayload } from "payload";
 import config from "@payload-config";
-import { hero, about, contact } from "../content/site";
+import { siteSettings, hero, about, contact } from "../content/site";
 import { experience } from "../content/experience";
 import { services } from "../content/services";
 
 const payload = await getPayload({ config });
+
+// --- Site settings: v2 structural content (nav gains Experience, wordmark,
+// footer links, résumé pill). Preserves any uploaded logoImage/favicon by
+// only setting these specific fields. ---
+await payload.updateGlobal({
+  slug: "site-settings",
+  data: {
+    logoText: siteSettings.logoText,
+    navLinks: siteSettings.navLinks,
+    footerText: siteSettings.footerText,
+    footerLinks: siteSettings.footerLinks,
+    ctaButton: siteSettings.ctaButton,
+    backLink: siteSettings.backLink,
+    ctaFooter: siteSettings.ctaFooter,
+  } as never,
+});
+console.log("site-settings: nav (with Experience) / footer / wordmark / résumé set");
+
+// --- Hero primary CTA → "View Work" (leaves the user's bio + portrait). ---
+await payload.updateGlobal({ slug: "hero", data: { primaryCta: hero.primaryCta } as never });
+console.log("hero: primary CTA set");
 
 // --- Hero: fill the new name/eyebrow/tag fields (leave bio/CTA/portrait) ---
 await payload.updateGlobal({
