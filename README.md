@@ -8,7 +8,7 @@ as a static export to GitHub Pages with the admin running on Vercel.
 | Path | What it is |
 |---|---|
 | [`site/`](site/) | The application — Next.js 15 (App Router) + Payload CMS 3 (Supabase Postgres hosted, SQLite locally). All active development happens here. |
-| [`docs/`](docs/) | Engineering docs: SOLID research reference and the codebase audit. |
+| [`docs/`](docs/) | Engineering docs: SOLID research reference, the codebase audit, and the [visual language reference](docs/design.md) for the in-progress redesign. |
 | [`prototypes/`](prototypes/) | The original hand-written static HTML mockups (pre-CMS Phase 1). Kept for reference; the seed content in `site/content/` was derived from them. Not deployed. |
 | [`.github/workflows/`](.github/workflows/) | CI: schema migration + static build + GitHub Pages deploy on every push to `main`. |
 
