@@ -1,105 +1,107 @@
 import Link from "next/link";
 import type { Project, SiteSettings } from "@/content/types";
-import { Btn } from "../shared";
-import { ArrowLeft, ArrowRight as ArrowRightSmall } from "../icons";
-import { Placeholder } from "./images";
+import { ArrowLeft, ArrowUpRight } from "../icons";
+import { CaseImage } from "./images";
 import { CaseSections } from "./sections";
 import { ProjectLock } from "./ProjectLock";
 
-// Case-study page assembly: tab nav, header, and shell. Section grouping and
-// block presentation live in sections.tsx / blocks.tsx / images.tsx /
-// rich-text.tsx; password-locked projects render through ProjectLock.
-
-// ---------- Case study page ----------
-
-export function CaseNav({
-  anchors,
-  backLink,
-}: {
-  anchors: string[];
-  backLink: SiteSettings["backLink"];
-}) {
-  return (
-    <nav>
-      <div className="container nav-inner">
-        <Link className="back-link" href={backLink.href}>
-          <ArrowLeft />
-          {backLink.label}
-        </Link>
-        <div className="nav-links">
-          {anchors.map((anchor) => (
-            <a key={anchor} href={`#${anchor}`} style={{ textTransform: "capitalize" }}>
-              {anchor}
-            </a>
-          ))}
-        </div>
-      </div>
-    </nav>
-  );
-}
+// Case-study page assembly (v2): sticky tab-nav, kicker header, meta grid, and
+// footer CTA. Section grouping / block presentation live in sections.tsx,
+// blocks.tsx, images.tsx, rich-text.tsx; locked projects render via ProjectLock.
 
 export function CaseStudy({
   project,
   settings,
   nextProject,
+  caseNumber,
 }: {
   project: Project;
   settings: SiteSettings;
   nextProject?: Project;
+  caseNumber?: number;
 }) {
-  const { ctaFooter } = settings;
-  // Tab nav auto-derived from anchored blocks (PRD §6)
+  const { ctaFooter, backLink } = settings;
   const anchors = project.sections
     .map((s) => s.anchor)
     .filter((anchor): anchor is string => Boolean(anchor));
 
   return (
-    <>
-      <CaseNav anchors={anchors} backLink={settings.backLink} />
+    <div className="case">
+      <div className="topbar">
+        <div className="topbar-inner">
+          <Link className="back-link" href={backLink.href}>
+            <ArrowLeft />
+            {backLink.label}
+          </Link>
+          <nav className="tab-nav">
+            {anchors.map((anchor) => (
+              <a key={anchor} href={`#${anchor}`} style={{ textTransform: "capitalize" }}>
+                {anchor.replace(/-/g, " ")}
+              </a>
+            ))}
+          </nav>
+          <span />
+        </div>
+      </div>
 
-      <header className="case-header">
-        <div className="container">
+      <div className="frame">
+        <header className="case-header">
+          <div className="kicker">
+            {caseNumber != null && (
+              <>
+                <span className="num">{String(caseNumber).padStart(2, "0")}</span>
+                <span className="sep" />
+              </>
+            )}
+            {project.category && <span className="cat">{project.category}</span>}
+          </div>
           <h1>{project.title}</h1>
-          <p className="lede">{project.summary}</p>
+          <p className="subtitle">{project.summary}</p>
           {project.metaGrid.length > 0 && (
             <div className="meta-grid">
               {project.metaGrid.map((pair) => (
-                <div key={pair.label} className="meta-cell">
-                  <div className="meta-label">{pair.label}</div>
-                  <div className="meta-value">{pair.value}</div>
+                <div key={pair.label} className="cell">
+                  <div className="m-label">{pair.label}</div>
+                  <div className="m-value">{pair.value}</div>
                 </div>
               ))}
             </div>
           )}
-        </div>
-      </header>
+        </header>
 
-      <div className="container">
         {/* Above the fold — the LCP element on case pages */}
-        <Placeholder image={project.heroImage} tall priority />
+        <CaseImage image={project.heroImage} hero priority />
+
+        {project.lock ? (
+          <div className="lock-wrap">
+            <ProjectLock slug={project.slug} lock={project.lock} />
+          </div>
+        ) : (
+          <CaseSections sections={project.sections} />
+        )}
       </div>
 
-      {project.lock ? (
-        <ProjectLock slug={project.slug} lock={project.lock} />
-      ) : (
-        <CaseSections sections={project.sections} />
-      )}
-
-      <section className="case-cta">
-        <div className="container" data-reveal>
-          <h2>{ctaFooter.headline}</h2>
-          <p>{ctaFooter.subtext}</p>
-          <div className="cta-row">
-            <Btn button={ctaFooter.button} />
-            {nextProject && (
-              <Link className="btn btn-outline" href={`/work/${nextProject.slug}`}>
-                Next Project: {nextProject.title}
-                <ArrowRightSmall />
-              </Link>
-            )}
+      <div className="foot-cta">
+        <div className="foot-cta-inner">
+          <div>
+            <span className="eyebrow">{ctaFooter.headline}</span>
+            <h2>{ctaFooter.subtext}</h2>
+          </div>
+          <div className="links">
+            <Link className="all-work" href="/#work">
+              <ArrowLeft />
+              All Work
+            </Link>
+            <Link
+              className="btn btn-accent"
+              href={nextProject ? `/work/${nextProject.slug}` : ctaFooter.button.href}
+            >
+              {nextProject ? "Next Project" : ctaFooter.button.label}
+              <ArrowUpRight />
+            </Link>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }

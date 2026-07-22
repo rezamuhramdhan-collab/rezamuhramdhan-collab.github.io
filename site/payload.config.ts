@@ -7,12 +7,7 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { seed } from "./lib/seed";
 import { hasLexical } from "./lib/lexical";
-import {
-  serviceIconKeys,
-  buttonIconKeys,
-  socialPlatformKeys,
-  thumbnailKeys,
-} from "./content/registry";
+import { buttonIconKeys } from "./content/registry";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -341,15 +336,14 @@ export default buildConfig({
       admin: { useAsTitle: "title" },
       hooks: { afterChange: [revalidateSite], afterDelete: [revalidateSite] },
       fields: [
-        {
-          name: "icon",
-          type: "select",
-          options: [...serviceIconKeys],
-          defaultValue: "pen",
-          required: true,
-        },
         { name: "title", type: "text", required: true },
         { name: "description", type: "textarea", required: true },
+        {
+          name: "tags",
+          type: "array",
+          admin: { description: "Skill pills shown under the service (e.g. Research, Prototyping)" },
+          fields: [{ name: "text", type: "text", required: true }],
+        },
       ],
     },
     {
@@ -364,6 +358,18 @@ export default buildConfig({
         { name: "role", type: "text", required: true },
         { name: "company", type: "text", required: true },
         { name: "companyLink", type: "text", defaultValue: "#" },
+        {
+          type: "row",
+          fields: [
+            {
+              name: "employmentType",
+              type: "select",
+              options: ["Full-time", "Part-time", "Contract", "Internship", "Freelance"],
+              admin: { width: "50%", description: "Shown after the company (Company · Type · Location)" },
+            },
+            { name: "location", type: "text", admin: { width: "50%" } },
+          ],
+        },
         // Legacy plain text — used only while the editor below is empty
         // (same convention as textArray / the richText block).
         {
@@ -466,24 +472,12 @@ export default buildConfig({
                   name: "thumbnail",
                   label: "Thumbnail (homepage card)",
                   type: "group",
+                  admin: {
+                    description:
+                      "Homepage card image. A neutral placeholder shows until an image is uploaded.",
+                  },
                   fields: [
-                    {
-                      name: "media",
-                      type: "upload",
-                      relationTo: "media",
-                      validate: (
-                        value: unknown,
-                        { siblingData }: { siblingData?: { placeholderKey?: string } },
-                      ) =>
-                        Boolean(value || siblingData?.placeholderKey) ||
-                        "Upload a thumbnail image (or pick a placeholder)",
-                    },
-                    {
-                      name: "placeholderKey",
-                      type: "select",
-                      options: [...thumbnailKeys],
-                      admin: { description: "Built-in placeholder art used until media is uploaded" },
-                    },
+                    { name: "media", type: "upload", relationTo: "media" },
                   ],
                 },
                 imageSlot("heroImage", { requireImage: true }),
@@ -601,35 +595,34 @@ export default buildConfig({
       access: publicRead,
       hooks: { afterChange: [revalidateSite] },
       fields: [
-        { name: "greeting", type: "text", required: true },
-        { name: "roleHighlight", type: "text", required: true },
-        { name: "bio", type: "textarea" },
-        { name: "primaryCta", type: "group", fields: buttonFields },
-        { name: "secondaryCta", type: "group", fields: buttonFields },
         {
-          name: "socialLinks",
-          type: "array",
+          name: "eyebrow",
+          type: "text",
+          admin: { description: "Small label above the name (e.g. Product Designer)" },
+        },
+        {
+          type: "row",
           fields: [
             {
-              name: "platform",
-              type: "select",
-              options: [...socialPlatformKeys],
-              required: true,
+              name: "firstName",
+              type: "text",
+              admin: { width: "50%", description: "Solid first line of the big name" },
             },
-            { name: "href", type: "text", required: true },
-            { name: "label", type: "text", required: true },
+            {
+              name: "lastName",
+              type: "text",
+              admin: { width: "50%", description: "Ghosted second line of the big name" },
+            },
           ],
         },
-        imageSlot("portrait"),
         {
-          name: "profileCard",
-          type: "group",
-          fields: [
-            { name: "name", type: "text" },
-            { name: "subtitle", type: "text" },
-            { name: "avatarInitial", type: "text" },
-          ],
+          name: "portfolioTag",
+          type: "text",
+          admin: { description: 'Top-right tag over the hero photo (e.g. "Portfolio — 2026")' },
         },
+        { name: "bio", type: "textarea" },
+        { name: "primaryCta", type: "group", fields: buttonFields },
+        imageSlot("portrait"),
       ],
     },
     {
@@ -638,24 +631,55 @@ export default buildConfig({
       hooks: { afterChange: [revalidateSite] },
       fields: [
         { name: "headline", type: "text", required: true },
-        { name: "headlineAccent", type: "text" },
         textArray("paragraphs"),
+        imageSlot("image"),
         {
-          name: "yearsExperience",
-          type: "number",
-          admin: { description: "Replaces {years} in paragraphs" },
+          name: "skills",
+          type: "array",
+          admin: { description: "Skill list shown as a two-column dotted grid" },
+          fields: [{ name: "text", type: "text", required: true }],
         },
+        {
+          name: "locationTag",
+          type: "text",
+          admin: { description: 'Accent tag over the portrait (e.g. "Jakarta, ID")' },
+        },
+        { name: "resumeButton", type: "group", fields: buttonFields },
       ],
     },
     {
-      slug: "cta",
+      slug: "contact",
       access: publicRead,
       hooks: { afterChange: [revalidateSite] },
       fields: [
-        { name: "headline", type: "text", required: true },
-        { name: "headlineAccent", type: "text" },
-        { name: "subtext", type: "textarea" },
-        { name: "buttons", type: "array", fields: buttonFields },
+        { name: "eyebrow", type: "text", admin: { description: 'e.g. "Get In Touch"' } },
+        {
+          type: "row",
+          fields: [
+            {
+              name: "headline",
+              type: "text",
+              required: true,
+              admin: { width: "50%", description: 'Solid line (e.g. "Start a")' },
+            },
+            {
+              name: "headlineGhost",
+              type: "text",
+              admin: { width: "50%", description: 'Ghosted line (e.g. "Project")' },
+            },
+          ],
+        },
+        { name: "email", type: "text" },
+        { name: "location", type: "text" },
+        { name: "availability", type: "text" },
+        {
+          name: "socialLinks",
+          type: "array",
+          fields: [
+            { name: "label", type: "text", required: true },
+            { name: "href", type: "text", required: true },
+          ],
+        },
       ],
     },
   ],

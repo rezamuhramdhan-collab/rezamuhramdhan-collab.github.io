@@ -1,6 +1,6 @@
 import type { Payload } from "payload";
 import type { Project, SectionBlock, ImageRef, RichItem } from "@/content/types";
-import { siteSettings, hero, about, cta } from "@/content/site";
+import { siteSettings, hero, about, contact } from "@/content/site";
 import { services } from "@/content/services";
 import { experience } from "@/content/experience";
 import { getPublishedProjects } from "@/content/projects";
@@ -120,7 +120,7 @@ export function toProjectDoc(project: Project, categoryId: number | string) {
     slug: project.slug,
     category: categoryId,
     year: project.year,
-    thumbnail: { placeholderKey: project.thumbnail },
+    thumbnail: {},
     featured: project.featured,
     summary: project.summary,
     meta: {
@@ -176,17 +176,22 @@ export async function seed(payload: Payload): Promise<void> {
   });
   await payload.updateGlobal({
     slug: "about",
-    data: { ...about, paragraphs: toTextArray(about.paragraphs) } as never,
+    data: {
+      ...about,
+      paragraphs: toTextArray(about.paragraphs),
+      image: { showPlaceholder: true },
+      skills: about.skills.map((text) => ({ text })),
+    } as never,
   });
-  await payload.updateGlobal({ slug: "cta", data: cta as never });
+  await payload.updateGlobal({ slug: "contact", data: contact as never });
 
   for (const service of [...services].sort((a, b) => a.order - b.order)) {
     await payload.create({
       collection: "services",
       data: {
-        icon: service.icon,
         title: service.title,
         description: service.description,
+        tags: service.tags.map((text) => ({ text })),
       } as never,
     });
   }
@@ -199,6 +204,8 @@ export async function seed(payload: Payload): Promise<void> {
         role: entry.role,
         company: entry.company,
         companyLink: entry.companyLink,
+        employmentType: entry.employmentType,
+        location: entry.location,
         description: entry.description,
         isCurrent: entry.isCurrent,
       } as never,

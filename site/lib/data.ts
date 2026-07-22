@@ -7,7 +7,7 @@ import type {
   SiteSettings,
   Hero,
   About,
-  CtaSection,
+  ContactSection,
   ServiceCard,
   ExperienceEntry,
   Project,
@@ -180,9 +180,7 @@ function fromProjectDoc(doc: ProjectDoc, index: number): Project {
       typeof doc.category === "object" && doc.category ? doc.category.name : String(doc.category ?? ""),
     year: doc.year,
     thumbnail:
-      thumbMedia && typeof thumbMedia === "object" && thumbMedia.url
-        ? thumbMedia.url
-        : doc.thumbnail?.placeholderKey ?? "",
+      thumbMedia && typeof thumbMedia === "object" && thumbMedia.url ? thumbMedia.url : "",
     featured: Boolean(doc.featured),
     order: index + 1,
     summary: doc.summary,
@@ -243,22 +241,26 @@ export async function getHero(): Promise<Hero> {
   return {
     ...doc,
     portrait: fromImageSlot(doc.portrait),
-    socialLinks: doc.socialLinks ?? [],
     primaryCta: resolveButton(doc.primaryCta),
-    secondaryCta: resolveButton(doc.secondaryCta),
   } as Hero;
 }
 
 export async function getAbout(): Promise<About> {
   const payload = await payloadClient();
-  const doc = await payload.findGlobal({ slug: "about" });
-  return { ...doc, paragraphs: fromTextArray(doc.paragraphs) } as About;
+  const doc = await payload.findGlobal({ slug: "about", depth: 1 });
+  return {
+    ...doc,
+    paragraphs: fromTextArray(doc.paragraphs),
+    image: fromImageSlot(doc.image),
+    skills: (doc.skills ?? []).map((s) => s.text),
+    resumeButton: doc.resumeButton ? resolveButton(doc.resumeButton) : undefined,
+  } as About;
 }
 
-export async function getCta(): Promise<CtaSection> {
+export async function getContact(): Promise<ContactSection> {
   const payload = await payloadClient();
-  const doc = await payload.findGlobal({ slug: "cta", depth: 1 });
-  return { ...doc, buttons: (doc.buttons ?? []).map((button) => resolveButton(button)) } as CtaSection;
+  const doc = await payload.findGlobal({ slug: "contact" });
+  return { ...doc, socialLinks: doc.socialLinks ?? [] } as ContactSection;
 }
 
 // ---------- Collections ----------
@@ -268,9 +270,9 @@ export async function getServices(): Promise<ServiceCard[]> {
   const { docs } = await payload.find({ collection: "services", sort: "_order", limit: 100 });
   return docs.map((doc, i) => ({
     id: String(doc.id),
-    icon: doc.icon,
     title: doc.title,
     description: doc.description,
+    tags: (doc.tags ?? []).map((t) => t.text),
     order: i + 1,
   }));
 }
@@ -284,6 +286,8 @@ export async function getExperience(): Promise<ExperienceEntry[]> {
     role: doc.role,
     company: doc.company,
     companyLink: doc.companyLink ?? "#",
+    employmentType: doc.employmentType ?? undefined,
+    location: doc.location ?? undefined,
     description: doc.description ?? "",
     content: hasLexical(doc.content) ? doc.content : undefined,
     order: i + 1,

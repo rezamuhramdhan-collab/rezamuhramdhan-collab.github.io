@@ -1,7 +1,16 @@
 // Small UI icons. Stroke-style, sized by parent containers.
 
 import type { ComponentType } from "react";
-import type { ServiceIconKey, SocialPlatformKey, ButtonIconKey } from "@/content/registry";
+import type { ButtonIconKey } from "@/content/registry";
+
+// Diagonal "go" arrow used on pill buttons and section links (↗).
+export function ArrowUpRight() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 17L17 7M17 7H8M17 7V16" />
+    </svg>
+  );
+}
 
 export function ArrowRight() {
   return (
@@ -13,34 +22,8 @@ export function ArrowRight() {
 
 export function ArrowLeft() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 12H5M12 19l-7-7 7-7" />
-    </svg>
-  );
-}
-
-export function ArrowDown() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 5v14M19 12l-7 7-7-7" />
-    </svg>
-  );
-}
-
-export function LinkedInIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
-    </svg>
-  );
-}
-
-export function InstagramIcon() {
-  return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <circle cx="12" cy="12" r="4.5" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+      <path d="M17 7L7 17M7 17H16M7 17V8" />
     </svg>
   );
 }
@@ -62,51 +45,21 @@ export function WhatsAppIcon() {
   );
 }
 
-export function PenIcon() {
+// Neutral placeholder shown in image slots with no uploaded media.
+export function PhotoIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 19l7-7 3 3-7 7-3-3z" />
-      <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-      <circle cx="11" cy="11" r="2" />
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <circle cx="8.5" cy="8.5" r="1.5" />
+      <path d="M21 15l-5-5L5 21" />
     </svg>
   );
 }
 
-export function GridIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="7" height="7" rx="1" />
-      <rect x="14" y="3" width="7" height="7" rx="1" />
-      <rect x="3" y="14" width="7" height="7" rx="1" />
-      <rect x="14" y="14" width="7" height="7" rx="1" />
-    </svg>
-  );
-}
-
-export function BulbIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.4 1 2.3h6c0-.9.4-1.8 1-2.3A7 7 0 0 0 12 2z" />
-    </svg>
-  );
-}
-
-// Keys come from content/registry.ts; the Record types make a key added there
+// Keys come from content/registry.ts; the Record type makes a key added there
 // a compile error here until its icon exists (and vice versa).
-export const serviceIcons: Record<ServiceIconKey, ComponentType> = {
-  pen: PenIcon,
-  grid: GridIcon,
-  bulb: BulbIcon,
-};
-
-export const socialIcons: Record<SocialPlatformKey, ComponentType> = {
-  linkedin: LinkedInIcon,
-  instagram: InstagramIcon,
-  email: EmailIcon,
-};
-
 export const buttonIcons: Record<ButtonIconKey, ComponentType> = {
-  arrow: ArrowRight,
+  arrow: ArrowUpRight,
   whatsapp: WhatsAppIcon,
   email: EmailIcon,
 };

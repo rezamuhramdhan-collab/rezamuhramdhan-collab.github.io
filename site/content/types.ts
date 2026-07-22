@@ -3,7 +3,7 @@
 // Phase 1 stores records as typed TS modules; the same shapes map 1:1 onto a
 // CMS schema (Sanity/Payload) or SQL tables when the backend is chosen.
 
-import type { ServiceIconKey, SocialPlatformKey, ButtonIconKey } from "./registry";
+import type { ButtonIconKey } from "./registry";
 
 // ---------- Shared ----------
 
@@ -19,9 +19,8 @@ export interface ButtonItem extends LinkItem {
 }
 
 export interface SocialLink {
-  platform: SocialPlatformKey;
-  href: string;
   label: string;
+  href: string;
 }
 
 // ---------- Singletons ----------
@@ -40,37 +39,41 @@ export interface SiteSettings {
 }
 
 export interface Hero {
-  greeting: string;
-  roleHighlight: string;
+  eyebrow?: string; // small label above the name (e.g. "Product Designer")
+  firstName?: string; // solid first line of the big name
+  lastName?: string; // ghosted second line of the big name
+  portfolioTag?: string; // top-right tag over the photo (e.g. "Portfolio — 2026")
   bio: string;
   primaryCta: ButtonItem;
-  secondaryCta: ButtonItem;
-  socialLinks: SocialLink[];
-  portrait?: ImageRef; // uploaded photo; built-in silhouette when placeholder
-  profileCard: { name: string; subtitle: string; avatarInitial: string };
+  portrait?: ImageRef; // uploaded photo; full-bleed placeholder gradient otherwise
 }
 
 export interface About {
   headline: string;
-  headlineAccent: string; // rendered in accent blue inside the headline
   paragraphs: string[];
-  yearsExperience: number; // drives "over N years" copy
+  image?: ImageRef; // portrait beside the copy
+  skills: string[]; // two-column dotted grid
+  locationTag?: string; // accent tag over the portrait (e.g. "Jakarta, ID")
+  resumeButton?: ButtonItem;
 }
 
-export interface CtaSection {
-  headline: string;
-  headlineAccent: string;
-  subtext: string;
-  buttons: ButtonItem[];
+export interface ContactSection {
+  eyebrow?: string;
+  headline: string; // solid line (e.g. "Start a")
+  headlineGhost?: string; // ghosted line (e.g. "Project")
+  email?: string;
+  location?: string;
+  availability?: string;
+  socialLinks: SocialLink[];
 }
 
 // ---------- Collections ----------
 
 export interface ServiceCard {
   id: string;
-  icon: ServiceIconKey;
   title: string;
   description: string;
+  tags: string[]; // skill pills under the (expanded) service
   order: number;
 }
 
@@ -80,6 +83,8 @@ export interface ExperienceEntry {
   role: string;
   company: string;
   companyLink: string;
+  employmentType?: string; // Company · Type · Location meta line
+  location?: string;
   description: string; // legacy plain text — used when content is absent
   content?: unknown; // Lexical editor state; wins over description when present
   order: number;
@@ -223,7 +228,7 @@ export interface Project {
   title: string;
   category: string;
   year: string;
-  thumbnail: string; // key into the thumbnail registry (svg placeholders for now)
+  thumbnail: string; // uploaded thumbnail URL, or "" to show the neutral placeholder
   featured: boolean;
   order: number;
 

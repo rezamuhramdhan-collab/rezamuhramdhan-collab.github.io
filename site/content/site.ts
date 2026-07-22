@@ -1,69 +1,82 @@
-import type { SiteSettings, Hero, About, CtaSection } from "./types";
+import type { SiteSettings, Hero, About, ContactSection } from "./types";
 
 // ---------- Singletons (PRD §4.1) ----------
 
 export const siteSettings: SiteSettings = {
-  logoText: "RR",
+  logoText: "Reza Ramdhan",
   navLinks: [
     { label: "Work", href: "/#work" },
     { label: "Services", href: "/#services" },
+    { label: "Experience", href: "/#experience" },
     { label: "About", href: "/#about" },
     { label: "Contact", href: "/#contact" },
   ],
   ctaButton: {
-    label: "Download Resume",
+    label: "Resume",
     href: "/resume.pdf",
     variant: "dark",
     download: true,
+    icon: "arrow",
   },
-  footerText: "© 2026 Reza Ramdhan. All rights reserved.",
+  footerText: "© 2026 Reza Ramdhan",
   footerLinks: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" },
+    { label: "Work", href: "/#work" },
+    { label: "Services", href: "/#services" },
+    { label: "Experience", href: "/#experience" },
+    { label: "About", href: "/#about" },
+    { label: "Contact", href: "/#contact" },
   ],
-  backLink: { label: "Back to Home", href: "/" },
+  backLink: { label: "Back", href: "/" },
   ctaFooter: {
     headline: "Interested in working together?",
-    subtext: "Let's discuss your next project",
-    button: { label: "Back to Home", href: "/#contact", variant: "dark" },
+    subtext: "Let's build something great.",
+    button: { label: "Next Project", href: "/#work", variant: "dark", icon: "arrow" },
   },
 };
 
 export const hero: Hero = {
-  greeting: "Hi, I'm Reza Ramdhan",
-  roleHighlight: "Product Designer.",
-  bio: "I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.",
-  primaryCta: { label: "View My Work", href: "/#work", variant: "dark", icon: "arrow" },
-  secondaryCta: { label: "Let's Talk", href: "/#contact", variant: "outline" },
-  socialLinks: [
-    { platform: "linkedin", href: "https://www.linkedin.com/in/rezamramdhan/", label: "LinkedIn" },
-    { platform: "instagram", href: "https://www.instagram.com/rezamrmdhn/", label: "Instagram" },
-    { platform: "email", href: "mailto:rezamramdhan@gmail.com", label: "Email" },
-  ],
-  profileCard: {
-    name: "Reza Ramdhan",
-    subtitle: "Product Designer at Figma",
-    avatarInitial: "R",
-  },
+  eyebrow: "Product Designer",
+  firstName: "Reza",
+  lastName: "Ramdhan",
+  portfolioTag: "Portfolio — 2026",
+  bio: "Product Designer with 5+ years of experience in fintech and digital banking, specializing in solving complex user problems and contributing to product strategy.",
+  primaryCta: { label: "View Work", href: "/#work", variant: "dark", icon: "arrow" },
 };
 
 export const about: About = {
-  headline: "I design products that people",
-  headlineAccent: "love to use.",
+  headline: "About",
   paragraphs: [
-    "With over {years} years of experience in product design, I've had the privilege of working with some of the most innovative companies in tech.",
-    "My approach combines strategic thinking with meticulous attention to detail, ensuring every design decision is both beautiful and purposeful.",
+    "With over 5 years of experience in product design, I create user-centered solutions that balance business goals, technical constraints, and seamless user experiences.",
+    "From discovery to delivery, I work closely with cross-functional teams to design intuitive products that solve real problems and drive measurable impact.",
   ],
-  yearsExperience: 6,
+  skills: [
+    "Product Design",
+    "Design Systems",
+    "User Research",
+    "Usability Testing",
+    "Product Strategy",
+    "Fintech & Banking",
+  ],
+  locationTag: "Jakarta, ID",
+  resumeButton: {
+    label: "Download Resume",
+    href: "/resume.pdf",
+    variant: "outline",
+    download: true,
+    icon: "arrow",
+  },
 };
 
-export const cta: CtaSection = {
-  headline: "Let's build something",
-  headlineAccent: "great",
-  subtext:
-    "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
-  buttons: [
-    { label: "WhatsApp Me", href: "#", variant: "dark", icon: "whatsapp" },
-    { label: "Send Email", href: "mailto:rezamramdhan@gmail.com", variant: "outline", icon: "email" },
+export const contact: ContactSection = {
+  eyebrow: "Get In Touch",
+  headline: "Start a",
+  headlineGhost: "Project",
+  email: "rezamuhramdhan@gmail.com",
+  location: "Jakarta, Indonesia (UTC+7)",
+  availability: "Open for new projects",
+  socialLinks: [
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/rezamramdhan/" },
+    { label: "Instagram", href: "https://www.instagram.com/rezamrmdhn/" },
+    { label: "WhatsApp", href: "https://wa.me/" },
   ],
 };

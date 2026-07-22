@@ -1,4 +1,4 @@
-import type { Hero, Project } from "@/content/types";
+import type { Hero, Project, SocialLink } from "@/content/types";
 
 // SEO foundation (see docs/seo-best-practices-research.md §5).
 // The custom-domain Vercel deployment is the canonical home; the GitHub
@@ -15,14 +15,17 @@ const httpOnly = (url?: string) => (url && url.startsWith("http") ? url : undefi
 
 // ---------- JSON-LD builders ----------
 
-export function personJsonLd(hero: Hero) {
+const fullName = (hero: Hero) =>
+  [hero.firstName, hero.lastName].filter(Boolean).join(" ").trim() || "Reza Ramdhan";
+
+export function personJsonLd(hero: Hero, socials: SocialLink[] = []) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: hero.profileCard.name,
-    jobTitle: hero.profileCard.subtitle,
+    name: fullName(hero),
+    ...(hero.eyebrow ? { jobTitle: hero.eyebrow } : {}),
     url: SITE_URL,
-    sameAs: hero.socialLinks.map((s) => httpOnly(s.href)).filter(Boolean),
+    sameAs: socials.map((s) => httpOnly(s.href)).filter(Boolean),
   };
 }
 
@@ -30,9 +33,9 @@ export function websiteJsonLd(hero: Hero) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: `${hero.profileCard.name} — Portfolio`,
+    name: `${fullName(hero)} — Portfolio`,
     url: SITE_URL,
-    author: { "@type": "Person", name: hero.profileCard.name },
+    author: { "@type": "Person", name: fullName(hero) },
   };
 }
 

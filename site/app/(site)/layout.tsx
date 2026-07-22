@@ -6,18 +6,31 @@ import { getSiteSettings, getHero } from "@/lib/data";
 import { SITE_URL, IS_SECONDARY_DEPLOY } from "@/lib/seo";
 import "../globals.css";
 
-// Anton: display face for headlines, the footer wordmark, and card titles —
-// always used uppercase. Archivo: body/UI text, variable weight 100–900.
-const anton = localFont({
-  src: "../fonts/anton.woff2",
-  weight: "400",
-  variable: "--font-anton",
+// Editorial-dark type system (see docs/design.md):
+// Playfair Display — display face for the hero name, section headings, card
+// and role titles (has a distinct italic used for the "ghost" second voice).
+// DM Mono — all small labels: eyebrows, numbers, dates, meta, footer links.
+// Manrope — body/UI text, buttons, nav links (variable weight 200–800).
+const playfair = localFont({
+  src: [
+    { path: "../fonts/playfair.woff2", weight: "300 900", style: "normal" },
+    { path: "../fonts/playfair-italic.woff2", weight: "400 900", style: "italic" },
+  ],
+  variable: "--font-playfair",
   display: "swap",
 });
-const archivo = localFont({
-  src: "../fonts/archivo.woff2",
-  weight: "100 900",
-  variable: "--font-archivo",
+const dmMono = localFont({
+  src: [
+    { path: "../fonts/dmmono-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/dmmono-500.woff2", weight: "500", style: "normal" },
+  ],
+  variable: "--font-dmmono",
+  display: "swap",
+});
+const manrope = localFont({
+  src: "../fonts/manrope.woff2",
+  weight: "200 800",
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -59,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
   return (
-    <html lang="en" className={`${anton.variable} ${archivo.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${dmMono.variable} ${manrope.variable}`}>
       <body>
         {children}
         <SiteFooter settings={settings} />
