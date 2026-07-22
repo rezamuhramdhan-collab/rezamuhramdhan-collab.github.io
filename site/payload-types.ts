@@ -99,13 +99,13 @@ export interface Config {
     'site-settings': SiteSetting;
     hero: Hero;
     about: About;
-    cta: Cta;
+    contact: Contact;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
-    cta: CtaSelect<false> | CtaSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
   };
   locale: null;
   widgets: {
@@ -196,9 +196,17 @@ export interface Category {
 export interface Service {
   id: number;
   _order?: string | null;
-  icon: 'pen' | 'grid' | 'bulb';
   title: string;
   description: string;
+  /**
+   * Skill pills shown under the service (e.g. Research, Prototyping)
+   */
+  tags?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -213,6 +221,11 @@ export interface Experience {
   role: string;
   company: string;
   companyLink?: string | null;
+  /**
+   * Shown after the company (Company · Type · Location)
+   */
+  employmentType?: ('Full-time' | 'Part-time' | 'Contract' | 'Internship' | 'Freelance') | null;
+  location?: string | null;
   /**
    * Plain text — used if the editor below is empty
    */
@@ -263,12 +276,11 @@ export interface Project {
     platform: string;
     timeline: string;
   };
+  /**
+   * Homepage card image. A neutral placeholder shows until an image is uploaded.
+   */
   thumbnail?: {
     media?: (number | null) | Media;
-    /**
-     * Built-in placeholder art used until media is uploaded
-     */
-    placeholderKey?: ('bank-saqu' | 'banking-app' | 'saas-wireframes' | 'design-system' | 'banking-homepage') | null;
   };
   heroImage?: {
     media?: (number | null) | Media;
@@ -913,9 +925,14 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface ServicesSelect<T extends boolean = true> {
   _order?: T;
-  icon?: T;
   title?: T;
   description?: T;
+  tags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -929,6 +946,8 @@ export interface ExperienceSelect<T extends boolean = true> {
   role?: T;
   company?: T;
   companyLink?: T;
+  employmentType?: T;
+  location?: T;
   description?: T;
   content?: T;
   isCurrent?: T;
@@ -958,7 +977,6 @@ export interface ProjectsSelect<T extends boolean = true> {
     | T
     | {
         media?: T;
-        placeholderKey?: T;
       };
   heroImage?:
     | T
@@ -1300,8 +1318,22 @@ export interface SiteSetting {
  */
 export interface Hero {
   id: number;
-  greeting: string;
-  roleHighlight: string;
+  /**
+   * Small label above the name (e.g. Product Designer)
+   */
+  eyebrow?: string | null;
+  /**
+   * Solid first line of the big name
+   */
+  firstName?: string | null;
+  /**
+   * Ghosted second line of the big name
+   */
+  lastName?: string | null;
+  /**
+   * Top-right tag over the hero photo (e.g. "Portfolio — 2026")
+   */
+  portfolioTag?: string | null;
   bio?: string | null;
   primaryCta: {
     label: string;
@@ -1314,35 +1346,11 @@ export interface Hero {
     icon?: ('arrow' | 'whatsapp' | 'email') | null;
     download?: boolean | null;
   };
-  secondaryCta: {
-    label: string;
-    href: string;
-    /**
-     * Optional file (e.g. résumé PDF). Overrides the link URL when set.
-     */
-    file?: (number | null) | Media;
-    variant: 'dark' | 'outline';
-    icon?: ('arrow' | 'whatsapp' | 'email') | null;
-    download?: boolean | null;
-  };
-  socialLinks?:
-    | {
-        platform: 'linkedin' | 'instagram' | 'email';
-        href: string;
-        label: string;
-        id?: string | null;
-      }[]
-    | null;
   portrait?: {
     media?: (number | null) | Media;
     alt?: string | null;
     caption?: string | null;
     showPlaceholder?: boolean | null;
-  };
-  profileCard?: {
-    name?: string | null;
-    subtitle?: string | null;
-    avatarInitial?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1354,7 +1362,6 @@ export interface Hero {
 export interface About {
   id: number;
   headline: string;
-  headlineAccent?: string | null;
   paragraphs?:
     | {
         /**
@@ -1379,33 +1386,64 @@ export interface About {
         id?: string | null;
       }[]
     | null;
+  image?: {
+    media?: (number | null) | Media;
+    alt?: string | null;
+    caption?: string | null;
+    showPlaceholder?: boolean | null;
+  };
   /**
-   * Replaces {years} in paragraphs
+   * Skill list shown as a two-column dotted grid
    */
-  yearsExperience?: number | null;
+  skills?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Accent tag over the portrait (e.g. "Jakarta, ID")
+   */
+  locationTag?: string | null;
+  resumeButton: {
+    label: string;
+    href: string;
+    /**
+     * Optional file (e.g. résumé PDF). Overrides the link URL when set.
+     */
+    file?: (number | null) | Media;
+    variant: 'dark' | 'outline';
+    icon?: ('arrow' | 'whatsapp' | 'email') | null;
+    download?: boolean | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cta".
+ * via the `definition` "contact".
  */
-export interface Cta {
+export interface Contact {
   id: number;
+  /**
+   * e.g. "Get In Touch"
+   */
+  eyebrow?: string | null;
+  /**
+   * Solid line (e.g. "Start a")
+   */
   headline: string;
-  headlineAccent?: string | null;
-  subtext?: string | null;
-  buttons?:
+  /**
+   * Ghosted line (e.g. "Project")
+   */
+  headlineGhost?: string | null;
+  email?: string | null;
+  location?: string | null;
+  availability?: string | null;
+  socialLinks?:
     | {
         label: string;
         href: string;
-        /**
-         * Optional file (e.g. résumé PDF). Overrides the link URL when set.
-         */
-        file?: (number | null) | Media;
-        variant: 'dark' | 'outline';
-        icon?: ('arrow' | 'whatsapp' | 'email') | null;
-        download?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -1477,8 +1515,10 @@ export interface SiteSettingsSelect<T extends boolean = true> {
  * via the `definition` "hero_select".
  */
 export interface HeroSelect<T extends boolean = true> {
-  greeting?: T;
-  roleHighlight?: T;
+  eyebrow?: T;
+  firstName?: T;
+  lastName?: T;
+  portfolioTag?: T;
   bio?: T;
   primaryCta?:
     | T
@@ -1490,24 +1530,6 @@ export interface HeroSelect<T extends boolean = true> {
         icon?: T;
         download?: T;
       };
-  secondaryCta?:
-    | T
-    | {
-        label?: T;
-        href?: T;
-        file?: T;
-        variant?: T;
-        icon?: T;
-        download?: T;
-      };
-  socialLinks?:
-    | T
-    | {
-        platform?: T;
-        href?: T;
-        label?: T;
-        id?: T;
-      };
   portrait?:
     | T
     | {
@@ -1515,13 +1537,6 @@ export interface HeroSelect<T extends boolean = true> {
         alt?: T;
         caption?: T;
         showPlaceholder?: T;
-      };
-  profileCard?:
-    | T
-    | {
-        name?: T;
-        subtitle?: T;
-        avatarInitial?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1533,7 +1548,6 @@ export interface HeroSelect<T extends boolean = true> {
  */
 export interface AboutSelect<T extends boolean = true> {
   headline?: T;
-  headlineAccent?: T;
   paragraphs?:
     | T
     | {
@@ -1541,20 +1555,22 @@ export interface AboutSelect<T extends boolean = true> {
         content?: T;
         id?: T;
       };
-  yearsExperience?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cta_select".
- */
-export interface CtaSelect<T extends boolean = true> {
-  headline?: T;
-  headlineAccent?: T;
-  subtext?: T;
-  buttons?:
+  image?:
+    | T
+    | {
+        media?: T;
+        alt?: T;
+        caption?: T;
+        showPlaceholder?: T;
+      };
+  skills?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  locationTag?: T;
+  resumeButton?:
     | T
     | {
         label?: T;
@@ -1563,6 +1579,27 @@ export interface CtaSelect<T extends boolean = true> {
         variant?: T;
         icon?: T;
         download?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  eyebrow?: T;
+  headline?: T;
+  headlineGhost?: T;
+  email?: T;
+  location?: T;
+  availability?: T;
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
         id?: T;
       };
   updatedAt?: T;
