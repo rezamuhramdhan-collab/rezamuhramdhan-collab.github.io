@@ -61,7 +61,7 @@ export function BlockBody({ block }: { block: SingleBlock }) {
           <div className="hmw-grid">
             {block.cards.map((card, i) => (
               <div key={i} className="hmw-card">
-                <span className="hmw-num">{i + 1}</span>
+                <span className="hmw-num tnum">{String(i + 1).padStart(2, "0")}</span>
                 <p><Cell item={card} /></p>
               </div>
             ))}
