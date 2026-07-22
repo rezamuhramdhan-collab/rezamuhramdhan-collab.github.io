@@ -3,9 +3,10 @@ import { hasLexical } from "@/lib/lexical";
 import { RichBody, Rich, Cell, Paras } from "./rich-text";
 import { ImageGroup, WithImages } from "./images";
 
-// Presentation for each case-study section block. Step blocks are only
-// renderable as a group (see groupSections in CaseStudy.tsx), so BlockBody
-// takes the union without them.
+// Presentation for each case-study section block. In v2 the block's heading is
+// hoisted out into the section's accent label row (see blockHeading +
+// CaseSections), so the bodies here render content only. Step blocks are only
+// renderable as a group, so BlockBody takes the union without them.
 
 export type SingleBlock = Exclude<SectionBlock, StepBlock>;
 
@@ -15,12 +16,30 @@ const listClass: Record<ListStyle, string> = {
   arrow: "dash-list",
 };
 
+// The short label shown in a section's accent eyebrow row (or undefined → no
+// label row). Step groups use their sectionHeading.
+export function blockHeading(block: SectionBlock): string | undefined {
+  switch (block.type) {
+    case "stepBlock":
+      return block.sectionHeading ?? "Solution";
+    case "richText":
+    case "bulletList":
+      return block.heading;
+    case "hmwGrid":
+    case "twoColumn":
+    case "impactCallout":
+    case "reflection":
+      return block.heading;
+    case "image":
+      return undefined;
+  }
+}
+
 export function BlockBody({ block }: { block: SingleBlock }) {
   switch (block.type) {
     case "richText":
       return (
         <WithImages images={block.images} layout={block.imageLayout}>
-          {block.heading && <h2>{block.heading}</h2>}
           {hasLexical(block.content) ? (
             <div className="prose rich">
               <RichBody data={block.content} />
@@ -29,12 +48,12 @@ export function BlockBody({ block }: { block: SingleBlock }) {
             <>
               <div className="prose"><Paras items={block.paragraphs} /></div>
               {block.items && (
-                <ul className="dash-list block-gap">
+                <ul className="dash-list" style={{ marginTop: 20 }}>
                   {block.items.map((item, i) => <li key={i}><Cell item={item} /></li>)}
                 </ul>
               )}
               {block.closingParagraphs && (
-                <div className="prose block-gap-lg"><Paras items={block.closingParagraphs} /></div>
+                <div className="prose" style={{ marginTop: 24 }}><Paras items={block.closingParagraphs} /></div>
               )}
             </>
           )}
@@ -44,11 +63,10 @@ export function BlockBody({ block }: { block: SingleBlock }) {
     case "bulletList":
       return (
         <WithImages images={block.images} layout={block.imageLayout}>
-          {block.heading && <h2>{block.heading}</h2>}
           {block.intro && (
             <div className="prose"><p><Rich text={block.intro} /></p></div>
           )}
-          <ul className={`${listClass[block.style]}${block.intro ? " block-gap-lg" : ""}`}>
+          <ul className={listClass[block.style]} style={block.intro ? { marginTop: 20 } : undefined}>
             {block.items.map((item, i) => <li key={i}><Cell item={item} /></li>)}
           </ul>
         </WithImages>
@@ -56,23 +74,19 @@ export function BlockBody({ block }: { block: SingleBlock }) {
 
     case "hmwGrid":
       return (
-        <>
-          <h2>{block.heading}</h2>
-          <div className="hmw-grid">
-            {block.cards.map((card, i) => (
-              <div key={i} className="hmw-card">
-                <span className="hmw-num tnum">{String(i + 1).padStart(2, "0")}</span>
-                <div className="hmw-body"><Cell item={card} /></div>
-              </div>
-            ))}
-          </div>
-        </>
+        <div className={`hmw-grid${block.cards.length > 1 ? " multi" : ""}`}>
+          {block.cards.map((card, i) => (
+            <div key={i} className="hmw-card">
+              <span className="hmw-num">{String(i + 1).padStart(2, "0")}</span>
+              <div className="hmw-body"><Cell item={card} /></div>
+            </div>
+          ))}
+        </div>
       );
 
     case "twoColumn":
       return (
         <WithImages images={block.images} layout={block.imageLayout}>
-          <h2>{block.heading}</h2>
           <div className="two-col">
             <div>
               <h4>{block.leftTitle}</h4>
@@ -93,7 +107,6 @@ export function BlockBody({ block }: { block: SingleBlock }) {
     case "impactCallout":
       return (
         <>
-          <h2>{block.heading}</h2>
           <ul className="check-list">
             {block.items.map((item, i) => <li key={i}><Cell item={item} /></li>)}
           </ul>
@@ -109,17 +122,16 @@ export function BlockBody({ block }: { block: SingleBlock }) {
     case "reflection":
       return (
         <>
-          <h2>{block.heading}</h2>
           <div className="prose">
             <Paras items={block.paragraphs} />
             <p><strong>{block.learningsTitle}</strong></p>
           </div>
-          <ul className="dash-list block-gap">
+          <ul className="dash-list" style={{ marginTop: 16 }}>
             {block.learnings.map((item, i) => <li key={i}><Cell item={item} /></li>)}
           </ul>
           {block.pullQuote && (
-            <p className="pull-quote">
-              {block.pullQuote.text} <span className="em">{block.pullQuote.accent}</span>
+            <p className="pull">
+              {block.pullQuote.text} {block.pullQuote.accent && <span className="em">{block.pullQuote.accent}</span>}
             </p>
           )}
         </>
@@ -139,19 +151,21 @@ export function BlockBody({ block }: { block: SingleBlock }) {
 
 export function StepGroup({ steps }: { steps: StepBlock[] }) {
   return (
-    <>
-      <h2>{steps[0].sectionHeading ?? "Solution"}</h2>
+    <div className="steps">
       {steps.map((step, i) => (
-        <div key={i} className="solution-item">
-          <WithImages images={step.images} layout={step.imageLayout}>
-            <h3>{step.stepNumber}. {step.title}</h3>
-            {step.description && <p className="step-desc">{step.description}</p>}
-            <ul className="dash-list">
-              {step.bullets.map((item, i) => <li key={i}><Cell item={item} /></li>)}
+        <div key={i} className="step">
+          <h3>
+            {String(step.stepNumber).padStart(2, "0")} — {step.title}
+          </h3>
+          {step.description && <p>{step.description}</p>}
+          {step.bullets.length > 0 && (
+            <ul className="sq-list">
+              {step.bullets.map((item, j) => <li key={j}><Cell item={item} /></li>)}
             </ul>
-          </WithImages>
+          )}
+          {step.images?.length ? <ImageGroup images={step.images} layout={step.imageLayout} /> : null}
         </div>
       ))}
-    </>
+    </div>
   );
 }

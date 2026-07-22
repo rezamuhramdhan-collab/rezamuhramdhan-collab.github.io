@@ -1,89 +1,82 @@
 import Image from "next/image";
-import type {
-  Hero as HeroData,
-  About,
-  CtaSection as CtaData,
-  ServiceCard,
-  ExperienceEntry,
-} from "@/content/types";
+import type { Hero as HeroData, About, ServiceCard, ExperienceEntry } from "@/content/types";
 import { Btn } from "../shared";
-import { serviceIcons, socialIcons, ArrowDown } from "../icons";
+import { ArrowUpRight, PhotoIcon } from "../icons";
 import { RichBody } from "../case/rich-text";
 
-// Full-bleed photo band: headline + primary CTA pinned to the bottom corners
-// as an overlay, bio/socials folded into the same block. `hero.secondaryCta`
-// ("Let's Talk") renders in the nav instead — see HomeNav in shared.tsx.
-// `hero.profileCard` is no longer rendered by this layout (the portrait now
-// fills the whole band rather than sitting in a separate card); the field
-// stays in the schema and CMS for a future use, per design.md.
+// Full-bleed portrait band with a bottom gradient; eyebrow + "Portfolio — YYYY"
+// tag on one row, the two-line solid/ghost name, then bio + View Work pill.
+// The nav (HomeNav) is rendered separately and overlays this via position:absolute.
 export function Hero({ hero }: { hero: HeroData }) {
+  const hasPhoto = hero.portrait && hero.portrait.src !== "placeholder";
   return (
-    <header className="hero">
-      {hero.portrait && hero.portrait.src !== "placeholder" && (
-        <Image
-          className="hero-bg"
-          src={hero.portrait.src}
-          alt={hero.portrait.alt}
-          fill
-          sizes="100vw"
-          priority
-          style={{ objectFit: "cover" }}
-        />
-      )}
-      <div className="container hero-inner">
-        <div>
-          <p className="eyebrow hero-eyebrow">{hero.greeting}</p>
-          <h1>{hero.roleHighlight}</h1>
-          <p className="hero-bio">{hero.bio}</p>
-          <div className="hero-secondary">
-            <div className="socials">
-              {hero.socialLinks.map((social, i) => {
-                const Icon = socialIcons[social.platform];
-                const external = social.href.startsWith("http");
-                return (
-                  <a
-                    key={`${social.platform}-${i}`}
-                    className="social-btn"
-                    href={social.href}
-                    aria-label={social.label}
-                    target={external ? "_blank" : undefined}
-                    rel={external ? "noopener" : undefined}
-                  >
-                    <Icon />
-                    {social.label}
-                  </a>
-                );
-              })}
-            </div>
-          </div>
+    <header className="hero" id="top">
+      <div className="hero-photo">
+        {hasPhoto && (
+          <Image
+            src={hero.portrait!.src}
+            alt={hero.portrait!.alt || `${hero.firstName ?? ""} ${hero.lastName ?? ""}`.trim()}
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: "cover", objectPosition: "center 20%" }}
+          />
+        )}
+      </div>
+      <div className="hero-content">
+        <div className="hero-eyebrow-row">
+          {hero.eyebrow && <span className="eyebrow">{hero.eyebrow}</span>}
+          {hero.portfolioTag && <span className="hero-tag">{hero.portfolioTag}</span>}
         </div>
-        <a className="hero-discover" href={hero.primaryCta.href}>
-          {hero.primaryCta.label}
-          <span className="arrow-chip" aria-hidden="true"><ArrowDown /></span>
-        </a>
+        <h1 className="hero-name">
+          {hero.firstName}
+          {hero.lastName && <span className="ghost">{hero.lastName}</span>}
+        </h1>
+        <div className="hero-sub">
+          {hero.bio && <p className="hero-bio">{hero.bio}</p>}
+          <Btn button={hero.primaryCta} />
+        </div>
       </div>
     </header>
   );
 }
 
+// Numbered hairline rows. A row expands (description + tag pills) when it has
+// tags; otherwise it shows the title only — a content-driven version of the
+// design's "first row open" state.
 export function Services({ services }: { services: ServiceCard[] }) {
   return (
-    <section className="section-alt" id="services">
-      <div className="container">
-        <div className="services-header" data-reveal>
-          <h2 className="section-heading">What I Do</h2>
-          <p className="section-sub">
-            I specialize in transforming complex problems into simple, beautiful solutions
-          </p>
+    <section className="section px" id="services">
+      <div className="services-grid">
+        <div className="services-intro" data-reveal>
+          <span className="eyebrow">What I Offer</span>
+          <h2>
+            Service<span className="accent-s">s</span>
+          </h2>
+          <p>I specialize in transforming complex problems into simple, beautiful solutions.</p>
         </div>
-        <div className="services-grid">
-          {services.map((card) => {
-            const Icon = serviceIcons[card.icon];
+        <div className="services-list">
+          {services.map((service, i) => {
+            const expanded = service.tags.length > 0;
             return (
-              <div key={card.id} className="service-card" data-reveal>
-                <div className="service-icon"><Icon /></div>
-                <h3>{card.title}</h3>
-                <p>{card.description}</p>
+              <div className="service-row" key={service.id} data-reveal>
+                <div className="service-btn">
+                  <div className="service-title">
+                    <span className="service-num">{String(i + 1).padStart(2, "0")}</span>
+                    <h3>{service.title}</h3>
+                  </div>
+                  <span className="arr"><ArrowUpRight /></span>
+                </div>
+                {expanded && (
+                  <div className="service-detail">
+                    <p>{service.description}</p>
+                    <div className="service-tags">
+                      {service.tags.map((tag) => (
+                        <span key={tag}>{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -93,58 +86,117 @@ export function Services({ services }: { services: ServiceCard[] }) {
   );
 }
 
-export function AboutExperience({
-  about,
-  experience,
-}: {
-  about: About;
-  experience: ExperienceEntry[];
-}) {
+// One-third intro / two-thirds right-aligned role list (design.md geometry).
+// Each role: title + Company · Type · Location meta line, accent date, and a
+// grey round-dot bullet list from the rich `content` (or newline-split text).
+export function Experience({ experience }: { experience: ExperienceEntry[] }) {
   return (
-    <section className="section-alt" id="about">
-      <div className="container exp-inner">
-        <div className="exp-statement" data-reveal>
-          <h2>
-            {about.headline} <span className="love">{about.headlineAccent}</span>
-          </h2>
-          {about.paragraphs.map((p, i) => (
-            <p key={i}>{p.replace("{years}", String(about.yearsExperience))}</p>
-          ))}
+    <section className="section px" id="experience">
+      <div className="exp-grid">
+        <div className="exp-intro" data-reveal>
+          <span className="eyebrow">Career</span>
+          <h2>Experience</h2>
+          <p>
+            5+ years across fintech and digital banking — designing and shipping onboarding,
+            lending, and design-system work that moves real product metrics.
+          </p>
         </div>
-        <div className="exp-timeline">
-          <h3 data-reveal>Experience</h3>
-          <ul className="timeline">
-            {experience.map((entry) => (
-              <li key={entry.id} data-reveal>
-                <div className="period">{entry.period}</div>
-                <div className="role">{entry.role}</div>
-                <a className="company" href={entry.companyLink}>{entry.company}</a>
-                {entry.content ? (
-                  <div className="desc rich"><RichBody data={entry.content} /></div>
-                ) : (
-                  <div className="desc">{entry.description}</div>
-                )}
-              </li>
-            ))}
-          </ul>
+        <div className="exp-list">
+          {experience.map((entry) => (
+            <div className="exp-item" key={entry.id} data-reveal>
+              <div className="exp-head">
+                <div className="exp-role">
+                  <h3>{entry.role}</h3>
+                  <div className="exp-meta">
+                    <span className="company">{entry.company}</span>
+                    {entry.employmentType && (
+                      <>
+                        <span className="div" />
+                        <span className="tag">{entry.employmentType}</span>
+                      </>
+                    )}
+                    {entry.location && (
+                      <>
+                        <span className="div" />
+                        <span className="tag">{entry.location}</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+                <span className="exp-date">{entry.period}</span>
+              </div>
+              <ExperienceBullets entry={entry} />
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-export function CtaSection({ cta }: { cta: CtaData }) {
+function ExperienceBullets({ entry }: { entry: ExperienceEntry }) {
+  if (entry.content) {
+    return (
+      <div className="exp-bullets rich">
+        <RichBody data={entry.content} />
+      </div>
+    );
+  }
+  const bullets = entry.description
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  if (!bullets.length) return null;
   return (
-    <section className="cta" id="contact">
-      <div className="container">
-        <h2 data-reveal>
-          {cta.headline} <span className="great">{cta.headlineAccent}</span>
-        </h2>
-        <p data-reveal>{cta.subtext}</p>
-        <div className="cta-actions" data-reveal>
-          {cta.buttons.map((button) => (
-            <Btn key={button.label} button={button} />
+    <ul className="exp-bullets">
+      {bullets.map((line, i) => (
+        <li key={i}>
+          <span className="dot" />
+          <span>{line}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// Portrait with an accent location tag + copy, skills grid, and résumé button.
+export function AboutSection({ about }: { about: About }) {
+  const hasPhoto = about.image && about.image.src !== "placeholder";
+  return (
+    <section className="section about px" id="about">
+      <div className="about-grid">
+        <div className="about-photo" data-reveal>
+          {hasPhoto ? (
+            <Image
+              src={about.image!.src}
+              alt={about.image!.alt || "Portrait"}
+              width={about.image!.width ?? 600}
+              height={about.image!.height ?? 640}
+              sizes="(max-width: 900px) 100vw, 600px"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : (
+            <div className="img-placeholder"><PhotoIcon /></div>
+          )}
+          {about.locationTag && <span className="about-tag">{about.locationTag}</span>}
+        </div>
+        <div className="about-body" data-reveal>
+          <span className="eyebrow">Who I Am</span>
+          <h2>{about.headline}</h2>
+          {about.paragraphs.map((p, i) => (
+            <p key={i}>{p}</p>
           ))}
+          {about.skills.length > 0 && (
+            <ul className="skills">
+              {about.skills.map((skill) => (
+                <li key={skill}>
+                  <span className="dot" />
+                  <span>{skill}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {about.resumeButton && <Btn button={about.resumeButton} />}
         </div>
       </div>
     </section>

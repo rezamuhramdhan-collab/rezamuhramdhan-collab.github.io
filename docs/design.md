@@ -1,157 +1,196 @@
-# Visual Language — Portfolio Redesign
+# Visual Language — Portfolio Redesign v2 (Editorial Dark)
 
-Reference document for the Mermet-inspired redesign explored in two mockups:
+Source of truth: the user's Figma file **Website Bank Saqu → "Homepage" frame**
+(`mYQVP1MznOJwEJdqcWxdyQ`, node `4379:7830`), read directly via the Figma MCP
+(exact fills, type styles, and spacing below are pulled from the file, not
+eyeballed from screenshots). A companion case-study detail mockup ("Volta
+Studio") from the same design establishes the case-study template conventions.
+This replaces the previous "Mermet-inspired" ink/chartreuse system entirely
+(see git history), and supersedes the earlier draft of this document that
+guessed Fraunces/Inter before file access was available.
 
-- Homepage: https://claude.ai/code/artifact/167fe3c3-71eb-429e-8818-39bd6811b80d
-- Case study page: https://claude.ai/code/artifact/a4fbf6f7-4126-4f71-a179-bc8911eee04f
-
-The direction — bold condensed type, neon-on-ink color blocking, plus-mark image
-badges — was explicitly requested to match a reference site (Mermet, a sunscreen
-fabric brand). Nothing here is a "safe default"; it's a deliberate, pinned
-aesthetic. This doc exists so the direction survives past the two mockups and
-can be implemented consistently in `site/` when the redesign is greenlit.
+This is a **single, committed dark theme** — no light variant exists in the
+design, and the mood (dim photography, ghost-italic display lines, hairlines
+on near-black) depends on staying dark. A light mode would be a new design
+decision, not a default to preserve.
 
 ## Color
 
+Exact values from the Figma file:
+
 | Token | Value | Use |
 |---|---|---|
-| `--ink` | `#14130f` | Warm near-black — page bg (dark theme), hero/CTA/card surfaces in both themes |
-| `--paper` | `#e7e2d6` | Warm stone — page bg (light theme) |
-| `--paper-soft` | `#ddd7c8` | Alt-row tint (light theme), e.g. alternating case-study sections |
-| `--cream` | `#f6f3ea` | Off-white text on dark surfaces |
-| `--accent` | `#d7ff3d` | Acid chartreuse — the one bold color, spent sparingly |
-| `--accent-ink` | `#1c2100` | Dark text/icon color *on* the accent (buttons, badges) |
-| `--muted` | `#5a5648` | Secondary text, light theme |
-| `--muted-on-dark` | `#a8a495` | Secondary text on fixed-dark surfaces, either theme |
-| `--line` | `rgba(20,19,15,.14)` | Hairline dividers, light theme |
-| `--line-on-dark` | `rgba(246,243,234,.14)` | Hairline dividers, dark theme / fixed-dark surfaces |
+| `--bg` | `#0c0c0a` | Page background |
+| `--panel` | `#151513` | Raised surfaces: project cards, About section band, meta bar, callout cards |
+| `--fg` | `#ede8df` | Headings, high-emphasis text (warm off-white); also the fill of the light button |
+| `--muted` | `#7a7570` | Body copy, secondary labels, collapsed-state text |
+| `--accent` | `#ff4020` | Eyebrows, numbers, primary buttons, active tab, skill dots, About location tag, step-block left border |
+| `--line` | `rgba(237,232,223,0.1)` | All hairlines: section top borders, card borders, row dividers, form underlines, tag-pill borders |
+| Ghost 30% | `rgba(237,232,223,0.3)` | Hero name second line (italic) |
+| Ghost 20% | `rgba(237,232,223,0.2)` | "Start a *Project*" second line |
+| Ghost 5% | `rgba(237,232,223,0.05)` | Giant footer signature |
+| Nav link | `rgba(237,232,223,0.8)` | Top-nav links at rest |
+| Placeholder | `rgba(122,117,112,0.4)` | Form placeholders, footer copyright |
 
-**Rule**: spend the accent in one or two places per screen — a CTA pill, one
-headline word, a status dot, list-item arrows. It should never be a background
-for body copy or compete with itself across a section.
+Button text: on accent = `#ede8df` for large CTAs (View Work, Send Message)
+but `#0c0c0a` for the small nav Resume pill and the About location tag; the
+light button (Download Resume) is `#ede8df` fill with `#0c0c0a` text.
 
-**Theming**: token-level, not a blind invert. `--bg`/`--fg`/`--fg-muted`/`--card-line`
-are the four theme-aware aliases; every component reads through them, never
-`--ink`/`--paper` directly (those are theme-*fixed* — used deliberately for
-surfaces like the hero photo band or CTA section that stay dark in both themes).
-Set via `prefers-color-scheme` and mirrored by `:root[data-theme]` so a manual
-toggle can override the OS setting in either direction.
+## Typography — three faces, strict roles
 
-## Typography
+| Face | Weights used | Role |
+|---|---|---|
+| **Playfair Display** | 700, 900, 900 italic | All display/headings: hero name, section headings, card titles, service titles, contact values, wordmark |
+| **DM Mono** | 400, 500 | Every small label: eyebrows, numbers, categories, years, meta labels, form labels, tab nav, footer links, tag pills, copyright |
+| **Manrope** | 300–700 | Body copy, top-nav links, buttons, skills list, form input text |
 
-- **Display — Anton**: all headlines, giant numbers, nav wordmark. Always
-  uppercase, `line-height: 0.94–0.98`, `text-wrap: balance`. Bold/condensed by
-  nature — never pair it with a second display face.
-- **Body/UI — Archivo** (variable, 100–900): paragraphs, nav, buttons, labels,
-  meta values. Weight does the differentiation work Anton can't (regular body,
-  700 for buttons/eyebrows).
-- Both fonts are self-hosted (`@font-face` + base64 `woff2` data URI) — no
-  external font requests.
-- **Eyebrow/label**: 0.72rem, weight 700, uppercase, `letter-spacing: 0.16em`.
-- **Tabular numbers** (`font-variant-numeric: tabular-nums`) wherever digits
-  need to align in a column: experience dates, project years, stat counters.
+The **two-voice display pattern**: paired display lines set the first line in
+Playfair Black upright `--fg` and the second in Playfair Black *Italic* at a
+ghost opacity — hero name (30%), "Start a / *Project*" (20%), footer
+signature (5%, single element that wraps to two lines). Single-word accents
+use the same italic voice at full accent color: the trailing "s" in
+"Service*s*", the "M" in the "AM"-style wordmark.
 
-### Type scale (approximate, clamp-based on the homepage; fixed px where matching an existing page — see Spacing)
+### Exact type specs (desktop, 1387px frame)
 
-| Role | Size |
+| Role | Spec |
 |---|---|
-| Hero h1 | `clamp(3.2rem, 8.5vw, 7.6rem)` |
-| Landing section h2 | `clamp(2.1rem, 5vw, 3.6rem)` |
-| Case-study h1 | `clamp(2.4rem, 6vw, 4.4rem)` |
-| Case-study section h2 | `clamp(1.7rem, 3.4vw, 2.5rem)` |
-| Card title (h3) | `clamp(1.2rem, 2vw, 1.5rem)` |
-| Footer/meta wordmark | `clamp(3.8rem, 17vw, 12.5rem)` |
+| Hero name | Playfair Black 152px / 134px line, uppercase; line 2 italic ghost-30 |
+| Section heading (Work) | Playfair Black 80px |
+| Section heading (Services/About) | Playfair Black 69px |
+| "Start a Project" | Playfair Black 111px / 111px |
+| Footer signature | Playfair Black Italic 250px, ghost-5, wraps to 2 lines |
+| Card / service / contact-value titles | Playfair Bold 18–24px |
+| Eyebrow | DM Mono 400 12px, tracking 2.64px, uppercase, accent |
+| Small label (meta, form, footer, numbers) | DM Mono 400/500 12px, tracking 1.2px, uppercase |
+| Category / tag pill / year | DM Mono 400 12px, tracking 0.6px, no uppercase |
+| Nav link | Manrope 600 12px, tracking 2.16px, uppercase, fg-80 |
+| Button label | Manrope 700 12px, tracking 1.2px, uppercase |
+| Body copy | Manrope 400 14px / 22.75px line, `--muted` |
+| Skills item | Manrope 500 12px, tracking 0.3px |
+| Form input | Manrope 300 14px |
 
 ## Layout
 
-- **Container**: `.wrap` — `max-width: 1280px`, `margin: 0 auto`,
-  `padding-left/right: clamp(1.25rem, 5vw, 4rem)`. One container class, used
-  everywhere; don't invent a second one.
-- **Full-width content, not artificially narrowed**: headlines, lede
-  paragraphs, body prose, and in-content images extend to the container's
-  full width. Don't cap them with `max-width: Nch` "for readability" unless a
-  real design reason calls for a narrow column (we removed several ch-based
-  caps that were fighting the layout for no reason).
-- **Section rhythm**: prefer *one-sided* padding (top-only) over splitting
-  space across both the bottom of section A and the top of section B — doing
-  both doubles the visual gap by accident. When a page must match an existing
-  site's exact rhythm, use its literal fixed pixel values rather than a
-  responsive `clamp()` guess (see the case-study page: header 72px/56px,
-  section 88px, mobile step-down to 64px — all pulled from the live site's
-  own CSS).
-- **Grids**: 2-up (work cards) and 3-up (services) at desktop, collapsing to
-  1-column under 900px. Nav collapses to a 2-row stack (logo+CTAs, then links)
-  under 900px rather than shrinking text until it breaks.
+- Frame 1387px wide, max content 1440px; side padding **64px**; section
+  vertical padding **144px**; every section separated by a `--line` top
+  border (not background alternation — except About, which additionally
+  sits on `--panel`).
+- **Nav**: 70px tall, absolute over the hero photo. `justify-content:
+  space-between`: wordmark left (Playfair Bold 20px, second initial italic),
+  links center (gap 40px), small accent Resume pill right (dark text,
+  download icon).
+- **Hero**: full-viewport photo (object-fit cover) under a bottom-heavy
+  gradient — solid `#0c0c0a` at 30% from bottom, ~55% opacity at 70%, 20%
+  at top. Content block pinned to bottom (80px bottom padding): accent
+  eyebrow + "Portfolio — YYYY" mono tag right-aligned on the same row, the
+  two-line name, then bio (max 320px) and the View Work pill side by side.
+- **Work grid**: 2-col, 20px gap, starts 64px below the section head. The
+  "All Projects" link sits top-right of the section head, aligned with the
+  eyebrow.
+- **Services**: 377px intro column + flexible rows column, 64px gap. Rows
+  divided by `--line`; each row py-24: accent mono number (gap 20) +
+  Playfair Bold 24px title, arrow right. First row is expanded: description
+  and tag pills indented 40px; expanded arrow points →, collapsed ↗.
+- **Experience**: a two-column split with a **wide gutter** — the intro
+  ("Career" eyebrow + Playfair Black "Experience" heading + short lede) takes
+  the left **~30%**, and the role list is a narrow **~44%** column pushed to
+  the far right (`justify-content: space-between` leaves a ~26% gap between
+  them; the list is *not* two-thirds-width). Each role is a row divided by `--line`
+  bottom borders (last row borderless): the header is `justify-content:
+  space-between` — left is the Playfair Bold 20px role title above a meta line
+  of `Company` (Manrope SemiBold 14px, `--fg`-80%) `·` `Type` `·` `Location`
+  (DM Mono 12px muted, separated by 1px×12px hairline dividers); right is the
+  date range (DM Mono 12px **accent**, e.g. "2022 — Present"). Below, the
+  bullet list uses small **grey round dots** (4px, `--line` color — not
+  accent, unlike the case-study square markers) with Manrope 14px muted text.
+  Sits between Services and About; adds an "Experience" nav + footer link.
+- **About**: on `--panel`. 2 equal columns, 64px gap, vertically centered.
+  Image (max 640px tall) with an accent location tag — square corners, not
+  a pill — overlapping near the bottom-right. Text column: eyebrow, heading,
+  two paragraphs, then a hairline-topped 2-col skills grid (4px accent dot +
+  Manrope 12px), then the light Download Resume pill. **No experience
+  timeline in this design** — see "Adaptation notes".
+- **Contact ("Start a Project")**: eyebrow + two-voice display heading, then
+  a 2:3 split. Left: stacked info items (mono label over Playfair Bold 18px
+  value, hairline under each): Email (accent arrow icon), Location,
+  Availability, then a mono social-links row. Right: form — mono labels,
+  underline-only inputs (no boxes), name/email in one row, service dropdown,
+  message textarea, centered accent Send Message pill.
+- **Footer**: hairline top; links row (DM Mono 12px, gap 32) + copyright
+  (placeholder-grey) in one 32px-padded row; below, the giant ghost
+  signature (5% opacity Playfair Black Italic) breaking out to two lines,
+  clipped by the page edge.
 
-## Components
+## Case-study template conventions (from the Figma "Detail Project" frame)
 
-- **Nav**: sticky, `border-bottom: 1px solid var(--card-line)`. Logo/back-link
-  left, links true-centered (3-column grid `1fr auto 1fr`, *not*
-  `justify-content: space-between` — that only centers the middle item when
-  the two side groups happen to be equal width), CTA button(s) right.
-- **Buttons**: pill (`border-radius: 999px`), uppercase bold label,
-  `accent`-filled primary / outline secondary. Always paired outline+filled
-  when two actions sit together, never two filled buttons side by side.
-- **Hero**: full-bleed photo, bottom gradient scrim for text legibility,
-  headline + primary CTA pinned to the bottom corners as an overlay — not a
-  split two-column layout. Bio, secondary CTA, and social links live inside
-  the same dark band, stacked under the headline, so the hero reads as one
-  block rather than a hero-plus-separate-intro-strip.
-- **Cards** (project/work): dark ink chip, hairline border, thumbnail image
-  with a circular "+" badge overlaid top-right *on the image* (not floating on
-  the card corner), hover = lift + accent-tinted border glow.
-- **Section header**: two variants —
-  - *split*: heading left, one-line intro right, baseline-aligned (`.section-head`)
-  - *stacked*: heading, then intro directly below with a fixed 16px gap
-    (`.section-head--stacked` — a modifier, not a separate rule set, so it
-    doesn't fight the base class's `gap`/`flex-direction`)
-- **Meta grid** (case-study role/scope/platform/timeline): bordered box,
-  equal cells, uniform `20px 24px` padding on *every* cell (including the
-  first — don't special-case it), hairline `border-left` dividers between.
-- **Lists**: no default bullets. Arrow (`→`) marker in accent color for
-  unordered, accent-colored numeral for ordered.
-- **Blockquote**: `border-left: 2px solid var(--accent)`, italic text.
-- **Image placeholders**: a consistent "photo icon on a soft accent-tinted
-  gradient" treatment for any unfilled media slot — signals "swap this for a
-  real asset" without faking a screenshot. Used identically for the hero photo
-  slot, work-card thumbnails, and in-content case-study images.
+Verified from Figma node `4380:8128` (the Volta Studio case study).
 
-## Recurring implementation traps
+- **Layout width**: max container **1200px** centered, **48px** inner padding
+  → 1104px content. Body **text wraps at 672px** (left-aligned, roughly the
+  left half), while **images span the full 1104px** content width. This
+  asymmetry — narrow text, full-width imagery — is the defining rhythm of the
+  page; do not center the text or narrow the images to match it.
+- **Top bar**: sticky, `rgba(12,12,10,0.95)` + blur, hairline bottom border,
+  56px tall. Three-column grid: "← Back" mono link left; centered mono
+  tab-nav of the section anchors (Background / Problem / Design Strategy /
+  Solution / Outcome), active tab accent; empty right cell to keep the nav
+  truly centered.
+- **Header**: kicker "`01 | Category`" (accent mono number, 1px vertical
+  separator, muted mono category); Playfair Black title at **96px** / 88px
+  line; muted subtitle (≤672px); then the meta grid.
+- **Meta grid**: full 1104px width, 4 equal columns, 16px radius,
+  `overflow:hidden`. Built with the **1px-gap divider trick** — the grid
+  background is `--line` and cells are `--panel`, so the 1px gaps read as
+  hairline dividers. Each cell: mono label over Playfair Bold 18px value.
+- **Section openers**: accent mono eyebrow (12px, tracking 1.2px) + a 1px
+  `--line` rule filling the rest of the row; ~96px top padding per section.
+- **Body**: Manrope 14px / 1.8; a leading paragraph may bump to 16px `--fg`.
+  Bullet lists use a small **square** accent marker (6px).
+- **Sequential content** (Solution steps): "`01 — Title`" Playfair Bold 18px
+  headings, each block indented behind a **2px accent left border**, compact
+  (title + one description paragraph). **Parallel content** (HMW cards) uses
+  `--panel` hairline cards with an accent mono number over a Playfair Bold
+  question.
+- **Pull-quotes**: Playfair italic ~22px, 2px accent left border.
+- **Impact stats**: `--panel` hairline card, Playfair Black number
+  (~44px) + mono label.
+- **Footer CTA**: on `--panel`, hairline top border. Left: accent mono
+  eyebrow + "Let's build something great." (Playfair Black 36px, **solid
+  `--fg`** — the Figma does *not* italic-ghost the tail here). Right: "All
+  Work" mono link + accent Next Project pill (dark text).
+- **Images**: full 1104px content-width, 16px radius (hero ≈2:1, body
+  images ≈2.3:1); no separate border needed — the radius + dark fill read
+  as framed on the near-black ground.
 
-These bit us more than once while building the mockups — worth checking for
-specifically during real implementation:
+## Adaptation notes (design → this site's real content)
 
-1. **Padding shorthand silently overwrites a sibling declaration.**
-   `.foo { padding: 1rem 0; }` on an element that also carries `.wrap` (which
-   sets `padding-left`/`padding-right`) zeroes those out, because the
-   shorthand always sets all four sides and a later rule with equal
-   specificity wins. Always use `padding-top`/`padding-bottom` explicitly on
-   any class that shares an element with `.wrap`. This exact bug appeared
-   independently in the homepage nav, the homepage footer, and the case-study
-   nav — three separate times.
-2. **`gap` on a flex/grid container plus a child's own margin double-count.**
-   If a parent sets `gap`, don't *also* put `margin-top` on a child expecting
-   a specific spacing value — they add together. Pick one mechanism (prefer
-   `gap`) and zero the other, including the browser's own default `<p>`
-   margin (`1em`), which will quietly reappear the moment an explicit
-   override is removed.
-3. **Verify spacing and overflow by measuring, not by reading the CSS.**
-   Several of the above were only caught by rendering the page headlessly and
-   reading `getBoundingClientRect()` / computed styles — visual inspection or
-   re-reading the source missed them. Worth doing for any nav, hero, or
-   section-boundary change before calling it done.
-4. **A full desktop nav (logo + several links + two buttons) will not fit a
-   360–390px viewport at any font size.** Design the mobile nav layout
-   deliberately (stacked rows, hidden tabs) rather than assuming it degrades
-   gracefully.
+- **Experience meta line**: the dedicated Experience section (see Components)
+  renders the CMS experience entries. Its `Company · Type · Location` meta
+  line needs two fields the CMS doesn't have yet — employment **type**
+  (Full-time / Internship) and **location**. Either add them to the
+  experience schema, or drop the missing segments and show `Company` alone.
+  The mockup's type/location values ("Full-time · Jakarta, ID", etc.) are
+  reasonable placeholders, not confirmed data.
+- **Location tag / contact location**: no location field exists in the CMS
+  yet ("Jakarta, ID" in the mockup is unconfirmed) — needs a Settings field
+  and the user's confirmation.
+- **Contact form**: the current site has no form backend (CTA buttons are
+  WhatsApp/mailto links). The form needs a submission strategy (API route on
+  Vercel; hidden or degraded on the static export) — scope separately.
+- **Resume**: nav pill + About button both reference the existing resume
+  download already in the CMS settings.
+- **Photography**: hero portrait, About portrait, and the four project card
+  photos in the mockups are the Figma design's stock placeholders — real
+  photography/screenshots must replace them before launch.
 
-## What's deliberately *not* carried over
+## Recurring implementation traps (carried forward, still true)
 
-- The literal Mermet fabric-catalog subject matter — only the visual grammar
-  (type, color, card/plus-mark conventions) was borrowed, not the imagery.
-  The hero/case-study background texture is a faint CSS-drawn grid (a nod to
-  design systems/UI grids) rather than fabric grain, since a design portfolio
-  and a textile brand carry different material worlds.
-- Numbered "01/02/03" markers, unless the content is genuinely sequential
-  (the Design Strategy section's two ordered steps qualify; a plain list of
-  three unrelated services doesn't).
+- Centering nav with `space-between` only works when side groups are equal
+  width — this design genuinely uses `space-between` (logo/links/button),
+  which visually off-centers the links; the Figma accepts this, so match it
+  rather than "fixing" it.
+- The padding shorthand (`padding: X Y`) on an element that also carries a
+  container class silently zeroes the container's side padding.
+- Measure rendered output (bounding boxes, screenshots) — don't just read
+  the CSS and assume.

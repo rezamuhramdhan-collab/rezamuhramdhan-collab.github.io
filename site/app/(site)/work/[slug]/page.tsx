@@ -68,20 +68,31 @@ export default async function CaseStudyPage({
     notFound();
   }
 
-  const [settings, nextProject, hero] = await Promise.all([
+  const [settings, nextProject, hero, published] = await Promise.all([
     getSiteSettings(),
     getNextProject(project),
     getHero(),
+    getPublishedProjects(),
   ]);
+  const authorName =
+    [hero.firstName, hero.lastName].filter(Boolean).join(" ").trim() || "Reza Ramdhan";
+  // Kicker number = position in the published work list (1-indexed), if listed.
+  const idx = published.findIndex((p) => p.slug === project.slug);
+  const caseNumber = idx >= 0 ? idx + 1 : undefined;
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: jsonLdString(caseStudyJsonLd(project, hero.profileCard.name)),
+          __html: jsonLdString(caseStudyJsonLd(project, authorName)),
         }}
       />
-      <CaseStudy project={project} settings={settings} nextProject={nextProject} />
+      <CaseStudy
+        project={project}
+        settings={settings}
+        nextProject={nextProject}
+        caseNumber={caseNumber}
+      />
     </>
   );
 }

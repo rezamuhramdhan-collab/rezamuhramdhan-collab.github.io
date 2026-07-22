@@ -60,38 +60,34 @@ export function ProjectLock({ slug, lock }: { slug: string; lock: ProjectLockBox
   if (sections) return <CaseSections sections={sections} />;
 
   return (
-    <section className="case-section">
-      <div className="container">
-        <form
-          className="lock-card"
-          onSubmit={(e) => {
-            e.preventDefault();
-            void tryUnlock(password, true);
-          }}
-        >
-          <span className="lock-icon" aria-hidden>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" />
-              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-            </svg>
-          </span>
-          <h2>This case study is protected</h2>
-          <p>Enter the password to view the full project details.</p>
-          <input
-            className="lock-input"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            aria-label="Project password"
-            autoComplete="off"
-          />
-          {error && <p className="lock-error">That password isn&rsquo;t right — please try again.</p>}
-          <button className="btn btn-dark" type="submit" disabled={busy || !password}>
-            {busy ? "Unlocking…" : "Unlock"}
-          </button>
-        </form>
-      </div>
-    </section>
+    <form
+      className="lock-card"
+      onSubmit={(e) => {
+        e.preventDefault();
+        void tryUnlock(password, true);
+      }}
+    >
+      <span className="lock-icon" aria-hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+      </span>
+      <h2>This case study is protected</h2>
+      <p>Enter the password to view the full project details.</p>
+      <input
+        className="lock-input"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        aria-label="Project password"
+        autoComplete="off"
+      />
+      {error && <p className="lock-error">That password isn&rsquo;t right — please try again.</p>}
+      <button className="btn btn-accent" type="submit" disabled={busy || !password}>
+        {busy ? "Unlocking…" : "Unlock"}
+      </button>
+    </form>
   );
 }
