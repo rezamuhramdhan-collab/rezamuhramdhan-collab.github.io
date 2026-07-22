@@ -671,6 +671,7 @@ footer {
 .rich-img.align-center { text-align: center; }
 .rich-img.align-right { text-align: right; }
 
+.rich-inline > .payload-richtext { display: contents; }
 .rich-inline p { display: inline; margin: 0; }
 .rich-inline strong { color: var(--fg); font-weight: 700; }
 .rich-inline em { font-style: italic; }
@@ -725,7 +726,7 @@ footer {
   font-size: 1.4rem;
   color: var(--accent);
 }
-.hmw-card p { margin-top: 14px; font-size: 15px; color: var(--muted-on-dark); }
+.hmw-card .hmw-body { margin-top: 14px; font-size: 15px; color: var(--muted-on-dark); }
 
 /* ---------- Solution steps ---------- */
 .solution-item { margin-bottom: 64px; }

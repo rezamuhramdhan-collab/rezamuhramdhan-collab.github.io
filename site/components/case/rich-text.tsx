@@ -69,10 +69,18 @@ function toRow(item: RichItem): { text: string; content?: unknown } {
 
 // A list entry: rich content rendered inline when present, else the legacy
 // plain text with **bold** support.
+//
+// The wrapper must be a <div>, not a <span>: Payload's <RichText> always
+// emits its own block-level wrapper (a <div class="payload-richtext">)
+// around whatever it renders, even a single plain paragraph. A <span> can
+// only contain phrasing content, so <span><div>...</div></span> is invalid
+// HTML — the browser silently re-parents the <div> out from under the span,
+// which then mismatches what React expects and trips a hydration error. See
+// .rich-inline's CSS for how the result is still made to read as inline.
 export function Cell({ item }: { item: RichItem }) {
   const row = toRow(item);
   if (hasLexical(row.content)) {
-    return <span className="rich-inline"><RichBody data={row.content} /></span>;
+    return <div className="rich-inline"><RichBody data={row.content} /></div>;
   }
   return <Rich text={row.text} />;
 }
