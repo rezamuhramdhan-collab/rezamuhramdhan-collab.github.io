@@ -7,7 +7,12 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { seed } from "./lib/seed";
 import { hasLexical } from "./lib/lexical";
-import { buttonIconKeys } from "./content/registry";
+import {
+  buttonIconKeys,
+  serviceIconKeys,
+  socialPlatformKeys,
+  thumbnailKeys,
+} from "./content/registry";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -64,6 +69,16 @@ const buttonFields: Field[] = [
   },
   { name: "icon", type: "select", options: [...buttonIconKeys] },
   { name: "download", type: "checkbox", defaultValue: false },
+];
+
+// Same shape as buttonFields but with label/href optional — used for button
+// groups added to an already-populated table (e.g. the `about` global), so the
+// new columns are nullable and the Postgres schema push adds them cleanly
+// rather than failing on NOT NULL against existing rows.
+const optionalButtonFields: Field[] = [
+  { name: "label", type: "text" },
+  { name: "href", type: "text" },
+  ...buttonFields.slice(2),
 ];
 
 // Image slot: uploaded media wins; otherwise the neutral placeholder renders
@@ -344,6 +359,8 @@ export default buildConfig({
           admin: { description: "Skill pills shown under the service (e.g. Research, Prototyping)" },
           fields: [{ name: "text", type: "text", required: true }],
         },
+        // Deprecated (v1) — retained hidden so the schema push stays additive.
+        { name: "icon", type: "select", options: [...serviceIconKeys], admin: { hidden: true } },
       ],
     },
     {
@@ -478,6 +495,13 @@ export default buildConfig({
                   },
                   fields: [
                     { name: "media", type: "upload", relationTo: "media" },
+                    // Deprecated (v1) — retained hidden to keep the push additive.
+                    {
+                      name: "placeholderKey",
+                      type: "select",
+                      options: [...thumbnailKeys],
+                      admin: { hidden: true },
+                    },
                   ],
                 },
                 imageSlot("heroImage", { requireImage: true }),
@@ -623,6 +647,30 @@ export default buildConfig({
         { name: "bio", type: "textarea" },
         { name: "primaryCta", type: "group", fields: buttonFields },
         imageSlot("portrait"),
+        // Deprecated (v1) — retained hidden so the schema push stays additive.
+        { name: "greeting", type: "text", admin: { hidden: true } },
+        { name: "roleHighlight", type: "text", admin: { hidden: true } },
+        { name: "secondaryCta", type: "group", admin: { hidden: true }, fields: buttonFields },
+        {
+          name: "socialLinks",
+          type: "array",
+          admin: { hidden: true },
+          fields: [
+            { name: "platform", type: "select", options: [...socialPlatformKeys] },
+            { name: "href", type: "text" },
+            { name: "label", type: "text" },
+          ],
+        },
+        {
+          name: "profileCard",
+          type: "group",
+          admin: { hidden: true },
+          fields: [
+            { name: "name", type: "text" },
+            { name: "subtitle", type: "text" },
+            { name: "avatarInitial", type: "text" },
+          ],
+        },
       ],
     },
     {
@@ -644,7 +692,10 @@ export default buildConfig({
           type: "text",
           admin: { description: 'Accent tag over the portrait (e.g. "Jakarta, ID")' },
         },
-        { name: "resumeButton", type: "group", fields: buttonFields },
+        { name: "resumeButton", type: "group", fields: optionalButtonFields },
+        // Deprecated (v1) — retained hidden so the schema push stays additive.
+        { name: "headlineAccent", type: "text", admin: { hidden: true } },
+        { name: "yearsExperience", type: "number", admin: { hidden: true } },
       ],
     },
     {
@@ -680,6 +731,19 @@ export default buildConfig({
             { name: "href", type: "text", required: true },
           ],
         },
+      ],
+    },
+    // Deprecated (v1) — superseded by `contact`. Retained hidden so the schema
+    // push stays additive (dropping its tables would hang drizzle push in CI).
+    {
+      slug: "cta",
+      access: publicRead,
+      admin: { hidden: true },
+      fields: [
+        { name: "headline", type: "text" },
+        { name: "headlineAccent", type: "text" },
+        { name: "subtext", type: "textarea" },
+        { name: "buttons", type: "array", fields: buttonFields },
       ],
     },
   ],
