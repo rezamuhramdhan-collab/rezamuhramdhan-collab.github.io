@@ -7,68 +7,60 @@ import type {
   ExperienceEntry,
 } from "@/content/types";
 import { Btn } from "../shared";
-import { serviceIcons, socialIcons } from "../icons";
-import { portraitSvg } from "../thumbs";
+import { serviceIcons, socialIcons, ArrowDown } from "../icons";
 import { RichBody } from "../case/rich-text";
 
+// Full-bleed photo band: headline + primary CTA pinned to the bottom corners
+// as an overlay, bio/socials folded into the same block. `hero.secondaryCta`
+// ("Let's Talk") renders in the nav instead — see HomeNav in shared.tsx.
+// `hero.profileCard` is no longer rendered by this layout (the portrait now
+// fills the whole band rather than sitting in a separate card); the field
+// stays in the schema and CMS for a future use, per design.md.
 export function Hero({ hero }: { hero: HeroData }) {
   return (
     <header className="hero">
+      {hero.portrait && hero.portrait.src !== "placeholder" && (
+        <Image
+          className="hero-bg"
+          src={hero.portrait.src}
+          alt={hero.portrait.alt}
+          fill
+          sizes="100vw"
+          priority
+          style={{ objectFit: "cover" }}
+        />
+      )}
       <div className="container hero-inner">
         <div>
-          <h1>
-            {hero.greeting}
-            <span className="role">{hero.roleHighlight}</span>
-          </h1>
-          <p>{hero.bio}</p>
-          <div className="hero-actions">
-            <Btn button={hero.primaryCta} />
-            <Btn button={hero.secondaryCta} />
-          </div>
-          <div className="socials">
-            {hero.socialLinks.map((social, i) => {
-              const Icon = socialIcons[social.platform];
-              const external = social.href.startsWith("http");
-              return (
-                <a
-                  key={`${social.platform}-${i}`}
-                  className="social-btn"
-                  href={social.href}
-                  aria-label={social.label}
-                  target={external ? "_blank" : undefined}
-                  rel={external ? "noopener" : undefined}
-                >
-                  <Icon />
-                </a>
-              );
-            })}
-          </div>
-        </div>
-        <div className="hero-portrait">
-          {hero.portrait && hero.portrait.src !== "placeholder" ? (
-            <div className="portrait-card">
-              {/* Above the fold — the LCP element when a portrait is uploaded */}
-              <Image
-                src={hero.portrait.src}
-                alt={hero.portrait.alt}
-                fill
-                sizes="(max-width: 900px) 90vw, 440px"
-                priority
-                style={{ objectFit: "cover" }}
-              />
+          <p className="eyebrow hero-eyebrow">{hero.greeting}</p>
+          <h1>{hero.roleHighlight}</h1>
+          <p className="hero-bio">{hero.bio}</p>
+          <div className="hero-secondary">
+            <div className="socials">
+              {hero.socialLinks.map((social, i) => {
+                const Icon = socialIcons[social.platform];
+                const external = social.href.startsWith("http");
+                return (
+                  <a
+                    key={`${social.platform}-${i}`}
+                    className="social-btn"
+                    href={social.href}
+                    aria-label={social.label}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener" : undefined}
+                  >
+                    <Icon />
+                    {social.label}
+                  </a>
+                );
+              })}
             </div>
-          ) : (
-            <div className="portrait-card" dangerouslySetInnerHTML={{ __html: portraitSvg }} />
-          )}
-          <div className="identity-chip">
-            <span className="avatar">{hero.profileCard.avatarInitial}</span>
-            <span>
-              <span className="name">{hero.profileCard.name}</span>
-              <br />
-              <span className="title">{hero.profileCard.subtitle}</span>
-            </span>
           </div>
         </div>
+        <a className="hero-discover" href={hero.primaryCta.href}>
+          {hero.primaryCta.label}
+          <span className="arrow-chip" aria-hidden="true"><ArrowDown /></span>
+        </a>
       </div>
     </header>
   );
