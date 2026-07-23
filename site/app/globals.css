@@ -487,7 +487,10 @@ footer{border-top:1px solid var(--line);}
   width:100%;max-width:var(--content);
   font-size:clamp(2.8rem,5vw,60px);line-height:0.92;color:var(--fg);
 }
-.case-header .subtitle{margin-top:24px;font-size:16px;line-height:1.65;max-width:var(--text);}
+.case-header .subtitle{
+  width:100%;max-width:var(--content);margin-top:24px;
+  font-size:16px;line-height:1.65;
+}
 
 /* Meta grid — 1px-gap divider trick */
 .meta-grid{
