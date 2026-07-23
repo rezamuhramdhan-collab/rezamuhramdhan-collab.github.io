@@ -7,7 +7,7 @@ import { ServiceAccordion } from "./ServiceAccordion";
 
 // Full-bleed portrait band with a bottom gradient; eyebrow + "Portfolio — YYYY"
 // tag on one row, the two-line solid/ghost name, then bio + View Work pill.
-// The nav (HomeNav) is rendered separately and overlays this via position:absolute.
+// The nav (HomeNav) is rendered separately and overlays this as a fixed header.
 export function Hero({ hero }: { hero: HeroData }) {
   const hasPhoto = hero.portrait && hero.portrait.src !== "placeholder";
   return (

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ButtonItem, SiteSettings } from "@/content/types";
 import { buttonIcons } from "./icons";
+import { StickyNavShell } from "./StickyNavShell";
 
 // Pill button. `variant` maps the CMS value onto the two v2 looks:
 // dark → solid accent fill; outline → light (paper) fill. `small` is the
@@ -27,7 +28,7 @@ export function Btn({ button, small }: { button: ButtonItem; small?: boolean }) 
 export function HomeNav({ settings }: { settings: SiteSettings }) {
   const { logoText, logoImage, navLinks, ctaButton } = settings;
   return (
-    <nav className="site-nav px">
+    <StickyNavShell>
       <Link className="nav-mark" href="/" aria-label={logoText}>
         {logoImage ? (
           logoImage.width && logoImage.height ? (
@@ -56,7 +57,7 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
       <div className="nav-cta">
         <Btn button={ctaButton} small />
       </div>
-    </nav>
+    </StickyNavShell>
   );
 }
 

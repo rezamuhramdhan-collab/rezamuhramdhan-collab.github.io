@@ -47,9 +47,17 @@ h1,h2,h3,h4,p{margin:0;}
 
 /* ---------- Nav ---------- */
 .site-nav{
-  position:absolute;top:0;left:0;right:0;z-index:10;height:70px;
+  position:fixed;top:0;left:0;right:0;z-index:30;height:70px;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 var(--pad-x);
+  background:transparent;border-bottom:1px solid transparent;
+  transition:background-color .25s,border-color .25s,backdrop-filter .25s;
+}
+.site-nav.is-scrolled{
+  background:rgba(12,12,10,.95);
+  border-bottom-color:var(--line);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 .nav-mark{font-family:var(--ff-display);font-weight:700;font-size:20px;line-height:28px;color:var(--fg);letter-spacing:-0.5px;}
 .nav-mark .it{font-style:italic;}
