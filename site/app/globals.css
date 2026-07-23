@@ -484,7 +484,7 @@ footer{border-top:1px solid var(--line);}
 .kicker .cat{font-family:var(--ff-mono);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);}
 .case-header h1{
   font-family:var(--ff-display);font-weight:900;
-  max-width:var(--text);
+  width:100%;max-width:var(--content);
   font-size:clamp(2.8rem,7vw,96px);line-height:0.92;color:var(--fg);
 }
 .case-header .subtitle{margin-top:24px;font-size:16px;line-height:1.65;max-width:var(--text);}
