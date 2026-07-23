@@ -4,12 +4,10 @@ import { useState } from "react";
 import type { ServiceCard } from "@/content/types";
 import { ArrowRight, ArrowUpRight } from "../icons";
 
-// Independently expandable service rows. The first item starts open so the
-// interaction and available detail are discoverable without requiring hover.
+// Independently expandable service rows. Every item starts collapsed; hover
+// previews the accent treatment and click reveals its description and tags.
 export function ServiceAccordion({ services }: { services: ServiceCard[] }) {
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(
-    () => new Set(services[0] ? [services[0].id] : []),
-  );
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(() => new Set());
 
   const toggle = (id: string) => {
     setExpandedIds((current) => {
@@ -21,7 +19,7 @@ export function ServiceAccordion({ services }: { services: ServiceCard[] }) {
   };
 
   return (
-    <div className="services-list">
+    <div className="services-list" data-reveal>
       {services.map((service, i) => {
         const expanded = expandedIds.has(service.id);
         const panelId = `service-panel-${service.id}`;
@@ -29,7 +27,6 @@ export function ServiceAccordion({ services }: { services: ServiceCard[] }) {
           <div
             className={`service-row${expanded ? " is-expanded" : ""}`}
             key={service.id}
-            data-reveal
           >
             <button
               className="service-btn"

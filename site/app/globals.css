@@ -199,12 +199,9 @@ h1,h2,h3,h4,p{margin:0;}
 .services-intro p{padding-top:24px;font-size:14px;line-height:22.75px;max-width:377px;}
 .service-row{border-bottom:1px solid var(--line);}
 .service-btn{
-  position:relative;
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  width:calc(100% + 32px);margin:0 -16px;padding:23px 15px;
-  border:1px solid transparent;border-radius:8px;
+  width:100%;padding:24px 0;border:0;
   background:transparent;color:inherit;text-align:left;cursor:pointer;
-  transition:border-color 250ms ease,background-color 250ms ease;
 }
 .service-title{display:flex;align-items:center;gap:20px;}
 .service-num{
@@ -215,29 +212,15 @@ h1,h2,h3,h4,p{margin:0;}
   font-family:var(--ff-display);font-weight:700;font-size:24px;line-height:32px;color:var(--fg);
   transition:color 250ms ease;
 }
-.service-row:is(:hover,:focus-within) .service-btn,
-.service-row.is-expanded .service-btn{
-  border-color:rgba(237,232,223,0.16);
-  background:rgba(237,232,223,0.015);
-}
-.service-row:is(:hover,:focus-within) .service-name,
-.service-row.is-expanded .service-name{
-  color:var(--accent);
-}
+.service-row:is(:hover,:focus-within) .service-name{color:var(--accent);}
+.service-row.is-expanded .service-name{color:var(--fg);}
 .service-btn:focus-visible{
   outline:2px solid var(--accent);outline-offset:3px;
 }
 .service-btn .arr{
-  width:42px;height:42px;margin:-6px -7px -6px 0;
-  display:grid;place-items:center;flex:none;
-  color:var(--muted);border:1px solid transparent;border-radius:8px;
-  transition:color 250ms ease,border-color 250ms ease,transform 250ms ease;
+  width:18px;height:18px;display:grid;place-items:center;flex:none;color:var(--muted);
 }
 .service-btn .arr svg{width:18px;height:18px;}
-.service-row:is(:hover,:focus-within) .arr,
-.service-row.is-expanded .arr{
-  color:var(--accent);border-color:rgba(237,232,223,0.16);transform:translateX(3px);
-}
 .service-detail-shell{
   display:grid;grid-template-rows:0fr;opacity:0;
   transition:grid-template-rows 350ms ease,opacity 250ms ease;
@@ -254,8 +237,7 @@ h1,h2,h3,h4,p{margin:0;}
   color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 13px;
 }
 @media (prefers-reduced-motion:reduce){
-  .service-btn,.service-name,.service-btn .arr,.service-detail-shell{transition:none;}
-  .service-row:is(:hover,:focus-within) .arr,.service-row.is-expanded .arr{transform:none;}
+  .service-name,.service-detail-shell{transition:none;}
 }
 
 /* ---------- About ---------- */
