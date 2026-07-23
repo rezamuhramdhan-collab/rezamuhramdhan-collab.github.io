@@ -76,7 +76,7 @@ function initials(text: string) {
 export function SiteFooter({ settings }: { settings: SiteSettings }) {
   const { footerText, footerLinks, logoText } = settings;
   return (
-    <footer>
+    <footer className="site-footer">
       <div className="footer-row">
         <div className="flinks">
           {footerLinks.map((link) => (

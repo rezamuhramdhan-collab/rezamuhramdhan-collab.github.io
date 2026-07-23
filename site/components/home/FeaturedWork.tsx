@@ -2,27 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import type { Project } from "@/content/types";
-import { ArrowLeft, ArrowRight, ArrowUpRight, PhotoIcon } from "../icons";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "../icons";
+import { ProjectCard } from "./ProjectCard";
 
 // Featured Work grid with client-side pagination: 4 projects per page,
 // controls appear only when there are more. Client-side because the site also
 // ships as a static export — there's no server to render ?page= variants.
 
 const PAGE_SIZE = 4;
-
-function Thumb({ src }: { src: string }) {
-  if (!src) {
-    return (
-      <div className="img-placeholder">
-        <PhotoIcon />
-      </div>
-    );
-  }
-  // fills .project-photo, which reserves space via aspect-ratio
-  return <Image src={src} alt="" fill sizes="(max-width: 820px) 100vw, 560px" style={{ objectFit: "cover" }} />;
-}
 
 export function FeaturedWork({ projects }: { projects: Project[] }) {
   const [page, setPage] = useState(0);
@@ -36,29 +24,18 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
           <span className="eyebrow">Selected Projects</span>
           <h2>Work</h2>
         </div>
-        <Link className="sec-link" href="/#work">
+        <Link className="sec-link" href="/work">
           All Projects
           <ArrowUpRight />
         </Link>
       </div>
       <div className="work-grid">
         {visible.map((project, i) => (
-          <Link key={project.id} className="project-card" href={`/work/${project.slug}`} data-reveal>
-            <div className="project-photo">
-              <Thumb src={project.thumbnail} />
-              <span className="project-num">{String(page * PAGE_SIZE + i + 1).padStart(2, "0")}</span>
-              <span className="project-open" aria-hidden="true">
-                <ArrowUpRight />
-              </span>
-            </div>
-            <div className="project-caption">
-              <div>
-                <h3>{project.title}</h3>
-                <div className="project-cat">{project.category}</div>
-              </div>
-              <span className="project-year">{project.year}</span>
-            </div>
-          </Link>
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={page * PAGE_SIZE + i}
+          />
         ))}
       </div>
       {pageCount > 1 && (

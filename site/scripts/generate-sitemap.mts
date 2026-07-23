@@ -34,11 +34,12 @@ const xml = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   entry(SITE_URL, newest, "1"),
+  entry(`${SITE_URL}/work`, newest, "0.9"),
   ...projects.map((p) => entry(`${SITE_URL}/work/${p.slug}`, p.updatedAt, "0.8")),
   "</urlset>",
   "",
 ].join("\n");
 
 writeFileSync(path.resolve(dirname, "../public/sitemap.xml"), xml);
-console.log(`sitemap.xml written — ${projects.length + 1} URLs`);
+console.log(`sitemap.xml written — ${projects.length + 2} URLs`);
 process.exit(0);
