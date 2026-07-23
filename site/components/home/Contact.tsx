@@ -41,7 +41,12 @@ export function Contact({
       {contact.eyebrow && <span className="eyebrow">{contact.eyebrow}</span>}
       <h2>
         {contact.headline}
-        {contact.headlineGhost && <span className="ghost">{contact.headlineGhost}</span>}
+        {contact.headlineGhost && (
+          <>
+            {" "}
+            <span className="ghost">{contact.headlineGhost}</span>
+          </>
+        )}
       </h2>
       <div className="contact-grid">
         <div className="contact-info">

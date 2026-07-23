@@ -47,6 +47,9 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
             <div className="project-photo">
               <Thumb src={project.thumbnail} />
               <span className="project-num">{String(page * PAGE_SIZE + i + 1).padStart(2, "0")}</span>
+              <span className="project-open" aria-hidden="true">
+                <ArrowUpRight />
+              </span>
             </div>
             <div className="project-caption">
               <div>

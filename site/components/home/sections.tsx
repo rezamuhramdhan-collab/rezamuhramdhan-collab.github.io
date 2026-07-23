@@ -1,8 +1,9 @@
 import Image from "next/image";
 import type { Hero as HeroData, About, ServiceCard, ExperienceEntry } from "@/content/types";
 import { Btn } from "../shared";
-import { ArrowUpRight, PhotoIcon } from "../icons";
+import { PhotoIcon } from "../icons";
 import { RichBody } from "../case/rich-text";
+import { ServiceAccordion } from "./ServiceAccordion";
 
 // Full-bleed portrait band with a bottom gradient; eyebrow + "Portfolio — YYYY"
 // tag on one row, the two-line solid/ghost name, then bio + View Work pill.
@@ -41,9 +42,7 @@ export function Hero({ hero }: { hero: HeroData }) {
   );
 }
 
-// Numbered hairline rows. A row expands (description + tag pills) when it has
-// tags; otherwise it shows the title only — a content-driven version of the
-// design's "first row open" state.
+// Numbered service rows with an independently expandable client-side detail.
 export function Services({ services }: { services: ServiceCard[] }) {
   return (
     <section className="section px" id="services">
@@ -55,32 +54,7 @@ export function Services({ services }: { services: ServiceCard[] }) {
           </h2>
           <p>I specialize in transforming complex problems into simple, beautiful solutions.</p>
         </div>
-        <div className="services-list">
-          {services.map((service, i) => {
-            const expanded = service.tags.length > 0;
-            return (
-              <div className="service-row" key={service.id} data-reveal>
-                <div className="service-btn">
-                  <div className="service-title">
-                    <span className="service-num">{String(i + 1).padStart(2, "0")}</span>
-                    <h3>{service.title}</h3>
-                  </div>
-                  <span className="arr"><ArrowUpRight /></span>
-                </div>
-                {expanded && (
-                  <div className="service-detail">
-                    <p>{service.description}</p>
-                    <div className="service-tags">
-                      {service.tags.map((tag) => (
-                        <span key={tag}>{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        <ServiceAccordion services={services} />
       </div>
     </section>
   );
