@@ -665,18 +665,6 @@ footer{border-top:1px solid var(--line);}
 /* Section head eyebrow stacks above the heading */
 .sec-head .eyebrow{display:block;}
 
-/* Featured work pagination */
-.work-pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:56px;}
-.page-btn{
-  width:40px;height:40px;display:flex;align-items:center;justify-content:center;
-  border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);
-  font-family:var(--ff-mono);font-size:12px;cursor:pointer;transition:color .2s,border-color .2s;
-}
-.page-btn svg{width:14px;height:14px;}
-.page-btn:hover:not(:disabled){color:var(--fg);border-color:var(--muted);}
-.page-btn.active{background:var(--accent);border-color:var(--accent);color:#0c0c0a;}
-.page-btn:disabled{opacity:.35;cursor:default;}
-
 /* HMW card body (Cell renders inline text, not a <p>) */
 .hmw-card .hmw-body{margin-top:12px;font-size:18px;color:var(--fg);line-height:1.5;font-family:var(--ff-display);font-weight:700;}
 /* Reflection pull-quote accent phrase */
