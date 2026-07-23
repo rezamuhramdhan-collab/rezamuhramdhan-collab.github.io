@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { Project, SiteSettings } from "@/content/types";
-import { ArrowLeft, ArrowUpRight } from "../icons";
+import { ArrowBack, ArrowUpRight } from "../icons";
 import { CaseImage } from "./images";
 import { CaseSections } from "./sections";
 import { ProjectLock } from "./ProjectLock";
+import { CaseNav } from "./CaseNav";
 
 // Case-study page assembly (v2): sticky tab-nav, kicker header, meta grid, and
 // footer CTA. Section grouping / block presentation live in sections.tsx,
@@ -30,16 +31,10 @@ export function CaseStudy({
       <div className="topbar">
         <div className="topbar-inner">
           <Link className="back-link" href={backLink.href}>
-            <ArrowLeft />
+            <ArrowBack />
             {backLink.label}
           </Link>
-          <nav className="tab-nav">
-            {anchors.map((anchor) => (
-              <a key={anchor} href={`#${anchor}`} style={{ textTransform: "capitalize" }}>
-                {anchor.replace(/-/g, " ")}
-              </a>
-            ))}
-          </nav>
+          <CaseNav anchors={anchors} />
           <span />
         </div>
       </div>
@@ -89,7 +84,7 @@ export function CaseStudy({
           </div>
           <div className="links">
             <Link className="all-work" href="/#work">
-              <ArrowLeft />
+              <ArrowBack />
               All Work
             </Link>
             <Link

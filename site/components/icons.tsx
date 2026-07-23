@@ -20,14 +20,6 @@ export function ArrowRight() {
   );
 }
 
-export function ArrowLeft() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M17 7L7 17M7 17H16M7 17V8" />
-    </svg>
-  );
-}
-
 export function ArrowBack() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

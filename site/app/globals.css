@@ -464,15 +464,16 @@ footer{border-top:1px solid var(--line);}
   font-family:var(--ff-mono);font-size:12px;line-height:16px;
   letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);
 }
-.back-link:hover{color:var(--fg);}
+.back-link:hover,.back-link:focus-visible{color:var(--accent);}
 .back-link svg{width:13px;height:13px;}
 .tab-nav{display:flex;gap:24px;justify-self:center;}
 .tab-nav a{
   font-family:var(--ff-mono);font-size:12px;line-height:16px;
   letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);
+  transition:color .2s;
 }
 .tab-nav a.active{color:var(--accent);}
-.tab-nav a:hover{color:var(--fg);}
+.tab-nav a:hover,.tab-nav a:focus-visible{color:var(--accent);}
 @media (max-width:900px){.tab-nav{display:none;}}
 
 /* ---------- Header ---------- */
