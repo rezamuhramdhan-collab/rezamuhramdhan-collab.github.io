@@ -108,7 +108,7 @@ h1,h2,h3,h4,p{margin:0;}
 }
 .hero-name .ghost{font-style:italic;color:var(--ghost-30);display:block;}
 .hero-sub{display:flex;align-items:center;gap:48px;padding-top:32px;flex-wrap:wrap;}
-.hero-bio{max-width:320px;font-size:14px;line-height:22.75px;color:var(--muted);}
+.hero-bio{max-width:420px;font-size:14px;line-height:20px;color:var(--muted);}
 
 /* ---------- Section shell ---------- */
 .section{padding-top:144px;padding-bottom:144px;border-top:1px solid var(--line);}
