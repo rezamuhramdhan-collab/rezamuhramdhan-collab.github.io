@@ -66,7 +66,6 @@ h1,h2,h3,h4,p{margin:0;}
   font-family:var(--ff-body);font-weight:600;font-size:12px;line-height:16px;
   letter-spacing:2.16px;text-transform:uppercase;color:var(--nav-fg);transition:color .2s;
 }
-.nav-links a.active,
 .nav-links a:hover,
 .nav-links a:focus-visible{color:var(--accent);}
 @media (max-width:860px){.nav-links{display:none;}}
