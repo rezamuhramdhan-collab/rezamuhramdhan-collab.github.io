@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ButtonItem, SiteSettings } from "@/content/types";
 import { buttonIcons } from "./icons";
+import { ActiveNavLinks } from "./ActiveNavLinks";
 import { StickyNavShell } from "./StickyNavShell";
 
 // Pill button. `variant` maps the CMS value onto the two v2 looks:
@@ -49,11 +50,7 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
           initials(logoText)
         )}
       </Link>
-      <div className="nav-links">
-        {navLinks.map((link) => (
-          <Link key={link.label} href={link.href}>{link.label}</Link>
-        ))}
-      </div>
+      <ActiveNavLinks links={navLinks} />
       <div className="nav-cta">
         <Btn button={ctaButton} small />
       </div>

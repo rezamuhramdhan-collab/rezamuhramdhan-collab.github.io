@@ -66,7 +66,9 @@ h1,h2,h3,h4,p{margin:0;}
   font-family:var(--ff-body);font-weight:600;font-size:12px;line-height:16px;
   letter-spacing:2.16px;text-transform:uppercase;color:var(--nav-fg);transition:color .2s;
 }
-.nav-links a:hover{color:var(--fg);}
+.nav-links a.active,
+.nav-links a:hover,
+.nav-links a:focus-visible{color:var(--accent);}
 @media (max-width:860px){.nav-links{display:none;}}
 
 /* ---------- Buttons ---------- */
@@ -105,7 +107,7 @@ h1,h2,h3,h4,p{margin:0;}
   padding-top:20px;
 }
 .hero-name .ghost{font-style:italic;color:var(--ghost-30);display:block;}
-.hero-sub{display:flex;align-items:center;gap:32px;padding-top:32px;flex-wrap:wrap;}
+.hero-sub{display:flex;align-items:center;gap:48px;padding-top:32px;flex-wrap:wrap;}
 .hero-bio{max-width:320px;font-size:14px;line-height:22.75px;color:var(--muted);}
 
 /* ---------- Section shell ---------- */
