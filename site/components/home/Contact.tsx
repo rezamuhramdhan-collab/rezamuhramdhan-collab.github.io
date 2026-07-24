@@ -103,7 +103,12 @@ export function Contact({
           </div>
           <div className="field">
             <label htmlFor="c-service">Service</label>
-            <select id="c-service" value={service} onChange={(e) => setService(e.target.value)}>
+            <select
+              id="c-service"
+              className={service ? "has-value" : undefined}
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+            >
               <option value="">Select a service</option>
               {services.map((s) => (
                 <option key={s.id} value={s.title}>

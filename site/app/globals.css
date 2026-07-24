@@ -400,6 +400,7 @@ body:has(.all-projects-page) > .site-footer{display:none;}
 }
 .field input::placeholder,.field textarea::placeholder{color:var(--placeholder);}
 .field select{color:var(--placeholder);appearance:none;}
+.field select.has-value{color:var(--fg);}
 .field textarea{height:105px;resize:vertical;}
 .field input:focus,.field select:focus,.field textarea:focus{border-bottom-color:var(--accent);}
 .form-submit{display:flex;justify-content:center;padding-top:20px;}
