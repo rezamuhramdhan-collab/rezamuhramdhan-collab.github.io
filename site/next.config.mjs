@@ -29,4 +29,38 @@ const nextConfig = {
   },
 };
 
-export default withPayload(nextConfig);
+const payloadConfig = withPayload(nextConfig);
+const payloadHeaders = payloadConfig.headers;
+const colorSchemeHint = "Sec-CH-Prefers-Color-Scheme";
+
+// Payload enables a critical color-scheme client hint for every route. Chrome
+// then repeats the first public-page request to attach that hint, which
+// Lighthouse reports as a redirect and a duplicate critical dependency. The
+// portfolio has a fixed dark theme, so scope those headers to the CMS instead.
+payloadConfig.headers = async () => {
+  const rules = typeof payloadHeaders === "function" ? await payloadHeaders() : [];
+  const publicRules = rules.map((rule) => ({
+    ...rule,
+    headers: (rule.headers ?? []).filter(
+      ({ key, value }) =>
+        !(
+          ["accept-ch", "critical-ch", "vary"].includes(key.toLowerCase()) &&
+          value === colorSchemeHint
+        ),
+    ),
+  }));
+
+  return [
+    ...publicRules,
+    {
+      source: "/admin/:path*",
+      headers: [
+        { key: "Accept-CH", value: colorSchemeHint },
+        { key: "Vary", value: colorSchemeHint },
+        { key: "Critical-CH", value: colorSchemeHint },
+      ],
+    },
+  ];
+};
+
+export default payloadConfig;
