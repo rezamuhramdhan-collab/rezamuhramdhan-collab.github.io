@@ -190,27 +190,31 @@ export function AboutSection({ about }: { about: About }) {
               </div>
             )}
           </div>
-          <dl className="about-facts">
-            {about.locationTag && (
-              <div>
-                <dt className="mono">Based in</dt>
-                <dd>{about.locationTag}</dd>
-              </div>
-            )}
-            {about.skills.length > 0 && (
-              <div>
-                <dt className="mono">Tools</dt>
-                <dd>{about.skills.join(", ")}</dd>
-              </div>
-            )}
-          </dl>
         </div>
         <div className="about-body" data-reveal>
           {about.subheading && <h3 className="display h-about">{about.subheading}</h3>}
           {about.paragraphs.map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}
-          {about.resumeButton && <Btn button={about.resumeButton} />}
+          {/* Fact list closes the copy column — two across, between hairlines.
+              It sits under the text, not under the portrait. */}
+          {(about.locationTag || about.skills.length > 0) && (
+            <dl className="about-facts">
+              {about.locationTag && (
+                <div>
+                  <dt className="mono">Based in</dt>
+                  <dd>{about.locationTag}</dd>
+                </div>
+              )}
+              {about.skills.length > 0 && (
+                <div>
+                  <dt className="mono">Tools</dt>
+                  <dd>{about.skills.join(", ")}</dd>
+                </div>
+              )}
+            </dl>
+          )}
+          {about.resumeButton?.label && <Btn button={about.resumeButton} />}
         </div>
       </div>
     </section>

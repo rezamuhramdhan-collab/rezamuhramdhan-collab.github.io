@@ -305,9 +305,17 @@ body:has(.all-projects-page) > .site-footer{display:none;}
   background:var(--fill);border:1px solid var(--line);border-radius:14px;
 }
 .about-photo img{width:100%;height:100%;object-fit:cover;}
-/* Definition list: mono term over ink value, hairline-separated. */
-.about-facts{margin-top:32px;border-top:1px solid var(--line);}
-.about-facts > div{padding-block:16px;border-bottom:1px solid var(--line);}
+/* Fact list: two columns at exactly 50%, closed by a hairline top and bottom,
+   sitting under the copy in the right-hand column (not under the portrait).
+   Columns are split with padding rather than a grid gap so the second term
+   starts on the halfway line, as the design has it. */
+.about-facts{
+  align-self:stretch;width:100%;margin-top:8px;
+  display:grid;grid-template-columns:1fr 1fr;
+  padding-block:16px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.about-facts > div{padding-right:24px;}
 .about-facts dd{margin:0;padding-top:8px;font-size:12.5px;line-height:20.3125px;color:var(--ink);}
 .about-body{display:flex;flex-direction:column;align-items:flex-start;gap:24px;}
 .about-body > p{align-self:stretch;}
@@ -677,6 +685,7 @@ footer{border-top:0;}
   .project-summary,.hero-bio{width:100%;}
   .project-foot{flex-direction:column;align-items:flex-start;gap:16px;}
   .exp-row{grid-template-columns:1fr;gap:8px;}
+  .about-facts{grid-template-columns:1fr;row-gap:16px;}
   .contact-card{padding:48px 24px;}
   .contact-card h2{font-size:clamp(1.75rem,7.5vw,57.6px);}
   .form-grid{grid-template-columns:1fr;row-gap:32px;}
