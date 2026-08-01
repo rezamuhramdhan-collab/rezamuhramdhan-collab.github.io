@@ -3,7 +3,7 @@
 // Phase 1 stores records as typed TS modules; the same shapes map 1:1 onto a
 // CMS schema (Sanity/Payload) or SQL tables when the backend is chosen.
 
-import type { ButtonIconKey } from "./registry";
+import type { ButtonIconKey, ServiceIconKey, SocialPlatformKey } from "./registry";
 
 // ---------- Shared ----------
 
@@ -39,17 +39,24 @@ export interface SiteSettings {
 }
 
 export interface Hero {
-  eyebrow?: string; // small label above the name (e.g. "Product Designer")
-  firstName?: string; // solid first line of the big name
-  lastName?: string; // ghosted second line of the big name
-  portfolioTag?: string; // top-right tag over the photo (e.g. "Portfolio — 2026")
+  eyebrow?: string; // not rendered in v3 — feeds JSON-LD jobTitle (lib/seo.ts)
+  firstName?: string; // first line of the display name
+  lastName?: string; // second line of the display name
+  portfolioTag?: string; // deprecated (v2 hero photo overlay)
   bio: string;
   primaryCta: ButtonItem;
-  portrait?: ImageRef; // uploaded photo; full-bleed placeholder gradient otherwise
+  secondaryCta?: ButtonItem; // ghost button beside it (e.g. "How I work")
+  socialLinks: HeroSocialLink[]; // icon buttons under the CTAs
+  portrait?: ImageRef; // not rendered in v3 — used as the OG/Twitter image
+}
+
+export interface HeroSocialLink extends SocialLink {
+  platform?: SocialPlatformKey;
 }
 
 export interface About {
-  headline: string;
+  headline: string; // section heading
+  subheading?: string; // large display line beside the portrait
   paragraphs: string[];
   image?: ImageRef; // portrait beside the copy
   skills: string[]; // two-column dotted grid
@@ -73,7 +80,8 @@ export interface ServiceCard {
   id: string;
   title: string;
   description: string;
-  tags: string[]; // skill pills under the (expanded) service
+  icon?: ServiceIconKey; // Approach strip icon tile; positional fallback if unset
+  tags: string[]; // deprecated (v2 accordion detail)
   order: number;
 }
 
@@ -228,6 +236,7 @@ export interface Project {
   title: string;
   category: string;
   year: string;
+  tags?: string[]; // pills on the work-list row (data layer always yields an array)
   thumbnail: string; // uploaded thumbnail URL, or "" to show the neutral placeholder
   featured: boolean;
   order: number;

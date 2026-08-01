@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import type { ContactSection, ServiceCard } from "@/content/types";
-import { ArrowUpRight } from "../icons";
+import { ArrowRight } from "../icons";
 
-// "Start a Project" — contact info column + a form that composes an email to
-// the address in `contact.email` (mailto:). No backend needed, so it works on
+// The closing ink card: headline + four-field form. The form composes an email
+// to `contact.email` (mailto:) — there is still no backend, so this works on
 // both the Vercel site and the static Pages mirror. Requires JS to build the
-// mailto link; without JS the fields are still visible and the email address
-// above is a live mailto link.
+// mailto link; without it the fields are still visible and the "Or write to"
+// line below the button is a live mailto fallback.
 export function Contact({
   contact,
   services,
@@ -36,98 +36,55 @@ export function Contact({
     )}&body=${encodeURIComponent(body)}`;
   };
 
-  return (
-    <section className="section contact px" id="contact">
-      {contact.eyebrow && <span className="eyebrow">{contact.eyebrow}</span>}
-      <h2>
-        {contact.headline}
-        {contact.headlineGhost && (
-          <>
-            {" "}
-            <span className="ghost">{contact.headlineGhost}</span>
-          </>
-        )}
-      </h2>
-      <div className="contact-grid">
-        <div className="contact-info">
-          {contact.email && (
-            <div className="c-item">
-              <span className="c-label">Email</span>
-              <a className="c-value" href={`mailto:${contact.email}`}>
-                {contact.email}
-                <ArrowUpRight />
-              </a>
-            </div>
-          )}
-          {contact.location && (
-            <div className="c-item">
-              <span className="c-label">Location</span>
-              <div className="c-value">{contact.location}</div>
-            </div>
-          )}
-          {contact.availability && (
-            <div className="c-item">
-              <span className="c-label">Availability</span>
-              <div className="c-value">{contact.availability}</div>
-            </div>
-          )}
-          {contact.socialLinks.length > 0 && (
-            <div className="c-socials">
-              {contact.socialLinks.map((social) => {
-                const external = social.href.startsWith("http");
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target={external ? "_blank" : undefined}
-                    rel={external ? "noopener" : undefined}
-                  >
-                    {social.label}
-                  </a>
-                );
-              })}
-            </div>
-          )}
-        </div>
+  const headline = [contact.headline, contact.headlineGhost].filter(Boolean).join(" ");
 
+  return (
+    <section className="section px" id="contact">
+      <div className="contact-card">
+        <h2 className="display">{headline}</h2>
         <form className="contact-form" onSubmit={submit}>
-          <div className="form-row">
+          <div className="form-grid">
             <div className="field">
-              <label htmlFor="c-name">Name</label>
+              <label className="mono" htmlFor="c-name">Name</label>
               <input id="c-name" type="text" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="field">
-              <label htmlFor="c-email">Email</label>
+              <label className="mono" htmlFor="c-email">Email</label>
               <input id="c-email" type="email" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
-          </div>
-          <div className="field">
-            <label htmlFor="c-service">Service</label>
-            <div className="select-wrap">
-              <select
-                id="c-service"
-                className={service ? "has-value" : undefined}
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-              >
-                <option value="">Select a service</option>
-                {services.map((s) => (
-                  <option key={s.id} value={s.title}>
-                    {s.title}
-                  </option>
-                ))}
-              </select>
+            <div className="field wide">
+              <label className="mono" htmlFor="c-service">Service</label>
+              <div className="select-wrap">
+                <select
+                  id="c-service"
+                  className={service ? "has-value" : undefined}
+                  value={service}
+                  onChange={(e) => setService(e.target.value)}
+                >
+                  <option value="">Select a service</option>
+                  {services.map((s) => (
+                    <option key={s.id} value={s.title}>
+                      {s.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="field wide">
+              <label className="mono" htmlFor="c-message">Message</label>
+              <textarea id="c-message" placeholder="Tell me about your project" value={message} onChange={(e) => setMessage(e.target.value)} />
             </div>
           </div>
-          <div className="field">
-            <label htmlFor="c-message">Message</label>
-            <textarea id="c-message" placeholder="Tell me about your project..." value={message} onChange={(e) => setMessage(e.target.value)} />
-          </div>
           <div className="form-submit">
-            <button className="btn btn-accent" type="submit">
-              Send Message
-              <ArrowUpRight />
+            <button className="btn-submit" type="submit">
+              Send message
+              <ArrowRight />
             </button>
+            {contact.email && (
+              <p className="form-alt">
+                Or write to <a href={`mailto:${contact.email}`}>{contact.email}</a>
+              </p>
+            )}
           </div>
         </form>
       </div>

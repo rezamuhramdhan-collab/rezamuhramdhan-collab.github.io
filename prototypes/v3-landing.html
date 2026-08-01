@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>v3 Paper Swiss — Landing Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600&family=DM+Mono&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="v3-landing.css">
+</head>
+<body>
+
+<!-- ---------- Header ---------- -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="#top">
+      <span class="mark">M</span>
+      <span class="name semi">Maya Alvarsson</span>
+    </a>
+    <nav class="site-nav">
+      <a href="#work">Work</a>
+      <a href="#approach">Approach</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-nav" href="#">Résumé</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ---------- Hero ---------- -->
+  <section class="wrap hero">
+    <div>
+      <h1 class="display h1">Research.<br>Shape.<br>Ship.</h1>
+      <p class="hero-lede">I am a senior product designer working on money movement, field tooling, and the design systems underneath them. Nine years of shipping the unglamorous parts well.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#work">
+          See selected work
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.225" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 7h9.6M8.1 3.3 11.8 7l-3.7 3.7"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="#approach">
+          How I work
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="9.2"/><path d="M6.6 11.9 13 5.6M7.9 5.6H13v5.1"/></svg>
+        </a>
+      </div>
+      <div class="hero-social">
+        <a class="social" href="#" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.4 5.9h2.2V13H3.4V5.9Zm1.1-3.4a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6ZM7.3 5.9h2.1v1h0a2.3 2.3 0 0 1 2.1-1.1c2.2 0 2.6 1.4 2.6 3.3V13h-2.2V9.5c0-.8 0-1.9-1.2-1.9s-1.3.9-1.3 1.8V13H7.3V5.9Z"/></svg>
+        </a>
+        <a class="social" href="#" aria-label="Email">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="1.8" y="3.4" width="12.4" height="9.2" rx="1.4"/><path d="m2.4 4.6 5.6 4 5.6-4"/></svg>
+        </a>
+        <a class="social" href="#" aria-label="WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 13.8 3.1 11a5.6 5.6 0 1 1 2.1 2l-3 .8Z"/><path d="M6.1 6.2c.3 1.6 2.1 3.4 3.7 3.7l.8-.9 1.3.6-.2 1.1c-2.3.5-5.8-3-5.3-5.3l1.1-.2.6 1.3-.9.8Z" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- WireframeStack: hairline grid + isometric layered planes. -->
+      <svg class="wireframe" viewBox="0 0 562 468" fill="none" aria-hidden="true">
+        <defs>
+          <pattern id="grid" width="27.02" height="27" patternUnits="userSpaceOnUse">
+            <path d="M27.02 0H0V27" stroke="#dededa" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect x="10.8" y="0" width="540.4" height="468" fill="url(#grid)"/>
+        <g stroke="#d0d0cb" stroke-width="1" stroke-linejoin="round">
+          <!-- connectors through the left, centre and right vertices -->
+          <path d="M109 108v234M453 108v234M281 48v354"/>
+          <!-- four stacked isometric planes (flat: 172 x 60 half-axes) -->
+          <path d="M281 48 453 108 281 168 109 108Z"/>
+          <path d="M281 126 453 186 281 246 109 186Z"/>
+          <path d="M281 204 453 264 281 324 109 264Z"/>
+          <path d="M281 282 453 342 281 402 109 342Z"/>
+          <!-- suggested UI blocks sitting on the top plane -->
+          <path d="M281 62.4 342.9 84 269 109.8 207 88.2Z"/>
+          <path d="M349.8 90 410 111 358.4 129 298.2 108Z"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ---------- Approach ---------- -->
+  <section class="wrap" id="approach">
+    <div class="approach">
+      <div class="approach-cell">
+        <span class="icon-tile">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="m10.4 10.4 3.2 3.2"/></svg>
+        </span>
+        <h3 class="semi">Discovery that bites</h3>
+        <p>Interviews, diary studies, and ride-alongs that surface the constraint nobody wrote in the brief.</p>
+      </div>
+      <div class="approach-cell">
+        <span class="icon-tile">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.8 14.4 5 8 8.2 1.6 5 8 1.8Z"/><path d="m1.6 8 6.4 3.2L14.4 8"/><path d="m1.6 11 6.4 3.2L14.4 11"/></svg>
+        </span>
+        <h3 class="semi">Systems, not screens</h3>
+        <p>Tokens, components, and documentation that survive three roadmaps and two rebrands.</p>
+      </div>
+      <div class="approach-cell">
+        <span class="icon-tile">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="m5.4 5-3.2 3 3.2 3M10.6 5l3.2 3-3.2 3"/></svg>
+        </span>
+        <h3 class="semi">Prototypes in code</h3>
+        <p>React and Figma side by side, so the hard interaction gets tested before it gets estimated.</p>
+      </div>
+      <div class="approach-cell">
+        <span class="icon-tile">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M2.4 13.6h11.2M4.6 13.6V8.4M8 13.6V3.6M11.4 13.6v-3.4"/></svg>
+        </span>
+        <h3 class="semi">Measured after launch</h3>
+        <p>Instrumented flows and honest retros. If it did not move a number, I say so out loud.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Selected projects ---------- -->
+  <section class="wrap s-work" id="work">
+    <div class="section-head">
+      <h2 class="display h2">Selected projects</h2>
+      <a class="btn btn-outline" href="#">
+        See all projects
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.225" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 7h9.6M8.1 3.3 11.8 7l-3.7 3.7"/></svg>
+      </a>
+    </div>
+
+    <ul class="project-list">
+      <li class="project">
+        <a class="project-link" href="#">
+          <div class="project-thumb"></div>
+          <div class="project-body">
+            <div>
+              <div class="project-title-row">
+                <span class="display h-project">Ledger Onboarding</span>
+                <span class="mono">2025</span>
+              </div>
+              <p class="project-meta">Mercato · Payments</p>
+              <p class="project-desc">Rebuilt merchant verification around what compliance actually needs, cutting a 14-step form to six and tripling activation.</p>
+            </div>
+            <div class="project-foot">
+              <div class="tags">
+                <span class="tag mono">Research</span>
+                <span class="tag mono">Flows</span>
+                <span class="tag mono">Design system</span>
+              </div>
+              <span class="read">
+                Read case study
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="9.2"/><path d="M6.6 11.9 13 5.6M7.9 5.6H13v5.1"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li class="project">
+        <a class="project-link" href="#">
+          <div class="project-thumb"></div>
+          <div class="project-body">
+            <div>
+              <div class="project-title-row">
+                <span class="display h-project">Atlas Design System</span>
+                <span class="mono">2024</span>
+              </div>
+              <p class="project-meta">Northwind · Platform</p>
+              <p class="project-desc">148 components, one token pipeline, and a contribution model six product teams still use without a design review bottleneck.</p>
+            </div>
+            <div class="project-foot">
+              <div class="tags">
+                <span class="tag mono">Systems</span>
+                <span class="tag mono">Tokens</span>
+                <span class="tag mono">Docs</span>
+              </div>
+              <span class="read">
+                Read case study
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="9.2"/><path d="M6.6 11.9 13 5.6M7.9 5.6H13v5.1"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li class="project">
+        <a class="project-link" href="#">
+          <div class="project-thumb"></div>
+          <div class="project-body">
+            <div>
+              <div class="project-title-row">
+                <span class="display h-project">Field Ops Console</span>
+                <span class="mono">2023</span>
+              </div>
+              <p class="project-meta">Verdant · Utilities</p>
+              <p class="project-desc">Offline-first work orders designed on tailgates with 12 technicians. Taps per job fell from 34 to 11.</p>
+            </div>
+            <div class="project-foot">
+              <div class="tags">
+                <span class="tag mono">Field research</span>
+                <span class="tag mono">Mobile</span>
+                <span class="tag mono">Offline</span>
+              </div>
+              <span class="read">
+                Read case study
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="9.2"/><path d="M6.6 11.9 13 5.6M7.9 5.6H13v5.1"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      </li>
+
+      <li class="project">
+        <a class="project-link" href="#">
+          <div class="project-thumb"></div>
+          <div class="project-body">
+            <div>
+              <div class="project-title-row">
+                <span class="display h-project">Quiet Hours</span>
+                <span class="mono">2022</span>
+              </div>
+              <p class="project-meta">Self-initiated · iOS app</p>
+              <p class="project-desc">A focus timer for shared studios. Shipped solo end to end, with 40k downloads and zero notification permissions.</p>
+            </div>
+            <div class="project-foot">
+              <div class="tags">
+                <span class="tag mono">Concept</span>
+                <span class="tag mono">iOS</span>
+                <span class="tag mono">Brand</span>
+              </div>
+              <span class="read">
+                Read case study
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="9.2"/><path d="M6.6 11.9 13 5.6M7.9 5.6H13v5.1"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ---------- Experience ---------- -->
+  <section class="wrap s-experience" id="experience">
+    <div class="section-head"><h2 class="display h2">Experience</h2></div>
+    <ul class="exp-list">
+      <li class="exp-row">
+        <div class="exp-when mono">Since 2023</div>
+        <div>
+          <h3 class="exp-role semi">Senior Product Designer <span class="company">· Mercato</span></h3>
+          <p class="exp-desc">Payments and merchant platform. Two designers reporting into me on the money-movement surface.</p>
+        </div>
+      </li>
+      <li class="exp-row">
+        <div class="exp-when mono">2021 to 2023</div>
+        <div>
+          <h3 class="exp-role semi">Product Designer <span class="company">· Northwind</span></h3>
+          <p class="exp-desc">Founded the Atlas design system and led platform IA through Series C.</p>
+        </div>
+      </li>
+      <li class="exp-row">
+        <div class="exp-when mono">2019 to 2021</div>
+        <div>
+          <h3 class="exp-role semi">Product Designer <span class="company">· Verdant</span></h3>
+          <p class="exp-desc">First design hire. Field tooling for utility crews across 14 regions.</p>
+        </div>
+      </li>
+      <li class="exp-row">
+        <div class="exp-when mono">2017 to 2019</div>
+        <div>
+          <h3 class="exp-role semi">Design Technologist <span class="company">· Studio Harrow</span></h3>
+          <p class="exp-desc">Client work for museums and civic clients. Where I learned to build what I drew.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ---------- About ---------- -->
+  <section class="wrap s-about" id="about">
+    <div class="section-head"><h2 class="display h2">About</h2></div>
+    <div class="about-grid">
+      <div>
+        <div class="about-portrait"><div class="ph"></div></div>
+        <dl class="deflist">
+          <div>
+            <dt class="mono">Based in</dt>
+            <dd>Stockholm, working CET with overlap to US East</dd>
+          </div>
+          <div>
+            <dt class="mono">Tools</dt>
+            <dd>Figma, React, TypeScript, Rive, a lot of paper</dd>
+          </div>
+        </dl>
+      </div>
+      <div>
+        <h3 class="display h-about">Nine years of<br>unglamorous detail</h3>
+        <div class="about-copy">
+          <p class="about-lead">I started out building what I drew, first for museums and then for a utility company where the users wore gloves and the interface had to work in the rain. That decade taught me to distrust anything that only looks right on a laptop.</p>
+          <p>Now I work on money movement and the systems underneath it. The work I am proudest of is usually invisible: a queue that stopped growing, a settlement flow that support no longer has to explain, a component library that outlived the team that wrote it.</p>
+          <p>I work best embedded in a small team with direct access to the people who use the thing. I write, I prototype in code, and I would rather show you a rough build on Thursday than a polished deck next month.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Contact ---------- -->
+  <section class="wrap s-contact" id="contact">
+    <div class="contact-card">
+      <h2 class="display h-contact">Let us talk about the hard part.</h2>
+      <form class="contact-form" onsubmit="return false;">
+        <div class="form-grid">
+          <div class="field">
+            <label class="mono" for="f-name">Name</label>
+            <input id="f-name" type="text" placeholder="Your name">
+          </div>
+          <div class="field">
+            <label class="mono" for="f-email">Email</label>
+            <input id="f-email" type="email" placeholder="your@email.com">
+          </div>
+          <div class="field wide">
+            <label class="mono" for="f-service">Service</label>
+            <div class="select-wrap">
+              <select id="f-service">
+                <option>Select a service</option>
+                <option>Product design</option>
+                <option>Design systems</option>
+                <option>Research</option>
+              </select>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgba(251,251,250,0.55)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 6 4.5 4.5L12.5 6"/></svg>
+            </div>
+          </div>
+          <div class="field wide">
+            <label class="mono" for="f-message">Message</label>
+            <textarea id="f-message" placeholder="Tell me about your project"></textarea>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button class="btn-submit" type="submit">
+            Send message
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.225" stroke-linecap="round" stroke-linejoin="round"><path d="M2.2 7h9.6M8.1 3.3 11.8 7l-3.7 3.7"/></svg>
+          </button>
+          <p class="form-alt">Or write to maya@alvarsson.design</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ---------- Footer ---------- -->
+  <footer class="wrap site-footer">
+    <p class="mono">Stockholm · CET · © 2026 Maya Alvarsson</p>
+    <p class="mono">Designed and built in the browser</p>
+  </footer>
+
+</main>
+
+</body>
+</html>

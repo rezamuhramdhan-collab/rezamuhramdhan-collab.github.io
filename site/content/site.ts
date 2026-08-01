@@ -41,10 +41,17 @@ export const hero: Hero = {
   portfolioTag: "Portfolio — 2026",
   bio: "Product Designer with 5+ years of experience in fintech and digital banking, specializing in solving complex user problems and contributing to product strategy.",
   primaryCta: { label: "View Work", href: "/#work", variant: "dark", icon: "arrow" },
+  secondaryCta: { label: "How I work", href: "/#services", variant: "outline" },
+  socialLinks: [
+    { platform: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/rezamramdhan/" },
+    { platform: "instagram", label: "Instagram", href: "https://www.instagram.com/rezamrmdhn/" },
+    { platform: "email", label: "Email", href: "mailto:rezamuhramdhan@gmail.com" },
+  ],
 };
 
 export const about: About = {
   headline: "About",
+  subheading: "Five years of the unglamorous parts",
   paragraphs: [
     "With over 5 years of experience in product design, I create user-centered solutions that balance business goals, technical constraints, and seamless user experiences.",
     "From discovery to delivery, I work closely with cross-functional teams to design intuitive products that solve real problems and drive measurable impact.",

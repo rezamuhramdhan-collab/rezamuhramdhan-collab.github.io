@@ -6,6 +6,7 @@ export const services: ServiceCard[] = [
   {
     id: "product-design",
     title: "Product Design",
+    icon: "search",
     description:
       "Creating intuitive and engaging user experiences that delight users and drive business results.",
     tags: ["Research", "Prototyping", "Usability Testing", "UI Design"],
@@ -14,6 +15,7 @@ export const services: ServiceCard[] = [
   {
     id: "design-systems",
     title: "Design Systems",
+    icon: "layers",
     description:
       "Building scalable component libraries and design tokens for consistent, efficient product development.",
     tags: [],
@@ -22,6 +24,7 @@ export const services: ServiceCard[] = [
   {
     id: "strategy",
     title: "Strategy",
+    icon: "chart",
     description:
       "Guiding product vision through user research, competitive analysis, and strategic design thinking.",
     tags: [],

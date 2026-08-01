@@ -354,13 +354,22 @@ export default buildConfig({
         { name: "title", type: "text", required: true },
         { name: "description", type: "textarea", required: true },
         {
+          name: "icon",
+          type: "select",
+          options: [...serviceIconKeys],
+          admin: {
+            description:
+              "Icon tile shown above the title in the Approach strip. Falls back to a positional icon when unset.",
+          },
+        },
+        // Unused in v3 — the Approach strip is title + one sentence, with no
+        // pills. Hidden rather than dropped so the schema push stays additive.
+        {
           name: "tags",
           type: "array",
-          admin: { description: "Skill pills shown under the service (e.g. Research, Prototyping)" },
+          admin: { hidden: true },
           fields: [{ name: "text", type: "text", required: true }],
         },
-        // Deprecated (v1) — retained hidden so the schema push stays additive.
-        { name: "icon", type: "select", options: [...serviceIconKeys], admin: { hidden: true } },
       ],
     },
     {
@@ -462,6 +471,14 @@ export default buildConfig({
                     },
                     { name: "year", type: "text", required: true, admin: { width: "50%" } },
                   ],
+                },
+                {
+                  name: "tags",
+                  type: "array",
+                  admin: {
+                    description: "Pills on the work-list row (e.g. Research, Flows). Up to 3 shown.",
+                  },
+                  fields: [{ name: "text", type: "text", required: true }],
                 },
                 { name: "summary", type: "textarea", required: true },
                 {
@@ -639,22 +656,24 @@ export default buildConfig({
             },
           ],
         },
-        {
-          name: "portfolioTag",
-          type: "text",
-          admin: { description: 'Top-right tag over the hero photo (e.g. "Portfolio — 2026")' },
-        },
+        // Unused in v3 — there is no hero photo to overlay. Hidden, not dropped.
+        { name: "portfolioTag", type: "text", admin: { hidden: true } },
         { name: "bio", type: "textarea" },
         { name: "primaryCta", type: "group", fields: buttonFields },
         imageSlot("portrait"),
         // Deprecated (v1) — retained hidden so the schema push stays additive.
         { name: "greeting", type: "text", admin: { hidden: true } },
         { name: "roleHighlight", type: "text", admin: { hidden: true } },
-        { name: "secondaryCta", type: "group", admin: { hidden: true }, fields: buttonFields },
+        {
+          name: "secondaryCta",
+          type: "group",
+          admin: { description: 'Ghost button beside the main CTA (e.g. "How I work")' },
+          fields: optionalButtonFields,
+        },
         {
           name: "socialLinks",
           type: "array",
-          admin: { hidden: true },
+          admin: { description: "Icon buttons under the hero CTAs (max 3 shown)" },
           fields: [
             { name: "platform", type: "select", options: [...socialPlatformKeys] },
             { name: "href", type: "text" },
@@ -678,13 +697,21 @@ export default buildConfig({
       access: publicRead,
       hooks: { afterChange: [revalidateSite] },
       fields: [
-        { name: "headline", type: "text", required: true },
+        { name: "headline", type: "text", required: true, admin: { description: "Section heading (e.g. About)" } },
+        {
+          name: "subheading",
+          type: "text",
+          admin: {
+            description:
+              "Large display line beside the portrait (e.g. \"Nine years of unglamorous detail\"). Optional.",
+          },
+        },
         textArray("paragraphs"),
         imageSlot("image"),
         {
           name: "skills",
           type: "array",
-          admin: { description: "Skill list shown as a two-column dotted grid" },
+          admin: { description: 'Rendered as the "Tools" row of the About fact list' },
           fields: [{ name: "text", type: "text", required: true }],
         },
         {
@@ -703,7 +730,8 @@ export default buildConfig({
       access: publicRead,
       hooks: { afterChange: [revalidateSite] },
       fields: [
-        { name: "eyebrow", type: "text", admin: { description: 'e.g. "Get In Touch"' } },
+        // v3 has no section eyebrows anywhere. Hidden, not dropped.
+        { name: "eyebrow", type: "text", admin: { hidden: true } },
         {
           type: "row",
           fields: [
@@ -721,8 +749,10 @@ export default buildConfig({
           ],
         },
         { name: "email", type: "text" },
-        { name: "location", type: "text" },
-        { name: "availability", type: "text" },
+        // The v3 contact card is a headline + form + "Or write to <email>";
+        // the info column that showed these is gone. Hidden, not dropped.
+        { name: "location", type: "text", admin: { hidden: true } },
+        { name: "availability", type: "text", admin: { hidden: true } },
         {
           name: "socialLinks",
           type: "array",

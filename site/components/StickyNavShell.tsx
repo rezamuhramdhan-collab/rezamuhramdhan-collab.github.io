@@ -1,21 +1,12 @@
-"use client";
+import type { ReactNode } from "react";
 
-import { useEffect, useState, type ReactNode } from "react";
-
+// v3: the header is sticky and always carries its translucent paper ground and
+// hairline, so there is no scrolled/unscrolled state to track — this no longer
+// needs to be a client component.
 export function StickyNavShell({ children }: { children: ReactNode }) {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const updateScrolledState = () => setScrolled(window.scrollY > 16);
-
-    updateScrolledState();
-    window.addEventListener("scroll", updateScrolledState, { passive: true });
-    return () => window.removeEventListener("scroll", updateScrolledState);
-  }, []);
-
   return (
-    <nav className={`site-nav px${scrolled ? " is-scrolled" : ""}`}>
-      {children}
+    <nav className="site-nav">
+      <div className="px nav-inner">{children}</div>
     </nav>
   );
 }

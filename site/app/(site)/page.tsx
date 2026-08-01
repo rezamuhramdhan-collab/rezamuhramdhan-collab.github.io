@@ -1,5 +1,5 @@
 import { HomeNav } from "@/components/shared";
-import { Hero, Services, Experience, AboutSection } from "@/components/home/sections";
+import { Hero, Approach, Experience, AboutSection } from "@/components/home/sections";
 import { FeaturedWork } from "@/components/home/FeaturedWork";
 import { Contact } from "@/components/home/Contact";
 import {
@@ -37,9 +37,11 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: jsonLdString(websiteJsonLd(hero)) }}
       />
       <HomeNav settings={settings} />
+      {/* v3 section order (docs/desain.md): the Approach strip sits directly
+          under the hero, ahead of the work list. */}
       <Hero hero={hero} />
+      <Approach services={services} />
       <FeaturedWork projects={projects} />
-      <Services services={services} />
       <Experience experience={experience} />
       <AboutSection about={about} />
       <Contact contact={contact} services={services} />
