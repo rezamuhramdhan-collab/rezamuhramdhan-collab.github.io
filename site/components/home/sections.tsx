@@ -6,6 +6,7 @@ import type {
   ExperienceEntry,
   HeroSocialLink,
 } from "@/content/types";
+import { lexicalToLines } from "@/lib/lexical";
 import { Btn } from "../shared";
 import {
   PhotoIcon,
@@ -141,7 +142,7 @@ export function Experience({ experience }: { experience: ExperienceEntry[] }) {
               <h3 className="exp-role semi">
                 {entry.role} <span className="company">· {entry.company}</span>
               </h3>
-              <p className="exp-desc">{firstLine(entry.description)}</p>
+              {summaryLine(entry) && <p className="exp-desc">{summaryLine(entry)}</p>}
             </div>
           </li>
         ))}
@@ -150,13 +151,16 @@ export function Experience({ experience }: { experience: ExperienceEntry[] }) {
   );
 }
 
-// v2 rendered the description as a dotted bullet list; v3's row is a single
-// line of prose, so multi-line descriptions collapse to their first line.
-function firstLine(description: string) {
-  return description
+// v2 rendered the whole bullet list; v3's row is a single line of prose. Most
+// CMS entries store their text in the rich `content` field and leave the legacy
+// `description` empty, so fall back to the first line of the rich content —
+// without it the rows render with no copy at all.
+function summaryLine(entry: ExperienceEntry): string | undefined {
+  const fromPlain = entry.description
     .split("\n")
     .map((line) => line.trim())
     .filter(Boolean)[0];
+  return fromPlain ?? lexicalToLines(entry.content)[0];
 }
 
 // Portrait + definition list on the left, heading and copy on the right.

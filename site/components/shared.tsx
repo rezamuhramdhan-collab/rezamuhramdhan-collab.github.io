@@ -27,32 +27,38 @@ export function Btn({ button, small }: { button: ButtonItem; small?: boolean }) 
 
 export function HomeNav({ settings }: { settings: SiteSettings }) {
   const { logoText, logoImage, navLinks, ctaButton } = settings;
+  // A logoText that is already an abbreviation ("RR") belongs in the tile on its
+  // own — pairing it with its own first letter would read "R RR".
+  const isMonogramText = !logoImage && !/\s/.test(logoText) && logoText.trim().length <= 3;
   return (
     <StickyNavShell>
+      {/* Wordmark = dark tile + name. The tile carries the uploaded logo when
+          there is one, otherwise the initial. Keeping the tile dark matters:
+          logos drawn for the v2 dark theme are near-white and would vanish on
+          the v3 paper chip. */}
       <Link className="nav-mark" href="/" aria-label={logoText}>
-        {logoImage ? (
-          logoImage.width && logoImage.height ? (
-            <Image
-              className="logo-img"
-              src={logoImage.src}
-              alt={logoImage.alt || logoText}
-              width={logoImage.width}
-              height={logoImage.height}
-              sizes="120px"
-            />
+        <span className="nav-monogram" aria-hidden={logoImage ? undefined : "true"}>
+          {logoImage ? (
+            logoImage.width && logoImage.height ? (
+              <Image
+                className="logo-img"
+                src={logoImage.src}
+                alt={logoImage.alt || logoText}
+                width={logoImage.width}
+                height={logoImage.height}
+                sizes="32px"
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} />
+            )
+          ) : isMonogramText ? (
+            logoText.trim().toUpperCase()
           ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} />
-          )
-        ) : (
-          // Monogram tile + full wordmark, sitting inside the filled chip.
-          <>
-            <span className="nav-monogram" aria-hidden="true">
-              {logoText.trim()[0]?.toUpperCase() ?? ""}
-            </span>
-            {logoText}
-          </>
-        )}
+            logoText.trim()[0]?.toUpperCase() ?? ""
+          )}
+        </span>
+        {!isMonogramText && logoText}
       </Link>
       <div className="nav-links">
         {navLinks.map((link) => (
