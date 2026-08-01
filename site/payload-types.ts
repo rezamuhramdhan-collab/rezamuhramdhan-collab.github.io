@@ -201,15 +201,15 @@ export interface Service {
   title: string;
   description: string;
   /**
-   * Skill pills shown under the service (e.g. Research, Prototyping)
+   * Icon tile shown above the title in the Approach strip. Falls back to a positional icon when unset.
    */
+  icon?: ('search' | 'layers' | 'code' | 'chart' | 'pen' | 'grid' | 'bulb') | null;
   tags?:
     | {
         text: string;
         id?: string | null;
       }[]
     | null;
-  icon?: ('pen' | 'grid' | 'bulb') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -272,6 +272,15 @@ export interface Project {
    */
   category: number | Category;
   year: string;
+  /**
+   * Pills on the work-list row (e.g. Research, Flows). Up to 3 shown.
+   */
+  tags?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   summary: string;
   meta: {
     role: string;
@@ -931,13 +940,13 @@ export interface ServicesSelect<T extends boolean = true> {
   _order?: T;
   title?: T;
   description?: T;
+  icon?: T;
   tags?:
     | T
     | {
         text?: T;
         id?: T;
       };
-  icon?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -969,6 +978,12 @@ export interface ProjectsSelect<T extends boolean = true> {
   slug?: T;
   category?: T;
   year?: T;
+  tags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   summary?: T;
   meta?:
     | T
@@ -1336,9 +1351,6 @@ export interface Hero {
    * Ghosted second line of the big name
    */
   lastName?: string | null;
-  /**
-   * Top-right tag over the hero photo (e.g. "Portfolio — 2026")
-   */
   portfolioTag?: string | null;
   bio?: string | null;
   primaryCta: {
@@ -1360,9 +1372,12 @@ export interface Hero {
   };
   greeting?: string | null;
   roleHighlight?: string | null;
+  /**
+   * Ghost button beside the main CTA (e.g. "How I work")
+   */
   secondaryCta: {
-    label: string;
-    href: string;
+    label?: string | null;
+    href?: string | null;
     /**
      * Optional file (e.g. résumé PDF). Overrides the link URL when set.
      */
@@ -1371,9 +1386,12 @@ export interface Hero {
     icon?: ('arrow' | 'whatsapp' | 'email') | null;
     download?: boolean | null;
   };
+  /**
+   * Icon buttons under the hero CTAs (max 3 shown)
+   */
   socialLinks?:
     | {
-        platform?: ('linkedin' | 'instagram' | 'email') | null;
+        platform?: ('linkedin' | 'instagram' | 'whatsapp' | 'email') | null;
         href?: string | null;
         label?: string | null;
         id?: string | null;
@@ -1393,7 +1411,14 @@ export interface Hero {
  */
 export interface About {
   id: number;
+  /**
+   * Section heading (e.g. About)
+   */
   headline: string;
+  /**
+   * Large display line beside the portrait (e.g. "Nine years of unglamorous detail"). Optional.
+   */
+  subheading?: string | null;
   paragraphs?:
     | {
         /**
@@ -1425,7 +1450,7 @@ export interface About {
     showPlaceholder?: boolean | null;
   };
   /**
-   * Skill list shown as a two-column dotted grid
+   * Rendered as the "Tools" row of the About fact list
    */
   skills?:
     | {
@@ -1459,9 +1484,6 @@ export interface About {
  */
 export interface Contact {
   id: number;
-  /**
-   * e.g. "Get In Touch"
-   */
   eyebrow?: string | null;
   /**
    * Solid line (e.g. "Start a")
@@ -1635,6 +1657,7 @@ export interface HeroSelect<T extends boolean = true> {
  */
 export interface AboutSelect<T extends boolean = true> {
   headline?: T;
+  subheading?: T;
   paragraphs?:
     | T
     | {

@@ -33,6 +33,7 @@ type UploadRef = (number | null) | Media | undefined;
 
 interface ImageSlotDoc {
   media?: UploadRef;
+  src?: string | null;
   alt?: string | null;
   caption?: string | null;
   showPlaceholder?: boolean | null;
@@ -57,6 +58,13 @@ function fromImageSlot(slot: ImageSlotDoc | null | undefined): ImageRef | undefi
       caption: slot.caption ?? undefined,
       width: slot.media.width ?? undefined,
       height: slot.media.height ?? undefined,
+    };
+  }
+  if (slot.src) {
+    return {
+      src: slot.src,
+      alt: slot.alt ?? "",
+      caption: slot.caption ?? undefined,
     };
   }
   if (slot.showPlaceholder) {
@@ -179,6 +187,7 @@ function fromProjectDoc(doc: ProjectDoc, index: number): Project {
     category:
       typeof doc.category === "object" && doc.category ? doc.category.name : String(doc.category ?? ""),
     year: doc.year,
+    tags: (doc.tags ?? []).map((t) => t.text),
     thumbnail:
       thumbMedia && typeof thumbMedia === "object" && thumbMedia.url ? thumbMedia.url : "",
     featured: Boolean(doc.featured),
@@ -242,6 +251,10 @@ export async function getHero(): Promise<Hero> {
     ...doc,
     portrait: fromImageSlot(doc.portrait),
     primaryCta: resolveButton(doc.primaryCta),
+    secondaryCta: doc.secondaryCta?.label ? resolveButton(doc.secondaryCta) : undefined,
+    socialLinks: (doc.socialLinks ?? [])
+      .filter((s) => s.href && s.label)
+      .map((s) => ({ label: s.label!, href: s.href!, platform: s.platform ?? undefined })),
   } as Hero;
 }
 
@@ -272,6 +285,7 @@ export async function getServices(): Promise<ServiceCard[]> {
     id: String(doc.id),
     title: doc.title,
     description: doc.description,
+    icon: doc.icon ?? undefined,
     tags: (doc.tags ?? []).map((t) => t.text),
     order: i + 1,
   }));

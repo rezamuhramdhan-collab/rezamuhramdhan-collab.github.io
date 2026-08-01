@@ -14,7 +14,12 @@ const toTextArray = (items?: RichItem[]) =>
 
 const toImageSlot = (image?: ImageRef) =>
   image
-    ? { alt: image.alt, caption: image.caption ?? null, showPlaceholder: true }
+    ? {
+        src: image.src === "placeholder" ? null : image.src,
+        alt: image.alt,
+        caption: image.caption ?? null,
+        showPlaceholder: image.src === "placeholder",
+      }
     : { showPlaceholder: false };
 
 // Blocks may declare a legacy single `image` or the newer `images` array.
@@ -120,6 +125,7 @@ export function toProjectDoc(project: Project, categoryId: number | string) {
     slug: project.slug,
     category: categoryId,
     year: project.year,
+    tags: (project.tags ?? []).map((text) => ({ text })),
     thumbnail: {},
     featured: project.featured,
     summary: project.summary,

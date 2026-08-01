@@ -1,0 +1,436 @@
+/* ==========================================================================
+   Portfolio v3 "Paper Swiss" — landing page prototype
+   Implements docs/desain.md. Values are the design's, not approximations.
+
+   Two things in here are NOT from the design and are marked inline:
+   hover/focus states, and the responsive breakpoints. The source artboard is
+   a single desktop composition with neither.
+   ========================================================================== */
+
+:root {
+  /* Color — ten neutrals, no accent hue anywhere */
+  --paper: #f4f4f2;
+  --surface: #fbfbfa;
+  --fill: #e9e9e6;
+  --ink: #111;
+  --muted: #8b8b85;
+  --line: #dededa;
+  --header-bg: rgba(244, 244, 242, 0.85);
+  --header-line: rgba(222, 222, 218, 0.7);
+
+  /* Alpha variants — the only non-opaque values in the system */
+  --ink-90: rgba(17, 17, 17, 0.9);
+  --on-ink-line: rgba(251, 251, 250, 0.25);
+  --on-ink-placeholder: rgba(251, 251, 250, 0.35);
+  --on-ink-subtle: rgba(251, 251, 250, 0.45);
+
+  --ff-display: "Archivo", system-ui, sans-serif;
+  --ff-body: "Instrument Sans", system-ui, sans-serif;
+  --ff-mono: "DM Mono", ui-monospace, monospace;
+
+  --max: 1152px;
+  --pad: 36px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--muted);
+  font-family: var(--ff-body);
+  font-size: 14px;
+  line-height: 1.625;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, p { margin: 0; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+/* Grid items default to min-width:auto, so intrinsically wide children (the
+   562px hero SVG, long words) refuse to shrink and force horizontal overflow.
+   Every grid track in this design needs this. */
+.hero > *,
+.approach > *,
+.project-link > *,
+.exp-row > *,
+.about-grid > *,
+.form-grid > * { min-width: 0; }
+
+/* ---------- Type primitives ----------
+   Tracking and line-height are per-role constants, not per-size. */
+.display {
+  font-family: var(--ff-display);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  color: var(--ink);
+}
+.h1 { font-size: 73.6px; }
+.h2 { font-size: 48px; }
+.h-about { font-size: 44.8px; }
+.h-project { font-size: 33.6px; }
+.h-contact { font-size: 57.6px; color: var(--surface); }
+
+.mono {
+  font-family: var(--ff-mono);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 16.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.semi {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 6px;
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 19.5px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.18s, border-color 0.18s, color 0.18s;
+}
+.btn svg { flex: none; }
+
+.btn-primary { background: var(--ink); color: var(--surface); padding: 10px 16px; }
+.btn-outline { background: transparent; color: var(--ink); padding: 12px 20px; border: 1px solid var(--line); }
+.btn-ghost { background: transparent; color: var(--ink); padding: 0; }
+.btn-nav { background: var(--ink); color: var(--surface); padding: 8px 14px; }
+
+/* Not in the design — a static artboard has no states. */
+.btn-primary:hover, .btn-nav:hover { background: #000; }
+.btn-outline:hover { border-color: var(--muted); }
+.btn-ghost:hover { color: var(--muted); }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 14px;
+}
+/* The wordmark is a filled chip, not bare text. */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--fill);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+.wordmark .mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0;
+}
+.wordmark .name { font-size: 14px; line-height: 21px; }
+
+.site-nav { display: flex; align-items: center; gap: 32px; }
+.site-nav a { font-size: 13px; line-height: 19.5px; color: var(--muted); transition: color 0.18s; }
+.site-nav a:hover { color: var(--ink); }
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 477.84px 1fr;
+  gap: 40px;
+  align-items: center;
+  padding-block: 96px;
+}
+.hero-lede { padding-top: 28px; width: 416px; max-width: 100%; font-size: 14px; line-height: 22.75px; }
+.hero-actions { display: flex; align-items: center; gap: 28px; padding-top: 36px; }
+.hero-social { display: flex; gap: 12px; padding-top: 32px; }
+.social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  transition: border-color 0.18s, background-color 0.18s;
+}
+.social:hover { border-color: var(--muted); background: var(--fill); }
+.wireframe { width: 100%; height: auto; }
+
+/* ---------- Approach strip ----------
+   Columns are divided by cell borders, NOT grid gaps. Don't mix the two. */
+.approach {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.approach-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 36px 28px;
+  border-right: 1px solid var(--line);
+}
+.approach-cell:last-child { border-right: 0; }
+.icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--fill);
+  border-radius: 6px;
+  color: var(--ink);
+}
+.approach-cell h3 { font-size: 13.5px; line-height: 20.25px; }
+.approach-cell p { font-size: 12.5px; line-height: 20.3125px; }
+
+/* ---------- Section heads ---------- */
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 24px;
+}
+
+.s-work { padding-top: 112px; padding-bottom: 60px; }
+.s-experience { padding-bottom: 60px; }
+.s-about { padding-bottom: 60px; }
+.s-contact { padding-bottom: 24px; }
+
+/* ---------- Projects ---------- */
+.project-list { margin-top: 48px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.project { border-bottom: 1px solid var(--line); }
+.project:last-child { border-bottom: 0; }
+.project-link {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  padding-block: 32px;
+}
+.project-thumb {
+  height: 175px;
+  background: var(--fill);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.project-body { display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
+.project-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; }
+.project-meta { padding-top: 8px; font-size: 12.5px; line-height: 18.75px; }
+.project-desc { padding-top: 16px; width: 540px; max-width: 100%; font-size: 13.5px; line-height: 21.9375px; }
+.project-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; }
+.read { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; line-height: 18.75px; color: var(--muted); }
+.project-link:hover .read { color: var(--ink); }
+
+/* ---------- Experience ---------- */
+.exp-list { margin-top: 40px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.exp-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 32px;
+  padding-block: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.exp-row:last-child { border-bottom: 0; }
+.exp-when { padding-top: 4px; }
+.exp-role { font-size: 15px; line-height: 22.5px; }
+/* Hierarchy by color alone — role in ink, company in muted, same size/weight. */
+.exp-role .company { color: var(--muted); }
+.exp-desc { padding-top: 8px; max-width: 544px; font-size: 13px; line-height: 21.125px; }
+
+/* ---------- About ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 388.84px 1fr;
+  gap: 64px;
+  margin-top: 40px;
+}
+.about-portrait {
+  height: 486px;
+  background: var(--fill);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.about-portrait .ph {
+  height: 100%;
+  background: linear-gradient(160deg, #2a2a28 0%, #17171a 55%, #0d0d0c 100%);
+}
+.deflist { margin-top: 32px; border-top: 1px solid var(--line); }
+.deflist > div { padding-block: 16px; border-bottom: 1px solid var(--line); }
+.deflist dd { margin: 0; padding-top: 8px; font-size: 12.5px; line-height: 20.3125px; color: var(--ink); }
+.about-copy { display: flex; flex-direction: column; gap: 24px; padding-top: 32px; }
+/* Lead is ink at 90% — above body copy, below a heading. */
+.about-lead { font-size: 18.4px; line-height: 29.9px; color: var(--ink-90); max-width: 628px; }
+.about-copy p:not(.about-lead) { font-size: 14px; line-height: 22.75px; max-width: 541px; }
+
+/* ---------- Contact ---------- */
+.contact-card {
+  background: var(--ink);
+  border-radius: 14px;
+  padding: 80px 56px;
+}
+.contact-card .h-contact { max-width: 728.64px; }
+.contact-form { padding-top: 48px; }
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 48px;
+  row-gap: 40px;
+}
+.field { display: flex; flex-direction: column; gap: 16px; }
+.field.wide { grid-column: 1 / -1; }
+.field label { color: var(--muted); }
+
+/* Underline-only controls: no box, no fill. */
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--on-ink-line);
+  border-radius: 0;
+  padding: 8px 0 12px;
+  color: var(--surface);
+  font-family: var(--ff-body);
+  font-size: 15px;
+  line-height: 18px;
+  transition: border-color 0.18s;
+}
+.field input, .field select { height: 43.5px; }
+.field select { line-height: 22.5px; }
+.field textarea { height: 118.5px; line-height: 24.375px; resize: vertical; }
+.field input::placeholder,
+.field textarea::placeholder { color: var(--on-ink-placeholder); }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { outline: 0; border-bottom-color: var(--surface); }
+
+.select-wrap { position: relative; }
+.select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  color: var(--on-ink-placeholder);
+  padding-right: 32px;
+}
+.select-wrap svg { position: absolute; right: 0; top: 12px; pointer-events: none; }
+
+.form-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 56px;
+}
+/* The one pill button in the system — every other button is a 6px rectangle. */
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  padding: 16px 32px;
+  font-family: var(--ff-body);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.18s;
+}
+.btn-submit:hover { opacity: 0.88; }
+.form-alt { font-size: 12px; line-height: 18px; color: var(--on-ink-subtle); }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 32px;
+  border-top: 1px solid var(--line);
+}
+
+/* ==========================================================================
+   Responsive — INVENTED, not in the design. The artboard is desktop-only at
+   1152px and defines no breakpoints and no mobile nav.
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr; gap: 56px; }
+  .hero-visual { order: -1; }
+  .approach { grid-template-columns: repeat(2, 1fr); }
+  .approach-cell:nth-child(2) { border-right: 0; }
+  .approach-cell:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 760px) {
+  :root { --pad: 20px; }
+  .site-nav { display: none; }
+  .h1 { font-size: 48px; }
+  .h2, .h-contact { font-size: 34px; }
+  .h-about { font-size: 30px; }
+  .h-project { font-size: 24px; }
+  .approach { grid-template-columns: 1fr; }
+  .approach-cell { border-right: 0; border-bottom: 1px solid var(--line); }
+  .approach-cell:last-child { border-bottom: 0; }
+  .project-link { grid-template-columns: 1fr; gap: 20px; }
+  .project-title-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .project-foot { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .exp-row { grid-template-columns: 1fr; gap: 8px; }
+  .form-grid { grid-template-columns: 1fr; row-gap: 32px; }
+  .contact-card { padding: 48px 24px; }
+  .hero-actions { flex-wrap: wrap; gap: 20px; }
+  .site-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

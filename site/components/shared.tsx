@@ -4,9 +4,9 @@ import type { ButtonItem, SiteSettings } from "@/content/types";
 import { buttonIcons } from "./icons";
 import { StickyNavShell } from "./StickyNavShell";
 
-// Pill button. `variant` maps the CMS value onto the two v2 looks:
-// dark → solid accent fill; outline → light (paper) fill. `small` is the
-// compact nav pill. The trailing arrow follows the label (design convention).
+// 6px-radius button. `variant` maps the CMS value onto the two v3 looks:
+// dark → solid ink fill; outline → hairline on paper. `small` is the compact
+// nav button. The trailing arrow follows the label (design convention).
 export function Btn({ button, small }: { button: ButtonItem; small?: boolean }) {
   const Icon = button.icon ? buttonIcons[button.icon] : null;
   const look = button.variant === "outline" ? "btn-light" : "btn-accent";
@@ -45,8 +45,13 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
             <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} />
           )
         ) : (
-          // Show just the initials as the wordmark when it's a text logo.
-          initials(logoText)
+          // Monogram tile + full wordmark, sitting inside the filled chip.
+          <>
+            <span className="nav-monogram" aria-hidden="true">
+              {logoText.trim()[0]?.toUpperCase() ?? ""}
+            </span>
+            {logoText}
+          </>
         )}
       </Link>
       <div className="nav-links">
@@ -61,32 +66,22 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
   );
 }
 
-// "Reza Ramdhan" → "RR" (first + last initial), italicising the second letter
-// to echo the display type's solid/italic pairing. Single word → first letter.
-function initials(text: string) {
-  const parts = text.trim().split(/\s+/);
-  if (parts.length < 2) return parts[0]?.[0]?.toUpperCase() ?? text;
-  return (
-    <>
-      {parts[0][0].toUpperCase()}
-      <span className="it">{parts[parts.length - 1][0].toUpperCase()}</span>
-    </>
-  );
-}
-
+// Two mono lines, copyright left and links right. v2's giant ghost signature
+// was part of the display-italic "second voice" pattern, which v3 doesn't have.
 export function SiteFooter({ settings }: { settings: SiteSettings }) {
-  const { footerText, footerLinks, logoText } = settings;
+  const { footerText, footerLinks } = settings;
   return (
     <footer className="site-footer">
-      <div className="footer-row">
-        <div className="flinks">
-          {footerLinks.map((link) => (
-            <a key={link.label} href={link.href}>{link.label}</a>
-          ))}
+      <div className="px">
+        <div className="footer-row">
+          <span className="mono">{footerText}</span>
+          <div className="flinks mono">
+            {footerLinks.map((link) => (
+              <a key={link.label} href={link.href}>{link.label}</a>
+            ))}
+          </div>
         </div>
-        <span className="copy">{footerText}</span>
       </div>
-      <div className="ghost-sign" aria-hidden="true">{logoText}</div>
     </footer>
   );
 }

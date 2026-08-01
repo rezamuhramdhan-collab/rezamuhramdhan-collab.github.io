@@ -1,175 +1,211 @@
 import Image from "next/image";
-import type { Hero as HeroData, About, ServiceCard, ExperienceEntry } from "@/content/types";
+import type {
+  Hero as HeroData,
+  About,
+  ServiceCard,
+  ExperienceEntry,
+  HeroSocialLink,
+} from "@/content/types";
 import { Btn } from "../shared";
-import { PhotoIcon } from "../icons";
-import { RichBody } from "../case/rich-text";
-import { ServiceAccordion } from "./ServiceAccordion";
+import {
+  PhotoIcon,
+  WireframeStack,
+  ArrowInCircle,
+  LinkedInIcon,
+  InstagramIcon,
+  EmailIcon,
+  WhatsAppIcon,
+  LinkIcon,
+  approachIcons,
+  serviceIcons,
+} from "../icons";
 
-// Full-bleed portrait band with a bottom gradient; eyebrow + "Portfolio — YYYY"
-// tag on one row, the two-line solid/ghost name, then bio + View Work pill.
-// The nav (HomeNav) is rendered separately and overlays this as a fixed header.
+const APPROACH_CELL_COUNT = 4;
+
+// Two columns: the display name, bio, CTA and social row on the left; the
+// isometric wireframe illustration on the right. v2's full-bleed portrait band
+// has no equivalent in v3 — the hero sits on plain paper.
 export function Hero({ hero }: { hero: HeroData }) {
-  const hasPhoto = hero.portrait && hero.portrait.src !== "placeholder";
+  const socialLinks = hero.socialLinks;
   return (
-    <header className="hero" id="top">
-      <div className="hero-photo">
-        {hasPhoto && (
-          <Image
-            src={hero.portrait!.src}
-            alt={hero.portrait!.alt || `${hero.firstName ?? ""} ${hero.lastName ?? ""}`.trim()}
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: "cover", objectPosition: "center 20%" }}
-          />
-        )}
-      </div>
-      <div className="hero-content">
-        <div className="hero-eyebrow-row">
-          {hero.eyebrow && <span className="eyebrow">{hero.eyebrow}</span>}
-          {hero.portfolioTag && <span className="hero-tag">{hero.portfolioTag}</span>}
-        </div>
-        <h1 className="hero-name">
-          {hero.firstName}
-          {hero.lastName && <span className="ghost">{hero.lastName}</span>}
-        </h1>
-        <div className="hero-sub">
+    <header className="px hero" id="top">
+      <div className="hero-grid">
+        <div>
+          <h1 className="display hero-name">
+            {hero.firstName}
+            {hero.lastName && (
+              <>
+                <br />
+                {hero.lastName}
+              </>
+            )}
+          </h1>
           {hero.bio && <p className="hero-bio">{hero.bio}</p>}
-          <Btn button={hero.primaryCta} />
+          <div className="hero-actions">
+            <Btn button={hero.primaryCta} />
+            {hero.secondaryCta && (
+              <a className="btn btn-ghost" href={hero.secondaryCta.href}>
+                {hero.secondaryCta.label}
+                <ArrowInCircle />
+              </a>
+            )}
+          </div>
+          {socialLinks.length > 0 && (
+            <div className="hero-socials">
+              {socialLinks.slice(0, 3).map((social) => (
+                <SocialButton key={social.label} social={social} />
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="hero-visual">
+          <WireframeStack />
         </div>
       </div>
     </header>
   );
 }
 
-// Numbered service rows with an independently expandable client-side detail.
-export function Services({ services }: { services: ServiceCard[] }) {
+const SOCIAL_ICONS: Array<[RegExp, typeof LinkedInIcon]> = [
+  [/linked/i, LinkedInIcon],
+  [/insta/i, InstagramIcon],
+  [/whats|wa\.me/i, WhatsAppIcon],
+  [/mail|^mailto:/i, EmailIcon],
+];
+
+function SocialButton({ social }: { social: HeroSocialLink }) {
+  const haystack = `${social.platform ?? ""} ${social.label} ${social.href}`;
+  const Icon = SOCIAL_ICONS.find(([pattern]) => pattern.test(haystack))?.[1] ?? LinkIcon;
+  const external = social.href.startsWith("http");
   return (
-    <section className="section px" id="services">
-      <div className="services-grid">
-        <div className="services-intro" data-reveal>
-          <span className="eyebrow">What I Offer</span>
-          <h2>
-            Service<span className="accent-s">s</span>
-          </h2>
-          <p>I specialize in transforming complex problems into simple, beautiful solutions.</p>
-        </div>
-        <ServiceAccordion services={services} />
+    <a
+      href={social.href}
+      aria-label={social.label}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener" : undefined}
+    >
+      <Icon />
+    </a>
+  );
+}
+
+// Four-up strip on one hairline card. Replaces v2's expandable service rows —
+// the CMS `services` entries supply the title and description; the icons are
+// assigned by position (no icon field exists yet).
+export function Approach({ services }: { services: ServiceCard[] }) {
+  const cells = services.slice(0, APPROACH_CELL_COUNT);
+  if (!cells.length) return null;
+  return (
+    // id stays "services": the CMS nav links point at /#services.
+    <section className="px section flush" id="services">
+      {/* The design shows four cells; the grid follows however many the CMS
+          actually has, so three entries fill the card evenly rather than
+          leaving a dead fourth column. */}
+      {/* Set as a custom property, not grid-template-columns directly — an
+          inline track list would outrank the responsive media queries. */}
+      <div
+        className="approach"
+        style={{ "--approach-cols": cells.length } as React.CSSProperties}
+      >
+        {cells.map((service, index) => {
+          const Icon = service.icon
+            ? serviceIcons[service.icon]
+            : approachIcons[index % approachIcons.length];
+          return (
+            <div className="approach-cell" key={service.id} data-reveal>
+              <span className="approach-icon">
+                <Icon />
+              </span>
+              <h3 className="semi">{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
 }
 
-// One-third intro / two-thirds right-aligned role list (design.md geometry).
-// Each role: title + Company · Type · Location meta line, accent date, and a
-// grey round-dot bullet list from the rich `content` (or newline-split text).
+// Divided rows: mono date range on the left, role · company + description right.
 export function Experience({ experience }: { experience: ExperienceEntry[] }) {
   return (
-    <section className="section px" id="experience">
-      <div className="exp-grid">
-        <div className="exp-intro" data-reveal>
-          <span className="eyebrow">Career</span>
-          <h2>Experience</h2>
-          <p>
-            5+ years across fintech and digital banking — designing and shipping onboarding,
-            lending, and design-system work that moves real product metrics.
-          </p>
-        </div>
-        <div className="exp-list">
-          {experience.map((entry) => (
-            <div className="exp-item" key={entry.id} data-reveal>
-              <div className="exp-head">
-                <div className="exp-role">
-                  <h3>{entry.role}</h3>
-                  <div className="exp-meta">
-                    <span className="company">{entry.company}</span>
-                    {entry.employmentType && (
-                      <>
-                        <span className="div" />
-                        <span className="tag">{entry.employmentType}</span>
-                      </>
-                    )}
-                    {entry.location && (
-                      <>
-                        <span className="div" />
-                        <span className="tag">{entry.location}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-                <span className="exp-date">{entry.period}</span>
-              </div>
-              <ExperienceBullets entry={entry} />
-            </div>
-          ))}
-        </div>
+    <section className="px section" id="experience">
+      <div className="sec-head" data-reveal>
+        <h2 className="display">Experience</h2>
       </div>
+      <ul className="exp-list">
+        {experience.map((entry) => (
+          <li className="exp-row" key={entry.id} data-reveal>
+            <div className="exp-when mono">{entry.period}</div>
+            <div>
+              <h3 className="exp-role semi">
+                {entry.role} <span className="company">· {entry.company}</span>
+              </h3>
+              <p className="exp-desc">{firstLine(entry.description)}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
 
-function ExperienceBullets({ entry }: { entry: ExperienceEntry }) {
-  if (entry.content) {
-    return (
-      <div className="exp-bullets rich">
-        <RichBody data={entry.content} />
-      </div>
-    );
-  }
-  const bullets = entry.description
+// v2 rendered the description as a dotted bullet list; v3's row is a single
+// line of prose, so multi-line descriptions collapse to their first line.
+function firstLine(description: string) {
+  return description
     .split("\n")
     .map((line) => line.trim())
-    .filter(Boolean);
-  if (!bullets.length) return null;
-  return (
-    <ul className="exp-bullets">
-      {bullets.map((line, i) => (
-        <li key={i}>
-          <span className="dot" />
-          <span>{line}</span>
-        </li>
-      ))}
-    </ul>
-  );
+    .filter(Boolean)[0];
 }
 
-// Portrait with an accent location tag + copy, skills grid, and résumé button.
+// Portrait + definition list on the left, heading and copy on the right.
+// The first paragraph gets the ink-90 lead treatment.
 export function AboutSection({ about }: { about: About }) {
   const hasPhoto = about.image && about.image.src !== "placeholder";
   return (
-    <section className="section about px" id="about">
+    <section className="px section" id="about">
+      <div className="sec-head" data-reveal>
+        <h2 className="display">{about.headline}</h2>
+      </div>
       <div className="about-grid">
-        <div className="about-photo" data-reveal>
-          {hasPhoto ? (
-            <Image
-              src={about.image!.src}
-              alt={about.image!.alt || "Portrait"}
-              width={about.image!.width ?? 600}
-              height={about.image!.height ?? 640}
-              sizes="(max-width: 900px) 100vw, 600px"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          ) : (
-            <div className="img-placeholder"><PhotoIcon /></div>
-          )}
-          {about.locationTag && <span className="about-tag">{about.locationTag}</span>}
+        <div data-reveal>
+          <div className="about-photo">
+            {hasPhoto ? (
+              <Image
+                src={about.image!.src}
+                alt={about.image!.alt || "Portrait"}
+                width={about.image!.width ?? 600}
+                height={about.image!.height ?? 640}
+                sizes="(max-width: 1100px) 100vw, 389px"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              <div className="img-placeholder">
+                <PhotoIcon />
+              </div>
+            )}
+          </div>
+          <dl className="about-facts">
+            {about.locationTag && (
+              <div>
+                <dt className="mono">Based in</dt>
+                <dd>{about.locationTag}</dd>
+              </div>
+            )}
+            {about.skills.length > 0 && (
+              <div>
+                <dt className="mono">Tools</dt>
+                <dd>{about.skills.join(", ")}</dd>
+              </div>
+            )}
+          </dl>
         </div>
         <div className="about-body" data-reveal>
-          <span className="eyebrow">Who I Am</span>
-          <h2>{about.headline}</h2>
-          {about.paragraphs.map((p, i) => (
-            <p key={i}>{p}</p>
+          {about.subheading && <h3 className="display h-about">{about.subheading}</h3>}
+          {about.paragraphs.map((paragraph, i) => (
+            <p key={i}>{paragraph}</p>
           ))}
-          {about.skills.length > 0 && (
-            <ul className="skills">
-              {about.skills.map((skill) => (
-                <li key={skill}>
-                  <span className="dot" />
-                  <span>{skill}</span>
-                </li>
-              ))}
-            </ul>
-          )}
           {about.resumeButton && <Btn button={about.resumeButton} />}
         </div>
       </div>

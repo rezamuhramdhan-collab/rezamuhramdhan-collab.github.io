@@ -13,9 +13,9 @@ export function AllProjectsGrid({ projects }: { projects: Project[] }) {
   );
   const [activeCategory, setActiveCategory] = useState(ALL);
 
-  const visibleProjects = projects
-    .map((project, index) => ({ project, index }))
-    .filter(({ project }) => activeCategory === ALL || project.category === activeCategory);
+  const visibleProjects = projects.filter(
+    (project) => activeCategory === ALL || project.category === activeCategory,
+  );
 
   return (
     <>
@@ -35,11 +35,13 @@ export function AllProjectsGrid({ projects }: { projects: Project[] }) {
           );
         })}
       </div>
-      <div className="all-projects-grid" aria-live="polite">
-        {visibleProjects.map(({ project, index }) => (
-          <ProjectCard key={project.id} project={project} index={index} />
+      {/* v3 shares the homepage's divided work list here — the 2-up card grid
+          it used to render no longer exists in the design system. */}
+      <ul className="work-list all-projects-list" aria-live="polite">
+        {visibleProjects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
-      </div>
+      </ul>
     </>
   );
 }
