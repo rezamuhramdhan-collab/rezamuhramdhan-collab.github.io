@@ -142,7 +142,7 @@ export function Experience({ experience }: { experience: ExperienceEntry[] }) {
               <h3 className="exp-role semi">
                 {entry.role} <span className="company">· {entry.company}</span>
               </h3>
-              {summaryLine(entry) && <p className="exp-desc">{summaryLine(entry)}</p>}
+              <ExperienceBullets entry={entry} />
             </div>
           </li>
         ))}
@@ -151,16 +151,27 @@ export function Experience({ experience }: { experience: ExperienceEntry[] }) {
   );
 }
 
-// v2 rendered the whole bullet list; v3's row is a single line of prose. Most
-// CMS entries store their text in the rich `content` field and leave the legacy
-// `description` empty, so fall back to the first line of the rich content —
-// without it the rows render with no copy at all.
-function summaryLine(entry: ExperienceEntry): string | undefined {
+// Each achievement is its own bullet. Entries keep their text either as
+// newline-separated plain text (`description`) or as rich `content`; both are
+// flattened to one line per bullet.
+function ExperienceBullets({ entry }: { entry: ExperienceEntry }) {
   const fromPlain = entry.description
     .split("\n")
     .map((line) => line.trim())
-    .filter(Boolean)[0];
-  return fromPlain ?? lexicalToLines(entry.content)[0];
+    .filter(Boolean);
+  const lines = (fromPlain.length ? fromPlain : lexicalToLines(entry.content))
+    // Strip any authored numbering ("1. ", "2) ") so it doesn't double up with
+    // the rendered marker.
+    .map((line) => line.replace(/^\d+[.)]\s*/, "").trim())
+    .filter(Boolean);
+  if (!lines.length) return null;
+  return (
+    <ul className="exp-bullets">
+      {lines.map((line, i) => (
+        <li key={i}>{line}</li>
+      ))}
+    </ul>
+  );
 }
 
 // Portrait + definition list on the left, heading and copy on the right.

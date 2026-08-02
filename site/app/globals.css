@@ -380,6 +380,17 @@ body:has(.all-projects-page) > .site-footer{display:none;}
 /* Hierarchy by colour alone — role in ink, company in muted, same size/weight. */
 .exp-role .company{color:var(--muted);}
 .exp-desc{padding-top:8px;max-width:544px;font-size:13px;line-height:21.125px;color:var(--muted);}
+/* Achievement bullets. Small muted dots — v3 has no accent, and a --line dot
+   would be near-invisible on paper. */
+.exp-bullets{padding-top:8px;display:flex;flex-direction:column;gap:6px;max-width:544px;}
+.exp-bullets li{
+  position:relative;padding-left:16px;
+  font-size:13px;line-height:21.125px;color:var(--muted);
+}
+.exp-bullets li::before{
+  content:"";position:absolute;left:2px;top:8.5px;
+  width:4px;height:4px;border-radius:50%;background:var(--muted);opacity:.55;
+}
 
 /* ---------- Footer ---------- */
 footer{border-top:0;}
