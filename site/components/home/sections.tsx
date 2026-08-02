@@ -225,7 +225,6 @@ export function AboutSection({ about }: { about: About }) {
               )}
             </dl>
           )}
-          {about.resumeButton?.label && <Btn button={about.resumeButton} />}
         </div>
       </div>
     </section>

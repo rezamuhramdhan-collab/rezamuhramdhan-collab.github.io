@@ -719,7 +719,14 @@ export default buildConfig({
           type: "text",
           admin: { description: 'Accent tag over the portrait (e.g. "Jakarta, ID")' },
         },
-        { name: "resumeButton", type: "group", fields: optionalButtonFields },
+        // Removed from the design — the v3 About section ends on the fact
+        // list. Hidden rather than dropped so the schema push stays additive.
+        {
+          name: "resumeButton",
+          type: "group",
+          admin: { hidden: true },
+          fields: optionalButtonFields,
+        },
         // Deprecated (v1) — retained hidden so the schema push stays additive.
         { name: "headlineAccent", type: "text", admin: { hidden: true } },
         { name: "yearsExperience", type: "number", admin: { hidden: true } },

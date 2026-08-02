@@ -38,6 +38,18 @@ deploy, and database work.
   prints a per-entry diff and is dry-run by default. Entries are matched on
   company name; anything unmatched is reported, not touched.
 
+### Removed
+
+- **The About "Download Resume" button.** The v3 design ends that section on
+  the fact list, so the button was a v2 carry-over. The nav's Résumé button is
+  untouched — it remains the only route to the file.
+- `about.resumeButton` is hidden in the CMS rather than dropped, keeping the
+  schema push additive; its data is preserved and the field can be un-hidden if
+  the button ever returns.
+- `.about-body`'s `align-items: flex-start` and the `> p { align-self: stretch }`
+  that compensated for it: both existed only to stop that button spanning the
+  column.
+
 ### Notes
 
 - Authored numbering (`1. `, `2) `) is stripped from bullets so it cannot
