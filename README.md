@@ -8,6 +8,7 @@ as a static export to GitHub Pages with the admin running on Vercel.
 | Path | What it is |
 |---|---|
 | [`site/`](site/) | The application — Next.js 15 (App Router) + Payload CMS 3 (Supabase Postgres hosted, SQLite locally). All active development happens here. |
+| [`changelogs.md`](changelogs.md) | Running history of every change, newest first. Updated alongside the code. |
 | [`docs/`](docs/) | Engineering docs: SOLID research reference, the codebase audit, and the [visual language reference](docs/desain.md) for the in-progress redesign. |
 | [`prototypes/`](prototypes/) | Static HTML mockups, not deployed. The original hand-written ones (pre-CMS Phase 1) are kept for reference — the seed content in `site/content/` was derived from them. [`v3-landing.html`](prototypes/v3-landing.html) is the current one: the v3 "Paper Swiss" landing page built to [`docs/desain.md`](docs/desain.md), for design review before implementing in `site/`. |
 | [`.github/workflows/`](.github/workflows/) | CI: schema migration + static build + GitHub Pages deploy on every push to `main`. |
