@@ -82,7 +82,14 @@ export function Hero({ hero }: { hero: HeroData }) {
   );
 }
 
-const SOCIAL_ICONS: Array<[RegExp, typeof LinkedInIcon]> = [
+const SOCIAL_ICONS: Record<NonNullable<HeroSocialLink["platform"]>, typeof LinkedInIcon> = {
+  linkedin: LinkedInIcon,
+  instagram: InstagramIcon,
+  whatsapp: WhatsAppIcon,
+  email: EmailIcon,
+};
+
+const LEGACY_SOCIAL_ICONS: Array<[RegExp, typeof LinkedInIcon]> = [
   [/linked/i, LinkedInIcon],
   [/insta/i, InstagramIcon],
   [/whats|wa\.me/i, WhatsAppIcon],
@@ -90,8 +97,13 @@ const SOCIAL_ICONS: Array<[RegExp, typeof LinkedInIcon]> = [
 ];
 
 function SocialButton({ social }: { social: HeroSocialLink }) {
-  const haystack = `${social.platform ?? ""} ${social.label} ${social.href}`;
-  const Icon = SOCIAL_ICONS.find(([pattern]) => pattern.test(haystack))?.[1] ?? LinkIcon;
+  // The explicit CMS type wins even when an editor keeps the old label or URL.
+  // Label/URL matching remains as a fallback for entries created before the
+  // platform field was introduced.
+  const legacyHaystack = `${social.label} ${social.href}`;
+  const Icon = social.platform
+    ? SOCIAL_ICONS[social.platform]
+    : LEGACY_SOCIAL_ICONS.find(([pattern]) => pattern.test(legacyHaystack))?.[1] ?? LinkIcon;
   const external = social.href.startsWith("http");
   return (
     <a
