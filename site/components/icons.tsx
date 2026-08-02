@@ -137,26 +137,99 @@ export const serviceIcons: Record<ServiceIconKey, ComponentType> = {
 // Positional fallback for services with no icon set yet.
 export const approachIcons = [SearchIcon, LayersIcon, CodeIcon, ChartIcon];
 
-// The hero's isometric wireframe stack: a hairline grid with four stacked
-// isometric planes. Purely decorative.
+// The hero's isometric layer stack: a hairline grid behind four stacked
+// isometric planes that grow toward the base, joined by dashed risers.
+// Geometry transcribed from the Paper source (artboard 1-0, node 1O-0); the
+// grid is a <pattern> rather than the 42 individual strokes the export emits.
+// True isometric — every plane and content line keeps a sqrt(3):1 run/rise.
+type Plane = {
+  x: number;
+  y: number;
+  w: number; // half-width
+  h: number; // half-height
+  gradient?: boolean; // one plane fades out instead of a flat tint
+  risers?: boolean; // dashed verticals down to the plane below
+  lines: Array<{ x: number; y: number; len: number; drop: number; lead?: boolean }>;
+};
+
+const PLANES: Plane[] = [
+  {
+    x: 8.019, y: 67.568, w: 273.063, h: 157.658,
+    lines: [
+      { x: 59.279, y: 34.234, len: 220, drop: 127.027, lead: true },
+      { x: 132.072, y: 76.306, len: 220.09, drop: 127.027 },
+      { x: 204.955, y: 118.288, len: 220, drop: 127.027 },
+    ],
+  },
+  {
+    x: 47.028, y: 34.234, w: 234.054, h: 135.135, gradient: true, risers: true,
+    lines: [
+      { x: 59.279, y: 34.234, len: 180.991, drop: 104.505, lead: true },
+      { x: 104.144, y: 60.18, len: 180.991, drop: 104.505 },
+      { x: 149.009, y: 86.036, len: 180.991, drop: 104.505 },
+      { x: 193.874, y: 111.982, len: 180.991, drop: 104.505 },
+    ],
+  },
+  {
+    x: 90.721, y: 3.604, w: 190.361, h: 109.91, risers: true,
+    lines: [
+      { x: 59.279, y: 34.234, len: 137.297, drop: 79.279, lead: true },
+      { x: 104.505, y: 60.36, len: 137.388, drop: 79.279 },
+      { x: 149.82, y: 86.487, len: 137.297, drop: 79.279 },
+    ],
+  },
+  {
+    x: 143.785, y: -21.622, w: 137.297, h: 79.279, risers: true,
+    lines: [
+      { x: 59.279, y: 34.234, len: 84.234, drop: 48.649, lead: true },
+      { x: 100.631, y: 58.108, len: 84.234, drop: 48.649 },
+    ],
+  },
+];
+
+const RISER = 55.856;
+
 export function WireframeStack() {
   return (
-    <svg viewBox="0 0 562 468" fill="none" aria-hidden="true">
+    <svg viewBox="0 0 562.16 468.47" fill="none" aria-hidden="true">
       <defs>
-        <pattern id="wf-grid" width="27.02" height="27" patternUnits="userSpaceOnUse">
-          <path d="M27.02 0H0V27" stroke="var(--line)" strokeWidth="1" />
+        <pattern id="wf-grid" width="27.027" height="27.027" patternUnits="userSpaceOnUse" x="10.811">
+          <path d="M27.027 0H0V27.027" stroke="rgb(17 17 17 / 7%)" strokeWidth="0.541" />
         </pattern>
+        <linearGradient id="wf-fade" gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="rgba(17,17,17,0.05)" />
+          <stop offset="1" stopColor="rgba(17,17,17,0)" />
+        </linearGradient>
       </defs>
-      <rect x="10.8" y="0" width="540.4" height="468" fill="url(#wf-grid)" />
-      <g stroke="#d0d0cb" strokeWidth="1" strokeLinejoin="round">
-        <path d="M109 108v234M453 108v234M281 48v354" />
-        <path d="M281 48 453 108 281 168 109 108Z" />
-        <path d="M281 126 453 186 281 246 109 186Z" />
-        <path d="M281 204 453 264 281 324 109 264Z" />
-        <path d="M281 282 453 342 281 402 109 342Z" />
-        <path d="M281 62.4 342.9 84 269 109.8 207 88.2Z" />
-        <path d="M349.8 90 410 111 358.4 129 298.2 108Z" />
-      </g>
+      <rect x="0" y="0" width="562.16" height="468.47" fill="url(#wf-grid)" />
+      {/* Painted base-first so the smaller upper planes sit in front. */}
+      {PLANES.map((p, i) => {
+        const d = `M${p.w} 0 L${p.w * 2} ${p.h} L${p.w} ${p.h * 2} L0 ${p.h} Z`;
+        return (
+          <g key={i} transform={`translate(${p.x} ${p.y})`}>
+            <path d={d} fill={p.gradient ? "url(#wf-fade)" : "rgb(251 251 250 / 55%)"} />
+            <path d={d} fill="none" stroke="rgb(17 17 17 / 50%)" strokeWidth="0.901" />
+            {p.lines.map((l, j) => (
+              <path
+                key={j}
+                d={`M${l.x + l.len} ${l.y} L${l.x} ${l.y + l.drop}`}
+                stroke={l.lead ? "rgb(17 17 17 / 40%)" : "rgb(17 17 17 / 16%)"}
+                strokeWidth={l.lead ? 1.441 : 0.811}
+              />
+            ))}
+            {p.risers &&
+              [[p.w, 0], [p.w * 2, p.h], [p.w, p.h * 2], [0, p.h]].map(([x, y], j) => (
+                <path
+                  key={`r${j}`}
+                  d={`M${x} ${y} L${x} ${y + RISER}`}
+                  stroke="rgb(17 17 17 / 20%)"
+                  strokeWidth="0.721"
+                  strokeDasharray="2.703 3.604"
+                />
+              ))}
+          </g>
+        );
+      })}
     </svg>
   );
 }

@@ -30,6 +30,20 @@ deploy, and database work.
   the diagonal `ArrowUpRight` to `ArrowRight`. The diagonal now appears only
   inside the circled "read case study" mark and on case-study links.
 - `content/experience.ts` now mirrors the LinkedIn profile (6 / 5 / 2 bullets).
+- **Hero illustration replaced** with the revised layered stack: four isometric
+  planes growing toward the base, joined by dashed risers, over a lighter grid.
+  Geometry transcribed from the Paper source rather than traced from an image.
+  The grid is a `<pattern>` instead of the 42 individual strokes the design
+  export emits, and the planes are generated from a small data array — the
+  export was 17KB of repeated paths.
+
+### Fixed
+
+- **The hero image set in the CMS did nothing.** `hero.portrait` was only read
+  by `layout.tsx` for the Open Graph/Twitter card — no component rendered it,
+  so uploading an image saved but changed nothing on the page. The hero now
+  renders the uploaded image in place of the built-in illustration, and the
+  admin field says so.
 
 ### Added
 

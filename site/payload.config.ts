@@ -84,9 +84,13 @@ const optionalButtonFields: Field[] = [
 // Image slot: uploaded media wins; otherwise the neutral placeholder renders
 // while showPlaceholder is on (case studies stay presentable without assets).
 // With `requireImage`, publishing demands an upload or the placeholder.
-const imageSlot = (name = "image", opts: { requireImage?: boolean } = {}): Field => ({
+const imageSlot = (
+  name = "image",
+  opts: { requireImage?: boolean; description?: string } = {},
+): Field => ({
   name,
   type: "group",
+  ...(opts.description ? { admin: { description: opts.description } } : {}),
   fields: [
     {
       name: "media",
@@ -660,7 +664,10 @@ export default buildConfig({
         { name: "portfolioTag", type: "text", admin: { hidden: true } },
         { name: "bio", type: "textarea" },
         { name: "primaryCta", type: "group", fields: buttonFields },
-        imageSlot("portrait"),
+        imageSlot("portrait", {
+          description:
+            "Shown beside the hero text, replacing the built-in isometric illustration. Also used as the social share (Open Graph) image.",
+        }),
         // Deprecated (v1) — retained hidden so the schema push stays additive.
         { name: "greeting", type: "text", admin: { hidden: true } },
         { name: "roleHighlight", type: "text", admin: { hidden: true } },

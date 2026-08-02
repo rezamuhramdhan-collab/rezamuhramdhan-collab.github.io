@@ -28,6 +28,10 @@ const APPROACH_CELL_COUNT = 4;
 // has no equivalent in v3 — the hero sits on plain paper.
 export function Hero({ hero }: { hero: HeroData }) {
   const socialLinks = hero.socialLinks;
+  // An uploaded hero image replaces the built-in illustration. Without this the
+  // CMS field saved but nothing on the page changed.
+  const heroImage =
+    hero.portrait && hero.portrait.src !== "placeholder" ? hero.portrait : undefined;
   return (
     <header className="px hero" id="top">
       <div className="hero-grid">
@@ -60,7 +64,18 @@ export function Hero({ hero }: { hero: HeroData }) {
           )}
         </div>
         <div className="hero-visual">
-          <WireframeStack />
+          {heroImage ? (
+            <Image
+              src={heroImage.src}
+              alt={heroImage.alt || ""}
+              width={heroImage.width ?? 1124}
+              height={heroImage.height ?? 937}
+              priority
+              sizes="(max-width: 1100px) 100vw, 562px"
+            />
+          ) : (
+            <WireframeStack />
+          )}
         </div>
       </div>
     </header>
