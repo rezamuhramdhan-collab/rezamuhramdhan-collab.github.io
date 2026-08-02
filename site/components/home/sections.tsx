@@ -11,7 +11,7 @@ import { Btn } from "../shared";
 import {
   PhotoIcon,
   WireframeStack,
-  ArrowInCircle,
+  ArrowRight,
   LinkedInIcon,
   InstagramIcon,
   EmailIcon,
@@ -45,9 +45,9 @@ export function Hero({ hero }: { hero: HeroData }) {
           <div className="hero-actions">
             <Btn button={hero.primaryCta} />
             {hero.secondaryCta && (
-              <a className="btn btn-ghost" href={hero.secondaryCta.href}>
+              <a className="btn btn-light" href={hero.secondaryCta.href}>
                 {hero.secondaryCta.label}
-                <ArrowInCircle />
+                <ArrowRight />
               </a>
             )}
           </div>

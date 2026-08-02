@@ -175,7 +175,9 @@ export function PhotoIcon() {
 // Keys come from content/registry.ts; the Record type makes a key added there
 // a compile error here until its icon exists (and vice versa).
 export const buttonIcons: Record<ButtonIconKey, ComponentType> = {
-  arrow: ArrowUpRight,
+  // v3 buttons take a plain right arrow. The diagonal ArrowUpRight is now used
+  // only inside the circled "read case study" mark and on case-study links.
+  arrow: ArrowRight,
   whatsapp: WhatsAppIcon,
   email: EmailIcon,
 };
