@@ -43,7 +43,10 @@ deploy, and database work.
   by `layout.tsx` for the Open Graph/Twitter card — no component rendered it,
   so uploading an image saved but changed nothing on the page. The hero now
   renders the uploaded image in place of the built-in illustration, and the
-  admin field says so.
+  admin field says so. The image is rendered flush like the illustration it
+  replaces — an earlier attempt gave it a `--fill` panel and radius, which
+  showed through the transparent areas of an exported illustration and read as
+  a card.
 
 ### Added
 

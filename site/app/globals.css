@@ -150,11 +150,10 @@ h1,h2,h3,h4,p{margin:0;}
 .hero-socials a:hover{border-color:var(--muted);background:var(--fill);}
 .hero-socials svg{width:16px;height:16px;}
 .hero-visual svg{width:100%;height:auto;}
-/* An uploaded hero image sits in the same box as the illustration. */
-.hero-visual img{
-  width:100%;height:auto;aspect-ratio:562/468;object-fit:cover;
-  background:var(--fill);border-radius:14px;
-}
+/* An uploaded hero image is treated exactly like the illustration it replaces:
+   flush on the page, no panel. A --fill background would show through the
+   transparent areas of an exported illustration and read as a card. */
+.hero-visual img{width:100%;height:auto;}
 
 /* ---------- Section shell ---------- */
 .section{padding-bottom:60px;}
