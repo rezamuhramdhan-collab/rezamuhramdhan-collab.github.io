@@ -184,6 +184,7 @@ h1,h2,h3,h4,p{margin:0;}
 .project-photo{
   position:relative;height:175px;background:var(--fill);border-radius:6px;overflow:hidden;
 }
+.project-photo .paper-thumb{width:100%;height:100%;}
 .project-photo img{width:100%;height:100%;object-fit:cover;}
 .project-body{display:flex;flex-direction:column;justify-content:space-between;gap:20px;}
 .project-title-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;}
