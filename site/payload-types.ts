@@ -1364,6 +1364,9 @@ export interface Hero {
     icon?: ('arrow' | 'whatsapp' | 'email') | null;
     download?: boolean | null;
   };
+  /**
+   * Shown beside the hero text, replacing the built-in isometric illustration. Also used as the social share (Open Graph) image.
+   */
   portrait?: {
     media?: (number | null) | Media;
     alt?: string | null;
