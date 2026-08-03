@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/content/types";
 import { ArrowInCircle } from "../icons";
@@ -96,6 +97,27 @@ function PaperThumbnail({ project }: { project: Project }) {
 }
 
 function ProjectThumbnail({ project }: { project: Project }) {
+  if (project.thumbnail) {
+    return (
+      <div className="real-paper-thumb">
+        <div className="real-paper-thumb-meta">
+          <span>{project.category}</span>
+          <span>{project.year}</span>
+        </div>
+        <div className="real-paper-thumb-image">
+          <Image
+            src={project.thumbnail}
+            alt=""
+            fill
+            sizes="(max-width: 760px) 100vw, 248px"
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+        <div className="real-paper-thumb-rule" />
+      </div>
+    );
+  }
+
   return <PaperThumbnail project={project} />;
 }
 

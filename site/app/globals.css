@@ -185,6 +185,19 @@ h1,h2,h3,h4,p{margin:0;}
   position:relative;height:175px;background:var(--fill);border-radius:6px;overflow:hidden;
 }
 .project-photo .paper-thumb{width:100%;height:100%;}
+.real-paper-thumb{
+  width:100%;height:100%;display:grid;grid-template-rows:18px 1fr 1px;gap:8px;
+  padding:12px 14px 10px;background:var(--paper);color:var(--ink);
+}
+.real-paper-thumb-meta{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;overflow:hidden;
+  font-family:var(--ff-mono);font-size:8px;line-height:12px;letter-spacing:.12em;
+  text-transform:uppercase;white-space:nowrap;color:var(--muted);
+}
+.real-paper-thumb-meta span:first-child{overflow:hidden;text-overflow:ellipsis;}
+.real-paper-thumb-image{position:relative;min-height:0;overflow:hidden;border:1px solid var(--line);background:var(--surface);}
+.real-paper-thumb-image img{filter:grayscale(1) contrast(.9) brightness(1.08);}
+.real-paper-thumb-rule{width:100%;height:1px;background:var(--ink);}
 .project-photo img{width:100%;height:100%;object-fit:cover;}
 .project-body{display:flex;flex-direction:column;justify-content:space-between;gap:20px;}
 .project-title-row{display:flex;align-items:baseline;justify-content:space-between;gap:24px;}
