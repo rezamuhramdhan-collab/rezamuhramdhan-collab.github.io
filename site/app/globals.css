@@ -647,7 +647,6 @@ footer{border-top:0;}
 .img-grid.cols-3{grid-template-columns:repeat(3,1fr);}
 @media (max-width:640px){.img-grid,.img-grid.cols-3{grid-template-columns:1fr;}}
 .img-stack .case-image,.img-grid .case-image{margin:0;aspect-ratio:16/10;}
-.case-image{margin:0;}
 
 /* Footer wraps on small screens */
 @media (max-width:640px){
