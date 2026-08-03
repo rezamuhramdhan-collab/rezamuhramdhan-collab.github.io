@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { SiteFooter } from "@/components/shared";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { getSiteSettings, getHero } from "@/lib/data";
@@ -36,6 +37,7 @@ const dmMono = localFont({
 const SITE_TITLE = "Reza Ramdhan — Product Designer";
 const SITE_DESCRIPTION =
   "I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.";
+const GOOGLE_TAG_ID = "G-9P2MJ72NW3";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [settings, hero] = await Promise.all([getSiteSettings(), getHero()]);
@@ -77,6 +79,16 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         <SiteFooter settings={settings} />
         <ScrollReveal />
         <SpeedInsights />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GOOGLE_TAG_ID}');`}
+        </Script>
       </body>
     </html>
   );
