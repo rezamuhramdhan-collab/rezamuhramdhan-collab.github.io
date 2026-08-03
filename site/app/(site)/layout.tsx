@@ -4,6 +4,7 @@ import { SiteFooter } from "@/components/shared";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { getSiteSettings, getHero } from "@/lib/data";
 import { SITE_URL, IS_SECONDARY_DEPLOY } from "@/lib/seo";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 
 // Paper Swiss type system (v3 — see docs/desain.md):
@@ -75,6 +76,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         {children}
         <SiteFooter settings={settings} />
         <ScrollReveal />
+        <SpeedInsights />
       </body>
     </html>
   );
