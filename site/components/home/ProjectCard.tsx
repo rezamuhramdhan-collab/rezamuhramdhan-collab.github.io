@@ -3,8 +3,16 @@ import Link from "next/link";
 import type { Project } from "@/content/types";
 import { ArrowInCircle, PhotoIcon } from "../icons";
 
+const VISUAL_THUMBNAILS: Record<string, string> = {
+  // The system case study gets a native Paper Swiss thumbnail instead of the
+  // legacy CMS mockup treatment, so the card previews the work's actual visual language.
+  "bank-saqu-design-system": "/work/design-systemqu/thumbnail.svg",
+};
+
 function ProjectThumbnail({ project }: { project: Project }) {
-  if (!project.thumbnail) {
+  const thumbnail = VISUAL_THUMBNAILS[project.slug] ?? project.thumbnail;
+
+  if (!thumbnail) {
     return (
       <div className="img-placeholder">
         <PhotoIcon />
@@ -14,7 +22,7 @@ function ProjectThumbnail({ project }: { project: Project }) {
 
   return (
     <Image
-      src={project.thumbnail}
+      src={thumbnail}
       alt=""
       fill
       sizes="(max-width: 760px) 100vw, 280px"
