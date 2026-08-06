@@ -12,6 +12,42 @@ deploy, and database work.
 
 ---
 
+## 2026-08-04
+
+### Removed
+
+- **Stray npm install at the repository root.** `package.json`,
+  `package-lock.json`, and `node_modules/` at the root declared a single
+  dependency, `@vercel/speed-insights`, that is only imported from
+  `site/app/(site)/layout.tsx` and is already declared in `site/package.json`.
+  Nothing at the root level is a Node project — the app lives entirely in
+  `site/`, and CI installs with `working-directory: site` — so the root
+  manifest was unused. Committed by accident in `de2a35d`.
+- Deleted the `.DS_Store` files left in the working tree. They were already
+  covered by `.gitignore` and never tracked.
+
+### Fixed
+
+- **The `portfolio-qa` skill now loads.** `docs/QA_Engineer.md` carried the
+  `name: portfolio-qa` skill frontmatter but sat in `docs/`, where no agent
+  reads it, while `.agents/skills/portfolio-qa/` held no `SKILL.md` at all.
+  Moved the playbook to `.agents/skills/portfolio-qa/SKILL.md`.
+- **De-staled the QA playbook.** It still described Turso as the hosted
+  database and documented a manual "boot dev against prod" migration that CI
+  now performs via `scripts/push-schema.mts`. Rewrote the schema protocol
+  around Supabase, recorded the non-additive-push CI hang as a named failure
+  mode, corrected the deploy secrets (`DATABASE_AUTH_TOKEN` is gone,
+  `BLOB_READ_WRITE_TOKEN` matters), repointed "root-level HTML files" at
+  `prototypes/`, and retired four QA-debt items that are already fixed in the
+  code (`PAYLOAD_SECRET` hard-fail, `nextProjectSlug` rendering, `payload.db`
+  gitignored, `(site)` error/not-found pages).
+- **README repository layout.** The `docs/` row named three of the six docs and
+  called the v3 redesign "in-progress"; the `prototypes/` row still framed
+  `v3-landing.html` as pending design review. v3 has shipped. Also added a row
+  for `.agents/skills/`, which was undocumented.
+
+---
+
 ## 2026-08-02
 
 ### Changed
