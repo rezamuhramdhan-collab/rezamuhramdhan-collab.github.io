@@ -195,8 +195,19 @@ h1,h2,h3,h4,p{margin:0;}
   text-transform:uppercase;white-space:nowrap;color:var(--muted);
 }
 .real-paper-thumb-meta span:first-child{overflow:hidden;text-overflow:ellipsis;}
-.real-paper-thumb-image{position:relative;min-height:0;overflow:hidden;border:1px solid var(--line);background:var(--surface);}
-.real-paper-thumb-image img{filter:grayscale(1) contrast(.9) brightness(1.08);}
+.real-paper-thumb-image{
+  position:relative;min-height:0;overflow:hidden;
+  border:1px solid var(--line);background:var(--surface);
+}
+/* Thumbnails keep their own colour — the paper frame, mono meta line and ink
+   rule carry the visual language, not a desaturation. Saturation is pulled
+   back one notch and a thin paper veil settles the image onto the page; hover
+   clears both so the row reads live, never disabled. */
+.real-paper-thumb-image::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:var(--paper);opacity:.14;transition:opacity .25s;
+}
+.real-paper-thumb-image img{filter:saturate(.78) contrast(1.06);transition:filter .25s;}
 .real-paper-thumb-rule{width:100%;height:1px;background:var(--ink);}
 .project-photo img{width:100%;height:100%;object-fit:cover;}
 .project-body{display:flex;flex-direction:column;justify-content:space-between;gap:20px;}
@@ -217,6 +228,10 @@ h1,h2,h3,h4,p{margin:0;}
 .project-read svg{width:20px;height:20px;flex:none;}
 .project-row:hover .project-read,
 .project-row:focus-visible .project-read{color:var(--ink);}
+.project-row:hover .real-paper-thumb-image::after,
+.project-row:focus-visible .real-paper-thumb-image::after{opacity:0;}
+.project-row:hover .real-paper-thumb-image img,
+.project-row:focus-visible .real-paper-thumb-image img{filter:saturate(1) contrast(1);}
 .project-row:focus-visible{outline:2px solid var(--ink);outline-offset:4px;}
 
 /* ---------- All Projects index (Figma node 4387:10) ---------- */
@@ -294,6 +309,7 @@ body:has(.all-projects-page) > .site-footer{display:none;}
 }
 @media (prefers-reduced-motion:reduce){
   .project-filter{transition:none;}
+  .real-paper-thumb-image::after,.real-paper-thumb-image img{transition:none;}
 }
 
 /* ---------- Approach strip (was: Services accordion) ----------

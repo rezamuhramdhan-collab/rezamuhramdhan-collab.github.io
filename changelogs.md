@@ -12,6 +12,26 @@ deploy, and database work.
 
 ---
 
+## 2026-08-06
+
+### Changed
+
+- **Project thumbnails keep their own colour.** The uploaded thumbnail in each
+  work-list row was rendered through
+  `grayscale(1) contrast(.9) brightness(1.08)`, which flattened every
+  screenshot to a washed-out grey and made the rows read as disabled. The
+  filter is now `saturate(.78) contrast(1.06)` plus a 14%-opacity `--paper`
+  veil over the image: saturation is pulled back one notch so the thumbnail
+  sits on the paper palette, but every hue survives. The Paper Swiss language
+  is carried by the frame — the mono meta line, the 1px `--line` border, and
+  the ink rule — not by desaturation.
+- **Thumbnails clear on hover and keyboard focus.** `.project-row:hover` /
+  `:focus-visible` drops the paper wash and returns the image to full
+  saturation, so the row visibly responds. Both transitions are disabled under
+  `prefers-reduced-motion: reduce`.
+
+---
+
 ## 2026-08-04
 
 ### Removed
