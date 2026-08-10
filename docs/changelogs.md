@@ -12,6 +12,30 @@ deploy, and database work.
 
 ---
 
+## 2026-08-10
+
+### Changed
+
+- **All project documentation lives in `docs/`.** `changelogs.md` moved from the
+  repo root into `docs/` so every markdown doc sits in one folder.
+- **The vendored caveman `README.md` files are gone.** All seven were
+  byte-identical to the copies the caveman plugin already ships in
+  `~/.claude/plugins/cache/caveman/`, so keeping them in the repo duplicated
+  content without adding anything — read them at the
+  [source repo](https://github.com/JuliusBrussee/caveman) instead. The one
+  skill doc that *is* repo-specific, `caveman-compress/SECURITY.md`, moved to
+  `docs/skills/caveman-compress-security.md`; it explains why that skill trips
+  Snyk's High Risk static analysis as a false positive.
+- **`.agents/skills/` now holds `SKILL.md` files only.** Those stay put: the
+  loader resolves each skill at `.agents/skills/<name>/SKILL.md` and
+  `skills-lock.json` pins that exact path, so moving them would silently
+  unregister every skill — the same failure recorded in the 2026-08-04 entry
+  below. `README.md` likewise stays at the repo root, where GitHub renders it.
+- **README repository-layout table updated** to match the new locations, and its
+  stale `docs/desain.md` links now point at the current `docs/Design.md`.
+
+---
+
 ## 2026-08-06
 
 ### Changed
