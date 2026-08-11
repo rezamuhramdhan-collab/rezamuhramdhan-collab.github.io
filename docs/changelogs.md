@@ -12,6 +12,40 @@ deploy, and database work.
 
 ---
 
+## 2026-08-11
+
+### Removed
+
+- **The eight vendored caveman skill documents are gone.** Every one was
+  byte-identical to the copy the installed [caveman
+  plugin](https://github.com/JuliusBrussee/caveman) already ships under
+  `~/.claude/plugins/cache/caveman/` — verified file by file — so the repo was
+  carrying a second copy of someone else's package with nothing added.
+  `caveman-compress.md` was the sole near-miss, differing only in the four
+  lines rewritten a day earlier to fix its script paths.
+
+  `docs/skills/portfolio-qa.md` stays: it is written for this codebase and has
+  no upstream to fall back on.
+
+  The seven caveman skills keep working wherever the plugin is installed, since
+  that is now their only definition. `portfolio-qa` does not load from anywhere
+  — restore it by recreating `.agents/skills/portfolio-qa/SKILL.md` from
+  `docs/skills/portfolio-qa.md`.
+
+- **`.agents/` is gone entirely.** With the skill documents removed, the only
+  thing left under it was `caveman-compress/scripts/` — seven `.py` files, also
+  byte-identical to the plugin's copies and orphaned once the `SKILL.md` that
+  invoked them was deleted — plus seven empty directories. Nothing referenced
+  the folder: no CI job, no npm script, no import. The README's
+  `.agents/skills/` layout row went with it.
+
+  `skills-lock.json` is now inert. It still pins the seven caveman skills to
+  their upstream source paths, so it stays internally valid, but there is no
+  longer a local `.agents/skills/` for a sync to populate — re-running one
+  would recreate the whole folder.
+
+---
+
 ## 2026-08-10
 
 ### Changed
@@ -22,15 +56,26 @@ deploy, and database work.
   byte-identical to the copies the caveman plugin already ships in
   `~/.claude/plugins/cache/caveman/`, so keeping them in the repo duplicated
   content without adding anything — read them at the
-  [source repo](https://github.com/JuliusBrussee/caveman) instead. The one
-  skill doc that *is* repo-specific, `caveman-compress/SECURITY.md`, moved to
+  [source repo](https://github.com/JuliusBrussee/caveman) instead.
+  `caveman-compress/SECURITY.md` moved to
   `docs/skills/caveman-compress-security.md`; it explains why that skill trips
   Snyk's High Risk static analysis as a false positive.
-- **`.agents/skills/` now holds `SKILL.md` files only.** Those stay put: the
-  loader resolves each skill at `.agents/skills/<name>/SKILL.md` and
-  `skills-lock.json` pins that exact path, so moving them would silently
-  unregister every skill — the same failure recorded in the 2026-08-04 entry
-  below. `README.md` likewise stays at the repo root, where GitHub renders it.
+- **Every `SKILL.md` moved to `docs/skills/<name>.md` too**, so all markdown in
+  the repo now lives under `docs/`. `README.md` is the one exception, kept at
+  the root where GitHub renders it.
+
+  **This unregisters all eight skills** — `caveman`, `caveman-commit`,
+  `caveman-compress`, `caveman-help`, `caveman-review`, `caveman-stats`,
+  `cavecrew`, and `portfolio-qa`. Agents discover skills only at
+  `.agents/skills/<name>/SKILL.md`; a markdown file elsewhere is just prose, so
+  none of the slash commands resolve and the QA playbook no longer auto-loads.
+  This is the same failure recorded in the 2026-08-04 entry below, applied
+  deliberately this time in exchange for a single docs folder. Seven of the
+  eight were deleted outright the next day — see the 2026-08-11 entry above.
+
+  `.agents/skills/caveman-compress/scripts/` stayed behind — it is Python, not
+  markdown, and the skill document's instructions were rewritten to point at
+  its repo-root path rather than "adjacent to this SKILL.md".
 - **README repository-layout table updated** to match the new locations, and its
   stale `docs/desain.md` links now point at the current `docs/Design.md`.
 
