@@ -203,7 +203,7 @@ export interface Service {
   /**
    * Icon tile shown above the title in the Approach strip. Falls back to a positional icon when unset.
    */
-  icon?: ('search' | 'layers' | 'code' | 'chart' | 'pen' | 'grid' | 'bulb') | null;
+  icon?: ('search' | 'layers' | 'code' | 'chart' | 'compass' | 'pen' | 'grid' | 'bulb') | null;
   tags?:
     | {
         text: string;

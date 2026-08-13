@@ -197,6 +197,7 @@ export async function seed(payload: Payload): Promise<void> {
       data: {
         title: service.title,
         description: service.description,
+        icon: service.icon,
         tags: service.tags.map((text) => ({ text })),
       } as never,
     });

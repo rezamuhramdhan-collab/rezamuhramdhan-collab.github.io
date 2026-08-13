@@ -12,6 +12,38 @@ deploy, and database work.
 
 ---
 
+## 2026-08-13
+
+### Changed
+
+- **The Approach strip now carries the v3 prototype's four cards.** It shipped
+  with the three v1 service cards (Product Design / Design Systems / Strategy),
+  while `prototypes/v3-landing.html` and the design have always shown four.
+  "Product Design" becomes "Discovery that bites" and "Design Systems" becomes
+  "Systems, not screens", both taking the prototype's copy; "Measured after
+  launch" is added as the fourth. The prototype's third cell ("Prototypes in
+  code") is deliberately not used — the existing **Strategy** card keeps that
+  slot with its title and description unchanged.
+
+  `content/services.ts` is the fixture, not the live content: after seeding, the
+  database is the source of truth. `scripts/update-approach-cards.mts` carries
+  the change across — dry-run by default, `--apply` to write, idempotent, and it
+  leaves any extra service rows alone rather than reordering them. Vercel masks
+  `DATABASE_URI` on `vercel env pull`, so the script runs from CI against the
+  repo secret: `.github/workflows/update-approach-cards.yml`, manually
+  dispatched, with an `apply` checkbox that defaults to a dry run.
+
+### Added
+
+- **`compass` service icon.** Strategy sat on the bar chart, which is now the
+  natural mark for "Measured after launch"; two identical tiles in one row read
+  as a bug. Appended to `serviceIconKeys`, so the schema push stays additive.
+  The positional fallback in `approachIcons` follows the same order (discovery,
+  systems, strategy, measurement), and `lib/seed.ts` now writes `icon` on seed —
+  previously a fresh database relied on the fallback alone.
+
+---
+
 ## 2026-08-11
 
 ### Removed

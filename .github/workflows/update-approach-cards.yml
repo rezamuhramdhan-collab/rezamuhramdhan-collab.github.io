@@ -1,0 +1,42 @@
+name: Update Approach cards
+
+# One-off, manually triggered. Rewrites the Approach strip's service rows on the
+# hosted database to the v3 prototype copy and adds the fourth cell ("Measured
+# after launch"). The Strategy card keeps its title and description; only its
+# icon moves to `compass`. Idempotent — safe to re-run.
+#
+# Runs in production mode so it only updates data (no schema push). Run the
+# Pages deploy afterwards (and `npx vercel --prod` for the app) so the change
+# is published: this runs outside the Next.js server, so the config's
+# revalidatePath hook does not fire.
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Write the changes (unchecked = dry run, prints the plan only)"
+        type: boolean
+        default: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Update Approach cards
+        working-directory: site
+        run: npx tsx scripts/update-approach-cards.mts ${{ inputs.apply && '--apply' || '' }}
+        env:
+          NODE_ENV: production
+          PAYLOAD_SECRET: build-only-not-a-secret
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}

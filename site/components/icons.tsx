@@ -122,6 +122,17 @@ export function ChartIcon() {
   );
 }
 
+// Direction-finding mark for the Strategy card — the bar chart already belongs
+// to "Measured after launch", and two identical tiles in one row read as a bug.
+export function CompassIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="8" cy="8" r="6.2" />
+      <path d="M10.6 5.4 9.2 9.2 5.4 10.6 6.8 6.8Z" />
+    </svg>
+  );
+}
+
 // Keys come from content/registry.ts; the Record type makes a key added there
 // a compile error here until its icon exists.
 export const serviceIcons: Record<ServiceIconKey, ComponentType> = {
@@ -129,14 +140,16 @@ export const serviceIcons: Record<ServiceIconKey, ComponentType> = {
   layers: LayersIcon,
   code: CodeIcon,
   chart: ChartIcon,
+  compass: CompassIcon,
   // v1 keys still present on existing rows — mapped to their closest v3 mark.
   pen: SearchIcon,
   grid: LayersIcon,
   bulb: ChartIcon,
 };
 
-// Positional fallback for services with no icon set yet.
-export const approachIcons = [SearchIcon, LayersIcon, CodeIcon, ChartIcon];
+// Positional fallback for services with no icon set yet — mirrors the four
+// Approach cards in order (discovery, systems, strategy, measurement).
+export const approachIcons = [SearchIcon, LayersIcon, CompassIcon, ChartIcon];
 
 // The hero's isometric layer stack: a hairline grid behind four stacked
 // isometric planes that grow toward the base, joined by dashed risers.

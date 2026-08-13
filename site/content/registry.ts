@@ -16,6 +16,7 @@ export const serviceIconKeys = [
   "layers",
   "code",
   "chart",
+  "compass",
   // v1 keys, retained so existing rows still resolve.
   "pen",
   "grid",
