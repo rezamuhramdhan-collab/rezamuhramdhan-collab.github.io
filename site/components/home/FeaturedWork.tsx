@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { Project } from "@/content/types";
-import { ArrowRight } from "../icons";
 import { ProjectCard } from "./ProjectCard";
 
 const FEATURED_PROJECT_COUNT = 4;
@@ -14,7 +13,6 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
         <h2 className="display">Selected projects</h2>
         <Link className="sec-link" href="/work">
           See all projects
-          <ArrowRight />
         </Link>
       </div>
       <ul className="work-list">

@@ -16,6 +16,12 @@ deploy, and database work.
 
 ### Changed
 
+- **Work-list marks.** The "See all projects" section link and the "Read case
+  study" affordance on every project row lose their arrows. Both were hardcoded
+  in the components, so this is a code-only change — no database write. The now
+  dead `.sec-link svg` / `.project-read svg` rules and the `ArrowInCircle`
+  component (its last caller) are removed with them.
+
 - **CTA marks.** The nav **Resume** button carries a download icon instead of a
   right arrow — it saves a file, it does not navigate. The hero's two buttons
   (**View Work**, **Let's Talk**) lose their arrows entirely. The secondary

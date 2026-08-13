@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/content/types";
-import { ArrowInCircle } from "../icons";
 
 function PaperThumbnail({ project }: { project: Project }) {
   const category = project.category.toLowerCase();
@@ -149,7 +148,6 @@ export function ProjectCard({ project }: { project: Project }) {
             )}
             <span className="project-read">
               Read case study
-              <ArrowInCircle />
             </span>
           </div>
         </div>

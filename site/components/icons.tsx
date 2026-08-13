@@ -57,17 +57,6 @@ export function WhatsAppIcon() {
   );
 }
 
-// Arrow inside a hairline circle — the "read more" affordance and the hero's
-// secondary (ghost) button.
-export function ArrowInCircle() {
-  return (
-    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="10" cy="10" r="9.2" />
-      <path d="M6.6 11.9 13 5.6M7.9 5.6H13v5.1" />
-    </svg>
-  );
-}
-
 export function LinkedInIcon() {
   return (
     <svg viewBox="0 0 16 16" fill="currentColor">
