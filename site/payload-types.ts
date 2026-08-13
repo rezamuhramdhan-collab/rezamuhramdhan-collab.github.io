@@ -1299,7 +1299,7 @@ export interface SiteSetting {
      */
     file?: (number | null) | Media;
     variant: 'dark' | 'outline';
-    icon?: ('arrow' | 'whatsapp' | 'email') | null;
+    icon?: ('arrow' | 'whatsapp' | 'email' | 'download') | null;
     download?: boolean | null;
   };
   footerText?: string | null;
@@ -1326,7 +1326,7 @@ export interface SiteSetting {
        */
       file?: (number | null) | Media;
       variant: 'dark' | 'outline';
-      icon?: ('arrow' | 'whatsapp' | 'email') | null;
+      icon?: ('arrow' | 'whatsapp' | 'email' | 'download') | null;
       download?: boolean | null;
     };
   };
@@ -1361,7 +1361,7 @@ export interface Hero {
      */
     file?: (number | null) | Media;
     variant: 'dark' | 'outline';
-    icon?: ('arrow' | 'whatsapp' | 'email') | null;
+    icon?: ('arrow' | 'whatsapp' | 'email' | 'download') | null;
     download?: boolean | null;
   };
   /**
@@ -1386,7 +1386,7 @@ export interface Hero {
      */
     file?: (number | null) | Media;
     variant: 'dark' | 'outline';
-    icon?: ('arrow' | 'whatsapp' | 'email') | null;
+    icon?: ('arrow' | 'whatsapp' | 'email' | 'download') | null;
     download?: boolean | null;
   };
   /**
@@ -1473,7 +1473,7 @@ export interface About {
      */
     file?: (number | null) | Media;
     variant: 'dark' | 'outline';
-    icon?: ('arrow' | 'whatsapp' | 'email') | null;
+    icon?: ('arrow' | 'whatsapp' | 'email' | 'download') | null;
     download?: boolean | null;
   };
   headlineAccent?: string | null;
@@ -1527,7 +1527,7 @@ export interface Cta {
          */
         file?: (number | null) | Media;
         variant: 'dark' | 'outline';
-        icon?: ('arrow' | 'whatsapp' | 'email') | null;
+        icon?: ('arrow' | 'whatsapp' | 'email' | 'download') | null;
         download?: boolean | null;
         id?: string | null;
       }[]

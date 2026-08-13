@@ -1,0 +1,41 @@
+name: Update CTA icons
+
+# One-off, manually triggered. Sets the nav Resume button's icon to `download`
+# and clears the arrow from the hero CTAs on the hosted database. Idempotent —
+# safe to re-run.
+#
+# Runs in production mode so it only updates data (no schema push). Run the
+# Pages deploy afterwards (and `npx vercel --prod` for the app) so the change
+# is published: this runs outside the Next.js server, so the config's
+# revalidatePath hook does not fire.
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Write the changes (unchecked = dry run, prints the plan only)"
+        type: boolean
+        default: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Update CTA icons
+        working-directory: site
+        run: npx tsx scripts/update-cta-icons.mts ${{ inputs.apply && '--apply' || '' }}
+        env:
+          NODE_ENV: production
+          PAYLOAD_SECRET: build-only-not-a-secret
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}

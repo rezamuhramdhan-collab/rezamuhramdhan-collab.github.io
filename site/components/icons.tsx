@@ -20,6 +20,17 @@ export function ArrowRight() {
   );
 }
 
+// Tray + downward arrow, drawn to ArrowRight's weight so the two read as one
+// set — the Resume button downloads a file rather than navigating.
+export function DownloadIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3v11m0 0 4.5-4.5M12 14l-4.5-4.5" />
+      <path d="M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17" />
+    </svg>
+  );
+}
+
 export function ArrowBack() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -267,4 +278,5 @@ export const buttonIcons: Record<ButtonIconKey, ComponentType> = {
   arrow: ArrowRight,
   whatsapp: WhatsAppIcon,
   email: EmailIcon,
+  download: DownloadIcon,
 };

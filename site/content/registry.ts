@@ -4,7 +4,7 @@
 // demand the matching icon/art everywhere else. Keep this module JSX-free so
 // payload.config.ts can import it.
 
-export const buttonIconKeys = ["arrow", "whatsapp", "email"] as const;
+export const buttonIconKeys = ["arrow", "whatsapp", "email", "download"] as const;
 export type ButtonIconKey = (typeof buttonIconKeys)[number];
 
 // v3 revived `services.icon` and `hero.socialLinks` — the Approach strip gives

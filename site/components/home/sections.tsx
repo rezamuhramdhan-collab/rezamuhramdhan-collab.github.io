@@ -11,7 +11,6 @@ import { Btn } from "../shared";
 import {
   PhotoIcon,
   WireframeStack,
-  ArrowRight,
   LinkedInIcon,
   InstagramIcon,
   EmailIcon,
@@ -48,10 +47,11 @@ export function Hero({ hero }: { hero: HeroData }) {
           {hero.bio && <p className="hero-bio">{hero.bio}</p>}
           <div className="hero-actions">
             <Btn button={hero.primaryCta} />
+            {/* No trailing mark on either hero CTA — the pair reads as plain
+                labels; the arrow is reserved for links that leave the page. */}
             {hero.secondaryCta && (
               <a className="btn btn-light" href={hero.secondaryCta.href}>
                 {hero.secondaryCta.label}
-                <ArrowRight />
               </a>
             )}
           </div>

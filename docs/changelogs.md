@@ -16,6 +16,18 @@ deploy, and database work.
 
 ### Changed
 
+- **CTA marks.** The nav **Resume** button carries a download icon instead of a
+  right arrow — it saves a file, it does not navigate. The hero's two buttons
+  (**View Work**, **Let's Talk**) lose their arrows entirely. The secondary
+  one's arrow was hardcoded in `components/home/sections.tsx`, not read from
+  data; the primary one's came from `hero.primaryCta.icon`, so it takes a
+  database write: `scripts/update-cta-icons.mts`, dispatched via
+  `.github/workflows/update-cta-icons.yml` (dry run by default).
+
+  `download` is appended to `buttonIconKeys` with a matching `DownloadIcon`
+  drawn to `ArrowRight`'s weight. The Contact section's "Download Resume"
+  button still shows an arrow — out of scope for this pass.
+
 - **The Approach strip now carries the v3 prototype's four cards.** It shipped
   with the three v1 service cards (Product Design / Design Systems / Strategy),
   while `prototypes/v3-landing.html` and the design have always shown four.

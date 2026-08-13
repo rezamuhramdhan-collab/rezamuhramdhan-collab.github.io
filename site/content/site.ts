@@ -16,7 +16,7 @@ export const siteSettings: SiteSettings = {
     href: "/resume.pdf",
     variant: "dark",
     download: true,
-    icon: "arrow",
+    icon: "download",
   },
   footerText: "© 2026 Reza Ramdhan",
   footerLinks: [
@@ -40,7 +40,7 @@ export const hero: Hero = {
   lastName: "Ramdhan",
   portfolioTag: "Portfolio — 2026",
   bio: "Product Designer with 5+ years of experience in fintech and digital banking, specializing in solving complex user problems and contributing to product strategy.",
-  primaryCta: { label: "View Work", href: "/#work", variant: "dark", icon: "arrow" },
+  primaryCta: { label: "View Work", href: "/#work", variant: "dark" },
   secondaryCta: { label: "How I work", href: "/#services", variant: "outline" },
   socialLinks: [
     { platform: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/rezamramdhan/" },
