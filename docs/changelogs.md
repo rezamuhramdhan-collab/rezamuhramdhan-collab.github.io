@@ -12,6 +12,18 @@ deploy, and database work.
 
 ---
 
+## 2026-09-08
+
+### Changed
+
+- **Case-study section labels.** The heading hoisted into a case-study section's
+  label row (e.g. "Problem statement") now renders as a real title — display
+  face, `clamp(22px,3.4vw,28px)`, ink, no uppercase — instead of an 11px muted
+  mono micro-label. The thin trailing rule stays. CSS-only, the
+  `.sec-label-row .eyebrow` rule in `globals.css`; no database write.
+
+---
+
 ## 2026-08-13
 
 ### Changed
