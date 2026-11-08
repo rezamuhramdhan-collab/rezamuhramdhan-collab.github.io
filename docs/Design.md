@@ -1,5 +1,12 @@
 # Visual language: The red-thread journey
 
+Latest owner refinement: omit the detail-page work counter, category/year
+eyebrow, complete chapter navigation bar and global atmosphere button. Keep
+the full authored story, direct anchors and original project metadata. Motion
+follows the operating system's reduced-motion preference; the earlier manual
+pause preference is no longer used. This explicit owner choice supersedes the
+earlier pause-control requirement below.
+
 ## Detail-page revision: editorial reading (2026-11-08)
 
 Latest owner refinement: remove short decorative rules beside text labels and

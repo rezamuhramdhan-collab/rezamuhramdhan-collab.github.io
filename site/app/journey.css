@@ -77,10 +77,6 @@ body { color: var(--ink); background: var(--night); }
 .btn-accent, .btn-dark, .btn-submit { background: var(--thread-strong); color: white; border-color: #f08b9d; }
 .btn-accent:hover, .btn-dark:hover, .btn-submit:hover { background: #b52c4d; color: white; }
 .btn.small { min-height: 44px; }
-.motion-toggle { position: fixed; z-index: 40; bottom: 16px; left: 16px; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 9px 14px; border: 1px solid #8d9dbb; border-radius: 24px; background: #101b37; color: #e1e9fb; box-shadow: 0 4px 20px #060b1c55; font-size: 12px; }
-.motion-toggle:hover { background: #273557; text-decoration: underline; }
-.motion-toggle:disabled { opacity: 1; }
-.motion-toggle > span { font-size: 17px; }
 
 /* Two original worlds: a geometric city and a painted countryside. */
 .hero { min-height: min(880px, calc(100svh - 80px)); background: #0a1634; }
@@ -285,7 +281,7 @@ body { color: var(--ink); background: var(--night); }
 .footer-row { border-color: #5f6f91; }
 .footer-row .mono, .footer-row .mono a { color: #c6d3ec; }
 
-/* Motion is finite for arrivals; continuous atmosphere has a persistent pause. */
+/* Finite arrivals and continuous atmosphere respect system reduced motion. */
 .page-transition { position: relative; animation: page-arrival var(--motion-scene) ease both; }
 .transition-flare { position: absolute; z-index: 10; inset: 0 0 auto; height: min(75vh, 700px); pointer-events: none; background: radial-gradient(ellipse at 50% 35%, #d4deff33, transparent 60%); animation: transition-flare 900ms ease both; }
 html[data-atmosphere="playing"].journey-enhanced [data-reveal]:not(.is-visible) { opacity: 0; filter: blur(4px); transform: translateY(16px); }
@@ -403,7 +399,6 @@ html[data-atmosphere="paused"] [data-reveal] { opacity: 1; filter: none; transfo
   .all-projects-content { padding-block: 40px 64px; }
   .all-projects-heading h1 { font-size: 64px; }
   .page-state { padding-block: 64px; }
-  .motion-toggle { left: 10px; bottom: 10px; min-height: 44px; padding: 8px 12px; font-size: 11px; }
   .site-footer { padding-bottom: 72px; }
   .footer-row { gap: 12px; }
 }

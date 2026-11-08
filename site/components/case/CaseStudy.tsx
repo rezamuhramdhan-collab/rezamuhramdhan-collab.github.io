@@ -6,11 +6,10 @@ import { CaseImage } from "./images";
 import { CaseSections } from "./sections";
 import { ProjectLock } from "./ProjectLock";
 
-export function CaseStudy({ project, settings, nextProject, caseNumber }: {
+export function CaseStudy({ project, settings, nextProject }: {
   project: Project;
   settings: SiteSettings;
   nextProject?: Project;
-  caseNumber?: number;
 }) {
   const { ctaFooter, backLink } = settings;
   const hasCover = project.heroImage.src && project.heroImage.src !== "placeholder";
@@ -21,11 +20,9 @@ export function CaseStudy({ project, settings, nextProject, caseNumber }: {
         <div className="frame">
           <div className="case-breadcrumb">
             <Link className="back-link" href={backLink.href}><ArrowBack />{backLink.label}</Link>
-            <span>Selected work / {caseNumber == null ? "Case study" : String(caseNumber).padStart(2, "0")}</span>
           </div>
           <header className="case-header" id="case-top">
             <div className="case-cover-copy">
-              <p className="chapter-label"><span>Behind the work</span><span>{project.category}{project.year && ` / ${project.year}`}</span></p>
               <h1>{project.title}</h1>
               <p className="subtitle">{project.summary}</p>
             </div>

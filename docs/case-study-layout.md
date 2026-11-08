@@ -1,5 +1,27 @@
 # Case-study layout: the editorial journey
 
+Latest owner refinement: remove the Selected work counter, the Behind the work
+category/year eyebrow, the complete chapter navigation bar and the global
+atmosphere button. Preserve the complete story, chapter headings, direct anchor
+IDs, cover imagery, metadata ledger and next-project link. Sticky chapter
+headings now account only for the main site header. Earlier navigation and
+manual-pause checks below describe superseded revisions.
+
+The owner explicitly removed the manual motion control. This overrides that
+control's earlier anti-slop R-39 requirement. The system reduced-motion media
+query and preference-change listener still pause atmosphere; old saved manual
+pause values are ignored so visitors cannot be stuck in a hidden toggle state.
+
+Latest cleanup QA: nine tests, strict TypeScript and the server production build
+pass. In the production preview, the cover breadcrumb contains only Back; the
+cover eyebrow, chapter navigation and atmosphere button each have zero DOM
+elements. All nine fixture story chapters remain. A direct #solution link lands
+at approximately 112px below the viewport top, below the main header at 81px.
+The homepage reports playing atmosphere, an infinite comet animation and reading
+progress with no floating control. No console warnings or errors appeared in
+these fresh checks. Reduced-motion handling remains implemented through the
+existing CSS media query and the system-preference change listener.
+
 Owner refinement: remove the repeated short line ornaments beside labels and
 transition copy, and omit the entire project-brief excerpt section. The cover
 now leads directly into chapter navigation and the complete authored story.

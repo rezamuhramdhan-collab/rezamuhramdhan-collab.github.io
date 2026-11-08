@@ -1,7 +1,6 @@
 import type { SectionBlock } from "@/content/types";
 import { groupCaseSections } from "@/lib/case-story";
 import { BlockBody, StepGroup, blockHeading } from "./blocks";
-import { CaseNav } from "./CaseNav";
 
 // The same reading layout appears after a protected story is unlocked.
 export function CaseSections({ sections }: { sections: SectionBlock[] }) {
@@ -11,11 +10,6 @@ export function CaseSections({ sections }: { sections: SectionBlock[] }) {
   }
   return (
     <div className="case-reading">
-      <aside className="case-contents">
-        <span className="contents-label">Explore the story</span>
-        <CaseNav items={groups.map(({ id, label }) => ({ id, label }))} />
-        <a className="contents-top" href="#case-top">Back to top</a>
-      </aside>
       <div className="case-chapters">
         {groups.map((group, index) => {
           const kind = group.kind === "steps" ? "steps" : group.block.type;

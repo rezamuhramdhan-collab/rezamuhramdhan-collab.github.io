@@ -70,6 +70,11 @@ deploy, and database work.
 
 ### Removed
 
+- Detail-page work counter, category/year eyebrow, complete chapter navigation
+  bar, and the global atmosphere button at the owner's request. The full story
+  and its anchors remain. Motion still honors system reduced-motion settings;
+  an old manual pause choice no longer silently disables animation.
+
 - Short decorative lines beside chapter labels and transition copy across the
   site, plus the duplicate project-brief section on case-study detail pages.
   The original story chapters and navigation remain.

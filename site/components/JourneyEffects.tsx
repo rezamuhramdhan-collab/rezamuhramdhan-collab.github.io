@@ -1,26 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 export function JourneyEffects() {
   const pathname = usePathname();
   const progress = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
-  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const preference = matchMedia("(prefers-reduced-motion: reduce)");
-    const updatePreference = () => setReduced(preference.matches);
+    const updatePreference = () => {
+      document.documentElement.dataset.atmosphere = preference.matches ? "paused" : "playing";
+    };
     updatePreference();
-    try { setPaused(localStorage.getItem("journey-motion") === "paused"); } catch { /* Storage is optional. */ }
     preference.addEventListener("change", updatePreference);
     return () => preference.removeEventListener("change", updatePreference);
   }, []);
-
-  useEffect(() => {
-    document.documentElement.dataset.atmosphere = paused || reduced ? "paused" : "playing";
-  }, [paused, reduced]);
 
   useEffect(() => {
     let frame = 0;
@@ -55,17 +50,7 @@ export function JourneyEffects() {
     };
   }, [pathname]);
 
-  const toggle = () => setPaused((value) => {
-    try { localStorage.setItem("journey-motion", value ? "playing" : "paused"); } catch { /* Storage is optional. */ }
-    return !value;
-  });
-
-  return <>
-    <div ref={progress} className="journey-progress" role="progressbar" aria-label="Reading progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={0}><span /></div>
-    <button type="button" className="motion-toggle" onClick={toggle} aria-pressed={paused || reduced} disabled={reduced}>
-      <span aria-hidden="true">{paused || reduced ? "Ⅱ" : "◌"}</span>{reduced ? "Reduced motion" : paused ? "Resume atmosphere" : "Pause atmosphere"}
-    </button>
-  </>;
+  return <div ref={progress} className="journey-progress" role="progressbar" aria-label="Reading progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={0}><span /></div>;
 }
 
 export function ArrivalComet() {
