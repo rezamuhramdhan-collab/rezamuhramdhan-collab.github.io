@@ -28,7 +28,7 @@ export default async function AllProjectsPage() {
       </header>
 
       <section className="all-projects-content">
-        <p className="chapter-label"><span>Fragments of the comet</span><span className="chapter-thread" aria-hidden="true" /><span>Selected work</span></p>
+        <p className="chapter-label"><span>Fragments of the comet</span><span>Selected work</span></p>
         <div className="all-projects-heading">
           <h1>Projects</h1>
           <p>

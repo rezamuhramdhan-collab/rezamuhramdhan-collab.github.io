@@ -1,5 +1,19 @@
 # Case-study layout: the editorial journey
 
+Owner refinement: remove the repeated short line ornaments beside labels and
+transition copy, and omit the entire project-brief excerpt section. The cover
+now leads directly into chapter navigation and the complete authored story.
+The initial brief-link checks below are historical verification of the earlier
+revision, not controls in the refined layout. Homepage project previews remain.
+
+Refinement QA: strict TypeScript and the production build pass. Browser checks
+confirm the case brief is absent, all nine authored chapters remain, and the
+cover leads directly to the chapter reader. The final chapter link still selects
+Reflection correctly. Homepage chapter-label and transition ornaments are gone;
+the project index uses the same simplified label. At 375px the case-study page
+has no horizontal overflow. No console warnings or errors appeared during the
+fresh production-preview checks. No CMS or project content was modified.
+
 This revision changes the detail-page composition while keeping the established
 sky palette, red thread, Plus Jakarta Sans and punctuation preference.
 ENERGY 2 / RHYTHM 3 / MOTION 1 for the case-study pages.

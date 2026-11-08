@@ -70,6 +70,10 @@ deploy, and database work.
 
 ### Removed
 
+- Short decorative lines beside chapter labels and transition copy across the
+  site, plus the duplicate project-brief section on case-study detail pages.
+  The original story chapters and navigation remain.
+
 - Decorative wireframe hero and synthetic product-thumbnail mockups.
 
 ---

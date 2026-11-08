@@ -2,6 +2,11 @@
 
 ## Detail-page revision: editorial reading (2026-11-08)
 
+Latest owner refinement: remove short decorative rules beside text labels and
+chapter transitions site-wide. Omit the duplicate project-brief excerpt section
+from detail pages; the project cover leads straight to chapter navigation and
+the full story. Structural separators and active navigation indicators remain.
+
 The owner requested a different case-study detail layout. Keep the established
 sky identity, Plus Jakarta Sans and punctuation preference. Use a wide navy
 project opening, an opaque light reading canvas, a horizontal chapter bar,
