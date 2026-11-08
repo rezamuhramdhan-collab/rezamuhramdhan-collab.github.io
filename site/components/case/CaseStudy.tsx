@@ -1,21 +1,13 @@
 import Link from "next/link";
 import type { Project, SiteSettings } from "@/content/types";
 import { ArrowBack, ArrowUpRight } from "../icons";
+import { Btn } from "../shared";
 import { CaseImage } from "./images";
 import { CaseSections } from "./sections";
 import { ProjectLock } from "./ProjectLock";
 import { storyHighlights } from "@/lib/case-story";
 
-// Case-study page assembly (v2): sticky tab-nav, kicker header, meta grid, and
-// footer CTA. Section grouping / block presentation live in sections.tsx,
-// blocks.tsx, images.tsx, rich-text.tsx; locked projects render via ProjectLock.
-
-export function CaseStudy({
-  project,
-  settings,
-  nextProject,
-  caseNumber,
-}: {
+export function CaseStudy({ project, settings, nextProject, caseNumber }: {
   project: Project;
   settings: SiteSettings;
   nextProject?: Project;
@@ -23,86 +15,58 @@ export function CaseStudy({
 }) {
   const { ctaFooter, backLink } = settings;
   const highlights = storyHighlights(project);
+  const hasCover = project.heroImage.src && project.heroImage.src !== "placeholder";
 
   return (
-    <main className="case" id="main-content">
-      <div className="topbar">
-        <div className="topbar-inner">
-          <Link className="back-link" href={backLink.href}>
-            <ArrowBack />
-            {backLink.label}
-          </Link>
-          <span className="topbar-project">{project.title}</span>
-          <Link className="topbar-contact" href="/#contact">Let’s talk</Link>
-        </div>
-      </div>
-
-      <div className="frame">
-        <header className="case-header" id="case-top">
-          <p className="chapter-label"><span>A fragment, remembered</span><span className="chapter-thread" aria-hidden="true" /><span>Case study</span></p>
-          <div className="kicker">
-            {caseNumber != null && (
-              <>
-                <span className="num">{String(caseNumber).padStart(2, "0")}</span>
-                <span className="sep" />
-              </>
-            )}
-            {project.category && <span className="cat">{project.category}</span>}
+    <main className="case case-editorial" id="main-content">
+      <div className="case-opening">
+        <div className="frame">
+          <div className="case-breadcrumb">
+            <Link className="back-link" href={backLink.href}><ArrowBack />{backLink.label}</Link>
+            <span>Selected work / {caseNumber == null ? "Case study" : String(caseNumber).padStart(2, "0")}</span>
           </div>
-          <h1>{project.title}</h1>
-          <p className="subtitle">{project.summary}</p>
-          <p className="case-story-note">First, the question. Then, the choices that followed.</p>
-          {project.metaGrid.length > 0 && (
-            <div className="meta-grid">
-              {project.metaGrid.map((pair) => (
-                <div key={pair.label} className="cell">
-                  <div className="m-label">{pair.label}</div>
-                  <div className="m-value">{pair.value}</div>
-                </div>
-              ))}
+          <header className="case-header" id="case-top">
+            <div className="case-cover-copy">
+              <p className="chapter-label"><span>Behind the work</span><span className="chapter-thread" aria-hidden="true" /><span>{project.category}{project.year && ` / ${project.year}`}</span></p>
+              <h1>{project.title}</h1>
+              <p className="subtitle">{project.summary}</p>
             </div>
-          )}
-        </header>
-
-        {/* Above the fold — the LCP element on case pages */}
-        {project.heroImage.src && project.heroImage.src !== "placeholder" && <CaseImage image={project.heroImage} hero priority />}
-
-        {highlights.length > 0 && <section className="case-brief" aria-labelledby="brief-title">
-          <div className="brief-heading"><span className="mono">The short version</span><h2 id="brief-title">At a glance</h2><p>Excerpts from the case study. Follow a link for the full context.</p></div>
-          <dl className="brief-points">{highlights.map((item) => <div key={item.label}><dt>{item.label}</dt><dd>{item.text}<a href={`#${item.id}`}>Read the {item.label === "Reported outcome" ? "results" : item.label === "Design response" ? "decisions" : "challenge"}</a></dd></div>)}</dl>
-        </section>}
-
-        {project.lock ? (
-          <div className="lock-wrap">
-            <ProjectLock slug={project.slug} lock={project.lock} />
-          </div>
-        ) : (
-          <CaseSections sections={project.sections} />
-        )}
-      </div>
-
-      <div className="foot-cta">
-        <div className="foot-cta-inner">
-          <div>
-            <p className="chapter-label">The thread continues</p>
-            <span className="eyebrow">{ctaFooter.headline}</span>
-            <h2>{ctaFooter.subtext}</h2>
-          </div>
-          <div className="links">
-            <Link className="all-work" href="/#work">
-              <ArrowBack />
-              All Work
-            </Link>
-            <Link
-              className="btn btn-accent"
-              href={nextProject ? `/work/${nextProject.slug}` : ctaFooter.button.href}
-            >
-              {nextProject ? "Next Project" : ctaFooter.button.label}
-              <ArrowUpRight />
-            </Link>
-          </div>
+            {project.metaGrid.length > 0 && <dl className="case-facts">
+              {project.metaGrid.map((pair) => <div key={pair.label}><dt>{pair.label}</dt><dd>{pair.value}</dd></div>)}
+            </dl>}
+          </header>
+          {hasCover && <div className="case-cover-media"><CaseImage image={project.heroImage} hero priority /></div>}
+          <div className="case-cover-end"><span>First, the question. Then, the choices.</span><span aria-hidden="true">↓</span></div>
         </div>
       </div>
+
+      <div className="case-paper">
+        <div className="frame">
+          {highlights.length > 0 && <section className="case-brief" aria-labelledby="brief-title">
+            <div className="brief-heading"><span className="mono">The project in brief</span><h2 id="brief-title">What changed, and why.</h2><p>A few excerpts before the full story.</p></div>
+            <dl className="brief-points">{highlights.map((item, index) => <div key={item.label}>
+              <dt><span aria-hidden="true">0{index + 1}</span>{item.label}</dt>
+              <dd>{item.text}<a href={`#${item.id}`}>Read the {item.label === "Reported outcome" ? "results" : item.label === "Design response" ? "decisions" : "challenge"}<ArrowUpRight /></a></dd>
+            </div>)}</dl>
+          </section>}
+          {project.lock
+            ? <div className="lock-wrap"><ProjectLock slug={project.slug} lock={project.lock} /></div>
+            : <CaseSections sections={project.sections} />}
+        </div>
+      </div>
+
+      <section className="case-ending" aria-labelledby="case-ending-title">
+        <div className="frame">
+          {nextProject && <Link className="case-next" href={`/work/${nextProject.slug}`}>
+            <span className="case-next-label">The next story<span>{nextProject.category}</span></span>
+            <span className="case-next-title">{nextProject.title}</span><ArrowUpRight />
+          </Link>}
+          <div className="case-contact">
+            <div><p className="chapter-label">{ctaFooter.headline}</p><h2 id="case-ending-title">{ctaFooter.subtext}</h2></div>
+            <div className="case-ending-actions"><Link className="all-work" href="/#work"><ArrowBack />All Work</Link>{nextProject ? <Link className="btn btn-accent" href="/#contact">Talk about a project</Link> : <Btn button={ctaFooter.button} />}</div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

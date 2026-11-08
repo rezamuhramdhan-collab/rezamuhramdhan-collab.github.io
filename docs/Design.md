@@ -1,5 +1,14 @@
 # Visual language: The red-thread journey
 
+## Detail-page revision: editorial reading (2026-11-08)
+
+The owner requested a different case-study detail layout. Keep the established
+sky identity, Plus Jakarta Sans and punctuation preference. Use a wide navy
+project opening, an opaque light reading canvas, a horizontal chapter bar,
+margin headings, full-width imagery and a named next-project ending.
+ENERGY 2 / RHYTHM 3 / MOTION 1 for detail pages. The homepage is unchanged.
+See [case-study-layout.md](case-study-layout.md) for rationale and QA evidence.
+
 ## Active direction: the complete journey (2026-11-08)
 
 The owner's latest brief applies the Your Name atmosphere to every public page,

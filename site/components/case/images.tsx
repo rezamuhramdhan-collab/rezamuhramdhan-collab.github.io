@@ -7,7 +7,7 @@ export function CaseImage({ image, hero, priority }: { image: ImageRef; hero?: b
     <figure className={`case-image ${hero ? "hero-image" : "body-image"}`}>
       {placeholder ? <div className="img-placeholder"><span>Project image not added</span>{image.alt && <span>{image.alt}</span>}</div> : image.width && image.height ? (
         <Image src={image.src} alt={image.alt} width={image.width} height={image.height}
-          sizes="(max-width: 860px) 100vw, 800px" priority={priority} style={{ width: "100%", height: "auto" }} />
+          sizes={hero ? "(max-width: 680px) 100vw, 1200px" : "(max-width: 860px) 100vw, 800px"} priority={priority} style={{ width: "100%", height: "auto" }} />
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={image.src} alt={image.alt} width={hero ? 1200 : 800} height={hero ? 750 : 500}

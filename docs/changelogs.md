@@ -16,6 +16,12 @@ deploy, and database work.
 
 ### Changed
 
+- **Editorial case studies.** Added a wide project opening with a metadata
+  ledger, a light reading canvas, source-backed brief columns, a horizontal
+  chapter bar, numbered margin headings and a full-width next-project link.
+  Chapter tracking keeps the current item visible on mobile. Existing content,
+  authored anchors, media, routes, SEO and password protection are retained.
+
 - **Typography and story order.** Switched headings, reading text, labels, recovery pages and CMS typography to locally hosted Plus Jakarta Sans. Moved About directly after Experience and renumbered the story chapters.
 - **Punctuation.** Public CMS copy displays plain hyphens instead of em dashes, including rich text and unlocked case studies. Saved CMS content, destinations, authored anchors and encryption credentials remain intact.
 - **Complete red-thread journey.** Rebuilt the visual and narrative layer across

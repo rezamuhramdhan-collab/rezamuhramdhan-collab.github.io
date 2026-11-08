@@ -8,6 +8,8 @@ import { SITE_URL, IS_SECONDARY_DEPLOY } from "@/lib/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 import "../journey.css";
+// Case-specific overrides follow the shared journey primitives.
+import "../case-study.css";
 
 const SITE_TITLE = "Reza Ramdhan | Product Designer";
 const SITE_DESCRIPTION =

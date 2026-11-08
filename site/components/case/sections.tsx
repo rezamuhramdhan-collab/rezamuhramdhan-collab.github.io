@@ -3,30 +3,37 @@ import { groupCaseSections } from "@/lib/case-story";
 import { BlockBody, StepGroup, blockHeading } from "./blocks";
 import { CaseNav } from "./CaseNav";
 
-// Also used after decryption: protected content and its contents list appear
-// together only after a successful unlock.
+// The same reading layout appears after a protected story is unlocked.
 export function CaseSections({ sections }: { sections: SectionBlock[] }) {
   const groups = groupCaseSections(sections);
-  if (!groups.length) return <p className="empty-state">This story is still taking shape. The full case study will appear here when it is ready.</p>;
+  if (!groups.length) {
+    return <p className="empty-state">This story is still taking shape. The full case study will appear here when it is ready.</p>;
+  }
   return (
     <div className="case-reading">
       <aside className="case-contents">
-        <span className="mono">In this case study</span>
+        <span className="contents-label">Explore the story</span>
         <CaseNav items={groups.map(({ id, label }) => ({ id, label }))} />
         <a className="contents-top" href="#case-top">Back to top</a>
       </aside>
       <div className="case-chapters">
-        {groups.map((group, index) => (
-          <section key={group.id} className="sec" id={group.id}>
-            {(group.kind === "steps" || blockHeading(group.block)) && (
-              <div className="sec-label-row">
-                <span className="chapter-number mono" aria-hidden="true">Chapter {String(index + 1).padStart(2, "0")}</span>
-                <h2>{group.label}</h2>
+        {groups.map((group, index) => {
+          const kind = group.kind === "steps" ? "steps" : group.block.type;
+          const hasHeading = group.kind === "steps" || blockHeading(group.block);
+          return (
+            <section key={group.id} className={`sec sec--${kind}`} id={group.id}>
+              {hasHeading && (
+                <div className="sec-label-row">
+                  <span className="chapter-number mono" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <h2>{group.label}</h2>
+                </div>
+              )}
+              <div className="chapter-body">
+                {group.kind === "steps" ? <StepGroup steps={group.steps} /> : <BlockBody block={group.block} />}
               </div>
-            )}
-            {group.kind === "steps" ? <StepGroup steps={group.steps} /> : <BlockBody block={group.block} />}
-          </section>
-        ))}
+            </section>
+          );
+        })}
       </div>
     </div>
   );
