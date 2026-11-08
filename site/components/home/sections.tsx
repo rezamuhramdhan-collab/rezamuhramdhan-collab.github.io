@@ -23,11 +23,9 @@ import {
 // A navy overlay gives text a predictable contrast independently of the clouds.
 export function Hero({ hero }: { hero: HeroData }) {
   const socialLinks = hero.socialLinks;
-  const heroImage =
-    hero.portrait && hero.portrait.src !== "placeholder" ? hero.portrait : undefined;
   return (
     <header className="hero" id="top">
-      <Image className="hero-sky" src={heroImage?.src || "/images/comet-sky.webp"} alt={heroImage?.alt || ""} fill priority sizes="100vw" style={{ objectFit: "cover" }} />
+      <Image className="hero-sky" src="/images/comet-sky.webp" alt="" fill priority sizes="100vw" style={{ objectFit: "cover" }} />
       <div className="hero-shade" aria-hidden="true" />
       <div className="world-city" aria-hidden="true" /><div className="world-nature" aria-hidden="true" />
       <div className="world-thread" aria-hidden="true" /><ArrivalComet />

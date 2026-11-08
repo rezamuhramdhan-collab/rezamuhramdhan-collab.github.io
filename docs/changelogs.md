@@ -53,6 +53,7 @@ deploy, and database work.
 
 ### Fixed
 
+- The approved original sky now supplies the hero background consistently, including when the CMS still holds an older decorative image. CMS records and the About portrait remain untouched.
 - **Release QA.** Tests and TypeScript now gate the Pages deployment. Route arrival uses a decorative thread instead of a streaming loading boundary, preserving HTTP 404 for missing projects.
 - Fresh local seeding no longer rejects a project whose legacy image URL has
   no corresponding CMS upload. Seed images use explicit placeholders.

@@ -179,3 +179,5 @@ website deployment was performed. Earlier screenshots show the prior variant.
 - Added test and TypeScript gates before the Pages schema/build/deploy steps.
 - No Payload schema changes or production content edits are included.
 - Final static export passes with all five project pages, optimized original artwork and custom 404. CMS routes were restored after the export. Only the expected static-hosting headers warning remains.
+
+- After Supabase was resumed, both production pipelines passed. Live QA identified an older decorative CMS image overriding the approved sky; the hero now always uses the original sky asset while CMS data and the About portrait remain unchanged. TypeScript passed for this correction; cloud build gates run again before deployment.
