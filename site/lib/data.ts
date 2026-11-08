@@ -1,6 +1,7 @@
 import { getPayload } from "payload";
 import config from "@payload-config";
 import { hasLexical } from "./lexical";
+import { formatDisplayCopy } from "./display-copy";
 import { encryptSections } from "./lock";
 import type { Project as ProjectDoc, Media } from "@/payload-types";
 import type {
@@ -177,10 +178,10 @@ function fromBlock(block: SectionBlockDoc): SectionBlock {
 
 function fromProjectDoc(doc: ProjectDoc, index: number): Project {
   const thumbMedia = doc.thumbnail?.media;
-  const sections = (doc.sections ?? []).map(fromBlock);
+  const sections = formatDisplayCopy((doc.sections ?? []).map(fromBlock));
   // Locked projects ship only ciphertext; the raw sections never leave here.
   const locked = Boolean(doc.locked && doc.password);
-  return {
+  return formatDisplayCopy({
     id: String(doc.id),
     slug: doc.slug,
     title: doc.title,
@@ -205,7 +206,7 @@ function fromProjectDoc(doc: ProjectDoc, index: number): Project {
     status: doc._status === "draft" ? "draft" : "published",
     nextProjectSlug: doc.nextProjectSlug ?? undefined,
     updatedAt: doc.updatedAt,
-  };
+  });
 }
 
 // ---------- Globals ----------
@@ -231,7 +232,7 @@ function resolveButton<B extends { href?: string | null; file?: UploadRef }>(b: 
 export async function getSiteSettings(): Promise<SiteSettings> {
   const payload = await payloadClient();
   const doc = await payload.findGlobal({ slug: "site-settings", depth: 1 });
-  return {
+  return formatDisplayCopy({
     ...doc,
     logoImage: fromUpload(doc.logoImage),
     favicon: fromUpload(doc.favicon),
@@ -241,13 +242,13 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     ctaFooter: doc.ctaFooter
       ? { ...doc.ctaFooter, button: resolveButton(doc.ctaFooter.button) }
       : doc.ctaFooter,
-  } as SiteSettings;
+  }) as SiteSettings;
 }
 
 export async function getHero(): Promise<Hero> {
   const payload = await payloadClient();
   const doc = await payload.findGlobal({ slug: "hero", depth: 1 });
-  return {
+  return formatDisplayCopy({
     ...doc,
     portrait: fromImageSlot(doc.portrait),
     primaryCta: resolveButton(doc.primaryCta),
@@ -255,25 +256,25 @@ export async function getHero(): Promise<Hero> {
     socialLinks: (doc.socialLinks ?? [])
       .filter((s) => s.href && s.label)
       .map((s) => ({ label: s.label!, href: s.href!, platform: s.platform ?? undefined })),
-  } as Hero;
+  }) as Hero;
 }
 
 export async function getAbout(): Promise<About> {
   const payload = await payloadClient();
   const doc = await payload.findGlobal({ slug: "about", depth: 1 });
-  return {
+  return formatDisplayCopy({
     ...doc,
     paragraphs: fromTextArray(doc.paragraphs),
     image: fromImageSlot(doc.image),
     skills: (doc.skills ?? []).map((s) => s.text),
     resumeButton: doc.resumeButton ? resolveButton(doc.resumeButton) : undefined,
-  } as About;
+  }) as About;
 }
 
 export async function getContact(): Promise<ContactSection> {
   const payload = await payloadClient();
   const doc = await payload.findGlobal({ slug: "contact" });
-  return { ...doc, socialLinks: doc.socialLinks ?? [] } as ContactSection;
+  return formatDisplayCopy({ ...doc, socialLinks: doc.socialLinks ?? [] }) as ContactSection;
 }
 
 // ---------- Collections ----------
@@ -281,20 +282,20 @@ export async function getContact(): Promise<ContactSection> {
 export async function getServices(): Promise<ServiceCard[]> {
   const payload = await payloadClient();
   const { docs } = await payload.find({ collection: "services", sort: "_order", limit: 100 });
-  return docs.map((doc, i) => ({
+  return formatDisplayCopy(docs.map((doc, i) => ({
     id: String(doc.id),
     title: doc.title,
     description: doc.description,
     icon: doc.icon ?? undefined,
     tags: (doc.tags ?? []).map((t) => t.text),
     order: i + 1,
-  }));
+  })));
 }
 
 export async function getExperience(): Promise<ExperienceEntry[]> {
   const payload = await payloadClient();
   const { docs } = await payload.find({ collection: "experience", sort: "_order", limit: 100 });
-  return docs.map((doc, i) => ({
+  return formatDisplayCopy(docs.map((doc, i) => ({
     id: String(doc.id),
     period: doc.period,
     role: doc.role,
@@ -306,7 +307,7 @@ export async function getExperience(): Promise<ExperienceEntry[]> {
     content: hasLexical(doc.content) ? doc.content : undefined,
     order: i + 1,
     isCurrent: Boolean(doc.isCurrent),
-  }));
+  })));
 }
 
 export async function getPublishedProjects(): Promise<Project[]> {

@@ -37,10 +37,10 @@ export default async function HomePage() {
       />
       <main id="main-content">
       <Hero hero={hero} />
-      <AboutSection about={about} />
       <FeaturedWork projects={projects} />
       <Approach services={services} />
       <Experience experience={experience} />
+      <AboutSection about={about} />
       <TwilightMeeting />
       <Contact contact={contact} services={services} />
       </main>

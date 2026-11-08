@@ -1,8 +1,8 @@
 /* A sky-led portfolio inspired by Your Name. Decisions: docs/Design.md. */
 :root {
-  --ff-display: var(--font-playfair), Georgia, serif;
-  --ff-body: var(--font-instrument), system-ui, sans-serif;
-  --ff-mono: var(--font-dmmono), ui-monospace, monospace;
+  --ff-display: var(--font-jakarta), system-ui, sans-serif;
+  --ff-body: var(--font-jakarta), system-ui, sans-serif;
+  --ff-mono: var(--font-jakarta), system-ui, sans-serif;
   --paper: #f6f9fc;
   --surface: #ffffff;
   --fill: #e7eef7;

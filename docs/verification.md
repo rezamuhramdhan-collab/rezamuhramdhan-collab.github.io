@@ -181,3 +181,13 @@ website deployment was performed. Earlier screenshots show the prior variant.
 - Final static export passes with all five project pages, optimized original artwork and custom 404. CMS routes were restored after the export. Only the expected static-hosting headers warning remains.
 
 - After Supabase was resumed, both production pipelines passed. Live QA identified an older decorative CMS image overriding the approved sky; the hero now always uses the original sky asset while CMS data and the About portrait remain unchanged. TypeScript passed for this correction; cloud build gates run again before deployment.
+
+
+## Typography and section-order update
+
+- Plus Jakarta Sans normal and italic are hosted locally under the included SIL Open Font License. All public typography tokens, recovery pages and the native CMS use this family.
+- About follows Experience, with the homepage sequence: Hero, Work, Services, Experience, About, Twilight, Contact. Chapter labels and transitions follow the new order.
+- Human-readable CMS copy replaces em dashes with plain hyphens on read, including rich text before protected-section encryption. Links, authored anchors, IDs and credentials are untouched; saved CMS input is not mutated.
+- Nine tests passed, including round trips across all fixture projects and focused punctuation preservation checks. TypeScript and the production server build passed.
+- Browser checks at 1280px and 375px confirm Plus Jakarta Sans for body, headings and labels, no horizontal overflow, correct section order and no em dashes in the homepage or checked full design-system case study. The CMS email form renders with Plus Jakarta Sans. No console errors or warnings were observed in these checks.
+- Final static export passed with all fixture routes and custom 404. Both normal and italic WOFF2 assets are valid and included.

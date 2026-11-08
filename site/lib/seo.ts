@@ -33,7 +33,7 @@ export function websiteJsonLd(hero: Hero) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: `${fullName(hero)} — Portfolio`,
+    name: `${fullName(hero)} | Portfolio`,
     url: SITE_URL,
     author: { "@type": "Person", name: fullName(hero) },
   };

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { plusJakarta } from "@/lib/fonts";
 import Script from "next/script";
 import { HomeNav, SiteFooter } from "@/components/shared";
 import { JourneyEffects } from "@/components/JourneyEffects";
@@ -9,30 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 import "../journey.css";
 
-// The cinematic serif voice follows the owner's anime reference; sans-serif
-// body text and locally hosted fonts keep the long case studies readable.
-const playfair = localFont({
-  src: "../fonts/playfair.woff2",
-  weight: "400 900",
-  variable: "--font-playfair",
-  display: "swap",
-});
-const instrumentSans = localFont({
-  src: "../fonts/instrumentsans.woff2",
-  weight: "400 700",
-  variable: "--font-instrument",
-  display: "swap",
-});
-const dmMono = localFont({
-  src: [
-    { path: "../fonts/dmmono-400.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/dmmono-500.woff2", weight: "500", style: "normal" },
-  ],
-  variable: "--font-dmmono",
-  display: "swap",
-});
-
-const SITE_TITLE = "Reza Ramdhan — Product Designer";
+const SITE_TITLE = "Reza Ramdhan | Product Designer";
 const SITE_DESCRIPTION =
   "I craft beautiful, user-centered digital experiences that solve real problems. Specializing in product design, design systems, and brand identity.";
 const GOOGLE_TAG_ID = "G-9P2MJ72NW3";
@@ -71,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
   return (
-    <html lang="en" className={`${playfair.variable} ${instrumentSans.variable} ${dmMono.variable}`}>
+    <html lang="en" className={plusJakarta.variable}>
       <body>
         <a className="skip-link" href="#main-content">Skip to content</a>
         <HomeNav settings={settings} />

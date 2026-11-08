@@ -4,8 +4,8 @@
 
 The owner's latest brief applies the Your Name atmosphere to every public page,
 section, component and state. A red thread connects a city and countryside,
-then follows biography, fragments of work, a search through services, a career
-interlude, twilight, a message, and a quiet starfield.
+then follows work, services, a career interlude, biography, twilight, a message,
+and a quiet starfield.
 
 The complete audit, preservation contract, story map, tokens, component
 behaviors and rationale are in [red-thread-design.md](red-thread-design.md).
@@ -24,6 +24,11 @@ routes, encryption, form behavior, category filters, CMS editing and SEO.
 The active visual layer is `site/app/journey.css`; `globals.css` retains the
 structural primitives. Original CSS city/ridge shapes and the previously
 approved original sky asset establish atmosphere without film reproductions.
+
+The active typeface is locally hosted Plus Jakarta Sans (normal and italic),
+used for headings, body, labels, recovery states and the CMS. Displayed copy
+uses plain hyphens in place of em dashes. CMS originals and destinations remain
+unchanged. About follows Experience; chapter numbers follow reading order.
 
 ## Previous direction: hero-led atmosphere (2026-11-08)
 

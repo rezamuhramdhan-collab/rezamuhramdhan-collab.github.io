@@ -11,7 +11,7 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
   return (
     <section className="section story-section story-work" id="work" data-story-chapter>
       <div className="px">
-      <Chapter number="03" title="Fragments of the comet" />
+      <Chapter number="02" title="Fragments of the comet" />
       <div className="sec-head" data-reveal>
         <div><p className="section-context">Selected work</p><h2 className="display">Small decisions.<br /><em>Lasting connections.</em></h2></div>
         <Link className="sec-link" href="/work">

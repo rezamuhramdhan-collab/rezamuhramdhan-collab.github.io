@@ -57,7 +57,7 @@ export function Hero({ hero }: { hero: HeroData }) {
           )}
         </div>
       </div>
-      <div className="hero-bottom"><a href="#about">Every connection starts with a person.</a><span aria-hidden="true">↓</span></div>
+      <div className="hero-bottom"><a href="#work">Every connection leaves a story.</a><span aria-hidden="true">↓</span></div>
       </div>
     </header>
   );
@@ -106,7 +106,7 @@ export function Approach({ services }: { services: ServiceCard[] }) {
     // id stays "services": the CMS nav links point at /#services.
     <section className="section story-section story-search" id="services" data-story-chapter>
       <div className="px">
-      <Chapter number="04" title="The search" />
+      <Chapter number="03" title="The search" />
       <div className="sec-head"><h2 className="display">A way through<br /><em>the unknown.</em></h2><p className="section-note">How I work. Following the question until a clear direction appears.</p></div>
       <div className="approach">
         {cells.map((service, index) => {
@@ -149,7 +149,7 @@ export function Experience({ experience }: { experience: ExperienceEntry[] }) {
         ))}
       </ul>
       {!experience.length && <p className="empty-state">The next chapter is still being written. Experience details will appear here when added.</p>}
-      <ChapterEnd>The work is remembered. So are the people beside it.</ChapterEnd>
+      <ChapterEnd>The work is remembered. Here is the person behind it.</ChapterEnd>
       </div>
     </section>
   );
@@ -185,7 +185,7 @@ export function AboutSection({ about }: { about: About }) {
   return (
     <section className="section story-section story-about" id="about" data-story-chapter>
       <div className="px">
-      <Chapter number="02" title="The thread" />
+      <Chapter number="04" title="The thread" />
       <div className="sec-head" data-reveal>
         <div><p className="section-context">{about.headline}</p><h2 className="display">Between people<br /><em>and possibility.</em></h2></div>
       </div>
@@ -228,7 +228,7 @@ export function AboutSection({ about }: { about: About }) {
           )}
         </div>
       </div>
-      <ChapterEnd>A thought becomes a sketch. A sketch becomes a story.</ChapterEnd>
+      <ChapterEnd>Every shared story carries a few voices with it.</ChapterEnd>
       </div>
     </section>
   );

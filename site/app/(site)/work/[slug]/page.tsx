@@ -31,7 +31,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
   if (!project) return {};
-  const title = `${project.title} — Reza Ramdhan`;
+  const title = `${project.title} | Reza Ramdhan`;
   const heroImage = project.heroImage.src.startsWith("http") ? project.heroImage.src : undefined;
   return {
     title,

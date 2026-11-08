@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { formatDisplayCopy } from "../lib/display-copy";
 
 test("all fixture projects seed into a fresh CMS and round-trip their authored content", async () => {
   const directory = await mkdtemp(path.join(tmpdir(), "portfolio-roundtrip-"));
@@ -21,7 +22,7 @@ test("all fixture projects seed into a fresh CMS and round-trip their authored c
       assert.ok(result, `Seeded ${source.slug}`);
       // Serialize the read model back through the writer. IDs/timestamps are
       // intentionally outside the authored content contract.
-      assert.deepEqual(JSON.parse(JSON.stringify(toProjectDoc(result, 1))), JSON.parse(JSON.stringify(toProjectDoc(source, 1))));
+      assert.deepEqual(JSON.parse(JSON.stringify(toProjectDoc(result, 1))), JSON.parse(JSON.stringify(toProjectDoc(formatDisplayCopy(source), 1))));
       assert.equal(result.heroImage.src, "placeholder");
     }
   } finally {

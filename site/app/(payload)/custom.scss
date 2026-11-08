@@ -1,6 +1,22 @@
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/plus-jakarta-sans.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/fonts/plus-jakarta-sans-italic.woff2') format('woff2');
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+}
 /* Carry the journey palette into the editing workspace without replacing
    Payload's native controls, validation, focus order, or theme switching. */
 :root {
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'Plus Jakarta Sans', system-ui, sans-serif;
   --color-base-0: #f8faff;
   --color-base-50: #edf1fa;
   --color-base-100: #e2e8f4;
@@ -27,7 +43,7 @@
   --style-radius-l: 18px;
 }
 body { background-image: radial-gradient(ellipse at 100% 0, #9f526b0d, transparent 60%); }
-h1, h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+h1, h2 { font-family: var(--font-body); font-weight: 400; }
 :focus-visible { outline: 3px solid #b94365; outline-offset: 3px; }
 html[data-theme='dark'] :focus-visible { outline-color: #ffadbd; }
 a, button, summary, select { cursor: pointer; }

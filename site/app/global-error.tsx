@@ -1,12 +1,12 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import { plusJakarta } from "@/lib/fonts";
 import "./globals.css";
 import "./journey.css";
 
 // Independent of CMS availability and the normal public layout.
 export default function GlobalError({ reset }: { error: Error; reset: () => void }) {
-  return <html lang="en" data-atmosphere="paused" style={{ "--font-playfair": "Georgia", "--font-instrument": "system-ui", "--font-dmmono": "monospace" } as CSSProperties}>
+  return <html lang="en" data-atmosphere="paused" className={plusJakarta.variable}>
     <head><title>Connection paused | Reza Ramdhan</title><meta name="robots" content="noindex" /></head>
     <body>
       <nav className="site-nav" aria-label="Recovery navigation"><div className="px nav-inner"><a className="nav-mark" href="/">Reza Ramdhan</a></div></nav>

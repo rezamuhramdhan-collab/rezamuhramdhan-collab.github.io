@@ -5,7 +5,7 @@ import { ArrowBack, ArrowRight } from "@/components/icons";
 import { getPublishedProjects } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "All Projects — Reza Ramdhan",
+  title: "All Projects | Reza Ramdhan",
   description:
     "Explore Reza Ramdhan's product design, UI/UX, and design-system case studies.",
   alternates: { canonical: "/work" },

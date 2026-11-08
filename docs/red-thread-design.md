@@ -36,11 +36,11 @@ Production CMS records were not edited. Local fixtures support verification.
 
 | Existing section | Chapter and emotional beat | Scene | Framing and transition |
 | --- | --- | --- | --- |
-| Hero | 01: Two worlds / separation | Original painted sky, geometric city silhouette, countryside ridge; a red thread divides and connects them | “Design brings us closer.” Name, role, original bio and actions remain. Ends with “Every connection starts with a person.” |
-| About | 02: The thread / connection | Cloud-white daylight; a looping red thread crosses toward the biography | “Between people and possibility.” Personal framing surrounds the original first-person facts. Ends with “A thought becomes a sketch. A sketch becomes a story.” |
-| Selected work | 03: Fragments of the comet / discovery | Dusk violet, staggered translucent fragments, restrained luminous borders | “Small decisions. Lasting connections.” Existing problem, design response, and reported outcome appear on hover or keyboard focus. Touch users can read them directly. Ends with “Behind every finished screen, there was a search.” |
-| Services / approach | 04: The search / persistence | A vertical red path through night, dawn, and morning | “A way through the unknown.” The actual services provide the steps; all CMS entries are supported. Ends with “Each step leaves something worth carrying forward.” |
-| Experience | Interlude: Along the way / remembering | A quiet cobalt chapter and a readable career timeline | Original roles, companies, dates, and achievements remain. Ends with “The work is remembered. So are the people beside it.” |
+| Hero | 01: Two worlds / separation | Original painted sky, geometric city silhouette, countryside ridge; a red thread divides and connects them | “Design brings us closer.” Name, role, original bio and actions remain. Ends with “Every connection leaves a story.” |
+| Selected work | 02: Fragments of the comet / discovery | Dusk violet, staggered translucent fragments, restrained luminous borders | “Small decisions. Lasting connections.” Existing problem, design response, and reported outcome appear on hover or keyboard focus. Touch users can read them directly. Ends with “Behind every finished screen, there was a search.” |
+| Services / approach | 03: The search / persistence | A vertical red path through night, dawn, and morning | “A way through the unknown.” The actual services provide the steps; all CMS entries are supported. Ends with “Each step leaves something worth carrying forward.” |
+| Experience | Interlude: Along the way / remembering | A quiet cobalt chapter and a readable career timeline | Original roles, companies, dates, and achievements remain. Ends with “The work is remembered. Here is the person behind it.” |
+| About | 04: The thread / connection | Cloud-white daylight; a looping red thread crosses toward the biography | “Between people and possibility.” Personal framing surrounds the original first-person facts. Ends with “Every shared story carries a few voices with it.” |
 | Testimonials | 05: Twilight meeting / openness | Amber light and violet; an empty memory panel | “Some stories arrive through other people.” Clearly says approved collaborator reflections have not been added. Links to real case studies. Ends with a bridge to contact. |
 | Contact | 06: Remembering your name / invitation | Navy and warm violet, a glass letter, a tied red thread | “Let’s find a shared direction.” Original contact headline remains as context. Friendly, explicit draft-email instructions. Ends with “Somewhere between an idea and a message, a new story begins.” |
 | Footer | After the story / quiet closure | A sparse original CSS starfield | “Some paths cross for a reason. Thank you for following mine.” Original copyright and links remain. |
@@ -61,7 +61,7 @@ Production CMS records were not edited. Local fixtures support verification.
 - Empty: a short scene-specific sentence followed by the actual missing-data
   explanation and an available next action.
 - Draft feedback: warm copy that distinguishes composing from sending.
-- Payload workspace: the same blue-toned palette and serif headings, while its
+- Payload workspace: the same blue-toned palette and Plus Jakarta Sans headings, while its
   native controls, theme switching, validation, and editorial functions remain.
 
 ## 3. Design system
@@ -98,9 +98,9 @@ high-opacity scrims; it does not depend on the brightness of a painted cloud.
 
 | System | Tokens / treatment | Why |
 | --- | --- | --- |
-| Display | Locally hosted Playfair; regular weight; `--type-hero: clamp(52px,6.6vw,92px)` and `--type-title: clamp(36px,4.5vw,62px)` | A cinematic, human voice with a visible contrast to body copy |
-| Body | Locally hosted Instrument Sans, normally 17–18px, generous line height | Long case studies remain comfortable to read |
-| Metadata | DM Mono only for small chapter indices and dates | Wayfinding, not a terminal aesthetic |
+| Display | Locally hosted Plus Jakarta Sans; regular weight; `--type-hero: clamp(52px,6.6vw,92px)` and `--type-title: clamp(36px,4.5vw,62px)` | Airy headings with clear weight and scale hierarchy |
+| Body | Locally hosted Plus Jakarta Sans, normally 17–18px, generous line height | Long case studies remain comfortable to read |
+| Metadata | Plus Jakarta Sans for chapter indices and dates | Wayfinding, not a terminal aesthetic |
 | Spacing | 8 / 16 / 24 / 40 / 72px; chapter separation `clamp(80px,9vw,136px)` | Short distances connect an argument; larger ones mark scene changes |
 | Reading measure | Maximum 720px, with responsive inner panels | Keeps long lines from tiring the reader |
 | Radius | 8px controls, 22px fragments, 30px letter panel; smaller on mobile | Distinguishes controls from content and scenes |
@@ -113,7 +113,7 @@ high-opacity scrims; it does not depend on the brightness of a painted cloud.
 | Component | Visual behavior | Function and accessibility |
 | --- | --- | --- |
 | Global navigation | Frosted midnight bar; measured red underline slides to active link | Existing CMS destinations, active section tracking, visible focus; appears on all public pages |
-| Mobile menu | Full-screen twilight, large staggered serif links | Modal semantics, first focus on Close, Tab trap, Escape dismissal, body scroll lock, focus return |
+| Mobile menu | Full-screen twilight, large staggered sans-serif links | Modal semantics, first focus on Close, Tab trap, Escape dismissal, body scroll lock, focus return |
 | Primary button | Strong red fill, luminous edge, small hover flare | Real navigation or button action; 44px+ target; readable white text |
 | Secondary button | Subtle glass with a defined border | Real destination, clear hover, keyboard focus |
 | Fragment card | Rounded translucent dusk panel, painterly top edge; title and real project metadata | Full card opens its original route; source excerpts reveal on hover/focus and remain available to touch users |
@@ -122,7 +122,7 @@ high-opacity scrims; it does not depend on the brightness of a painted cloud.
 | Case chapter | Navy reading panel with chapter index | Existing block renderers, captions and images, semantic headings, valid generated/authored anchors |
 | Protected chapter | Glass password panel | Existing encryption, busy state, visible label, accessible error; contents appear after successful decryption |
 | Loader | One finite red-thread drawing and end flare | Decorative route arrival; hidden under reduced motion |
-| 404 / error / empty | Same sky, thread and serif language | Explicit cause and useful recovery action, not poetry alone |
+| 404 / error / empty | Same sky, thread and sans-serif language | Explicit cause and useful recovery action, not poetry alone |
 | Footer | Quiet sparse starfield, sign-off, original links | All destinations work; star opacity animation is pausable |
 | Motion control | Small persistent “Pause atmosphere” / “Resume atmosphere” control | Pauses scenery without freezing menu text or route content; preference persists locally |
 | Reading progress | Thin red thread at the top edge | Real scroll progress, labeled progressbar, no cursor replacement |
@@ -166,7 +166,7 @@ The hero reserves space; images retain dimensions or an aspect-ratio container.
 
 ## 5. Changelog and rationale
 
-- Moved About immediately after the hero to establish a person before projects.
+- Placed About directly after Experience, following the owner’s updated section order.
 - Added six chapter markers and connective closing lines to give scrolling an arc.
 - Applied the atmosphere to shared navigation, project index, all case studies,
   form, footer, and route/data states, rather than confining it to a hero image.

@@ -16,6 +16,8 @@ deploy, and database work.
 
 ### Changed
 
+- **Typography and story order.** Switched headings, reading text, labels, recovery pages and CMS typography to locally hosted Plus Jakarta Sans. Moved About directly after Experience and renumbered the story chapters.
+- **Punctuation.** Public CMS copy displays plain hyphens instead of em dashes, including rich text and unlocked case studies. Saved CMS content, destinations, authored anchors and encryption credentials remain intact.
 - **Complete red-thread journey.** Rebuilt the visual and narrative layer across
   the homepage, project index, every case study, navigation, footer and data/page
   states. Existing factual CMS content, routes, contact behavior, encryption and
