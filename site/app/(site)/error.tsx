@@ -1,17 +1,4 @@
 "use client";
-
 export default function SiteError({ reset }: { error: Error; reset: () => void }) {
-  return (
-    <section className="case-cta">
-      <div className="container">
-        <h2>
-          Something went <span style={{ color: "var(--accent)" }}>wrong</span>
-        </h2>
-        <p>An unexpected error occurred while loading this page.</p>
-        <button className="btn btn-dark" onClick={reset} style={{ marginTop: 34 }}>
-          Try Again
-        </button>
-      </div>
-    </section>
-  );
+  return <main className="px page-state" id="main-content"><div className="state-comet" aria-hidden="true" /><p className="chapter-label">A pause in the journey</p><h1>The connection slipped.</h1><p>This page couldn’t load. Please try again, or follow the thread back home.</p><button className="btn btn-accent" onClick={reset}>Try this page again</button> <a className="btn btn-light" href="/">Return home</a></main>;
 }

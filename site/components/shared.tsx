@@ -3,10 +3,11 @@ import Image from "next/image";
 import type { ButtonItem, SiteSettings } from "@/content/types";
 import { buttonIcons } from "./icons";
 import { StickyNavShell } from "./StickyNavShell";
+import { MobileNav } from "./MobileNav";
+import { DesktopNav } from "./DesktopNav";
 
-// 6px-radius button. `variant` maps the CMS value onto the two v3 looks:
-// dark → solid ink fill; outline → hairline on paper. `small` is the compact
-// nav button. The trailing arrow follows the label (design convention).
+// Existing CMS variants retain their actions; the journey theme supplies the
+// primary red and secondary glass treatments.
 export function Btn({ button, small }: { button: ButtonItem; small?: boolean }) {
   const Icon = button.icon ? buttonIcons[button.icon] : null;
   const look = button.variant === "outline" ? "btn-light" : "btn-accent";
@@ -50,7 +51,7 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
               />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
-              <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} />
+              <img className="logo-img" src={logoImage.src} alt={logoImage.alt || logoText} width={28} height={28} />
             )
           ) : isMonogramText ? (
             logoText.trim().toUpperCase()
@@ -60,25 +61,22 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
         </span>
         {!isMonogramText && logoText}
       </Link>
-      <div className="nav-links">
-        {navLinks.map((link) => (
-          <Link key={link.label} href={link.href}>{link.label}</Link>
-        ))}
-      </div>
+      <DesktopNav links={navLinks} />
       <div className="nav-cta">
         <Btn button={ctaButton} small />
       </div>
+      <MobileNav links={navLinks} cta={ctaButton} />
     </StickyNavShell>
   );
 }
 
-// Two mono lines, copyright left and links right. v2's giant ghost signature
-// was part of the display-italic "second voice" pattern, which v3 doesn't have.
+// The quiet final scene preserves the copyright and every CMS footer link.
 export function SiteFooter({ settings }: { settings: SiteSettings }) {
   const { footerText, footerLinks } = settings;
   return (
     <footer className="site-footer">
       <div className="px">
+        <div className="footer-story"><p className="chapter-label">After the story</p><p>Some paths cross for a reason.</p><span>Thank you for following mine.</span></div>
         <div className="footer-row">
           <span className="mono">{footerText}</span>
           <div className="flinks mono">

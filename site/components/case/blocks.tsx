@@ -16,24 +16,7 @@ const listClass: Record<ListStyle, string> = {
   arrow: "dash-list",
 };
 
-// The short label shown in a section's accent eyebrow row (or undefined → no
-// label row). Step groups use their sectionHeading.
-export function blockHeading(block: SectionBlock): string | undefined {
-  switch (block.type) {
-    case "stepBlock":
-      return block.sectionHeading ?? "Solution";
-    case "richText":
-    case "bulletList":
-      return block.heading;
-    case "hmwGrid":
-    case "twoColumn":
-    case "impactCallout":
-    case "reflection":
-      return block.heading;
-    case "image":
-      return undefined;
-  }
-}
+export { sectionHeading as blockHeading } from "@/lib/case-story";
 
 export function BlockBody({ block }: { block: SingleBlock }) {
   switch (block.type) {
@@ -89,13 +72,13 @@ export function BlockBody({ block }: { block: SingleBlock }) {
         <WithImages images={block.images} layout={block.imageLayout}>
           <div className="two-col">
             <div>
-              <h4>{block.leftTitle}</h4>
+              <h3>{block.leftTitle}</h3>
               <ul className="dash-list">
                 {block.leftItems.map((item, i) => <li key={i}><Cell item={item} /></li>)}
               </ul>
             </div>
             <div>
-              <h4>{block.rightTitle}</h4>
+              <h3>{block.rightTitle}</h3>
               <ul className="dash-list">
                 {block.rightItems.map((item, i) => <li key={i}><Cell item={item} /></li>)}
               </ul>
@@ -111,7 +94,7 @@ export function BlockBody({ block }: { block: SingleBlock }) {
             {block.items.map((item, i) => <li key={i}><Cell item={item} /></li>)}
           </ul>
           <div className="benefits-card">
-            <h4>{block.calloutTitle}</h4>
+            <h3>{block.calloutTitle}</h3>
             <ul className="dash-list">
               {block.calloutItems.map((item, i) => <li key={i}><Cell item={item} /></li>)}
             </ul>
@@ -155,7 +138,7 @@ export function StepGroup({ steps }: { steps: StepBlock[] }) {
       {steps.map((step, i) => (
         <div key={i} className="step">
           <h3>
-            {String(step.stepNumber).padStart(2, "0")} — {step.title}
+            <span className="step-number">{String(step.stepNumber).padStart(2, "0")}</span> {step.title}
           </h3>
           {step.description && <p>{step.description}</p>}
           {step.bullets.length > 0 && (

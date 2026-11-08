@@ -6,7 +6,8 @@
     "dev": "next dev",
     "prebuild": "tsx scripts/generate-sitemap.mts",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "node --import tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.85.2",

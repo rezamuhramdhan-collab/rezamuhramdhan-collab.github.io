@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type {
   Hero as HeroData,
   About,
@@ -8,47 +9,41 @@ import type {
 } from "@/content/types";
 import { lexicalToLines } from "@/lib/lexical";
 import { Btn } from "../shared";
+import { Chapter, ChapterEnd } from "../Chapter";
+import { ArrivalComet } from "../JourneyEffects";
 import {
-  PhotoIcon,
-  WireframeStack,
   LinkedInIcon,
   InstagramIcon,
   EmailIcon,
   WhatsAppIcon,
   LinkIcon,
-  approachIcons,
-  serviceIcons,
 } from "../icons";
 
-const APPROACH_CELL_COUNT = 4;
-
-// Two columns: the display name, bio, CTA and social row on the left; the
-// isometric wireframe illustration on the right. v2's full-bleed portrait band
-// has no equivalent in v3 — the hero sits on plain paper.
+// Original sky artwork establishes the owner's anime-inspired direction.
+// A navy overlay gives text a predictable contrast independently of the clouds.
 export function Hero({ hero }: { hero: HeroData }) {
   const socialLinks = hero.socialLinks;
-  // An uploaded hero image replaces the built-in illustration. Without this the
-  // CMS field saved but nothing on the page changed.
   const heroImage =
     hero.portrait && hero.portrait.src !== "placeholder" ? hero.portrait : undefined;
   return (
-    <header className="px hero" id="top">
+    <header className="hero" id="top">
+      <Image className="hero-sky" src={heroImage?.src || "/images/comet-sky.webp"} alt={heroImage?.alt || ""} fill priority sizes="100vw" style={{ objectFit: "cover" }} />
+      <div className="hero-shade" aria-hidden="true" />
+      <div className="world-city" aria-hidden="true" /><div className="world-nature" aria-hidden="true" />
+      <div className="world-thread" aria-hidden="true" /><ArrivalComet />
+      <div className="px hero-content">
+      <Chapter number="01" title="Two worlds" />
+      <div className="hero-intro"><span>{[hero.firstName, hero.lastName].filter(Boolean).join(" ")}</span><span>{hero.eyebrow || "Product design"}</span></div>
       <div className="hero-grid">
         <div>
           <h1 className="display hero-name">
-            {hero.firstName}
-            {hero.lastName && (
-              <>
-                <br />
-                {hero.lastName}
-              </>
-            )}
+            Design brings<br /><em>us closer.</em>
           </h1>
+        </div>
+        <div className="hero-context">
           {hero.bio && <p className="hero-bio">{hero.bio}</p>}
           <div className="hero-actions">
             <Btn button={hero.primaryCta} />
-            {/* No trailing mark on either hero CTA — the pair reads as plain
-                labels; the arrow is reserved for links that leave the page. */}
             {hero.secondaryCta && (
               <a className="btn btn-light" href={hero.secondaryCta.href}>
                 {hero.secondaryCta.label}
@@ -63,20 +58,8 @@ export function Hero({ hero }: { hero: HeroData }) {
             </div>
           )}
         </div>
-        <div className="hero-visual">
-          {heroImage ? (
-            <Image
-              src={heroImage.src}
-              alt={heroImage.alt || ""}
-              width={heroImage.width ?? 1124}
-              height={heroImage.height ?? 937}
-              priority
-              sizes="(max-width: 1100px) 100vw, 562px"
-            />
-          ) : (
-            <WireframeStack />
-          )}
-        </div>
+      </div>
+      <div className="hero-bottom"><a href="#about">Every connection starts with a person.</a><span aria-hidden="true">↓</span></div>
       </div>
     </header>
   );
@@ -117,38 +100,29 @@ function SocialButton({ social }: { social: HeroSocialLink }) {
   );
 }
 
-// Four-up strip on one hairline card. Replaces v2's expandable service rows —
-// the CMS `services` entries supply the title and description; the icons are
-// assigned by position (no icon field exists yet).
+// The existing services become steps along the search, without adding or
+// truncating offerings from the CMS.
 export function Approach({ services }: { services: ServiceCard[] }) {
-  const cells = services.slice(0, APPROACH_CELL_COUNT);
-  if (!cells.length) return null;
+  const cells = services;
   return (
     // id stays "services": the CMS nav links point at /#services.
-    <section className="px section flush" id="services">
-      {/* The design shows four cells; the grid follows however many the CMS
-          actually has, so three entries fill the card evenly rather than
-          leaving a dead fourth column. */}
-      {/* Set as a custom property, not grid-template-columns directly — an
-          inline track list would outrank the responsive media queries. */}
-      <div
-        className="approach"
-        style={{ "--approach-cols": cells.length } as React.CSSProperties}
-      >
+    <section className="section story-section story-search" id="services" data-story-chapter>
+      <div className="px">
+      <Chapter number="04" title="The search" />
+      <div className="sec-head"><h2 className="display">A way through<br /><em>the unknown.</em></h2><p className="section-note">How I work. Following the question until a clear direction appears.</p></div>
+      <div className="approach">
         {cells.map((service, index) => {
-          const Icon = service.icon
-            ? serviceIcons[service.icon]
-            : approachIcons[index % approachIcons.length];
           return (
             <div className="approach-cell" key={service.id} data-reveal>
-              <span className="approach-icon">
-                <Icon />
-              </span>
+              <span className="approach-number mono">{String(index + 1).padStart(2, "0")}</span>
               <h3 className="semi">{service.title}</h3>
               <p>{service.description}</p>
             </div>
           );
         })}
+      </div>
+      {!cells.length && <p className="empty-state">This path is still being mapped. Service details will appear here when added.</p>}
+      <ChapterEnd>Each step leaves something worth carrying forward.</ChapterEnd>
       </div>
     </section>
   );
@@ -157,7 +131,9 @@ export function Approach({ services }: { services: ServiceCard[] }) {
 // Divided rows: mono date range on the left, role · company + description right.
 export function Experience({ experience }: { experience: ExperienceEntry[] }) {
   return (
-    <section className="px section" id="experience">
+    <section className="section story-section story-experience" id="experience" data-story-chapter>
+      <div className="px">
+      <Chapter number="Interlude" title="Along the way" />
       <div className="sec-head" data-reveal>
         <h2 className="display">Experience</h2>
       </div>
@@ -174,6 +150,9 @@ export function Experience({ experience }: { experience: ExperienceEntry[] }) {
           </li>
         ))}
       </ul>
+      {!experience.length && <p className="empty-state">The next chapter is still being written. Experience details will appear here when added.</p>}
+      <ChapterEnd>The work is remembered. So are the people beside it.</ChapterEnd>
+      </div>
     </section>
   );
 }
@@ -206,14 +185,15 @@ function ExperienceBullets({ entry }: { entry: ExperienceEntry }) {
 export function AboutSection({ about }: { about: About }) {
   const hasPhoto = about.image && about.image.src !== "placeholder";
   return (
-    <section className="px section" id="about">
+    <section className="section story-section story-about" id="about" data-story-chapter>
+      <div className="px">
+      <Chapter number="02" title="The thread" />
       <div className="sec-head" data-reveal>
-        <h2 className="display">{about.headline}</h2>
+        <div><p className="section-context">{about.headline}</p><h2 className="display">Between people<br /><em>and possibility.</em></h2></div>
       </div>
-      <div className="about-grid">
-        <div data-reveal>
+      <div className={`about-grid${hasPhoto ? "" : " without-photo"}`}>
+        {hasPhoto && <div data-reveal>
           <div className="about-photo">
-            {hasPhoto ? (
               <Image
                 src={about.image!.src}
                 alt={about.image!.alt || "Portrait"}
@@ -222,14 +202,10 @@ export function AboutSection({ about }: { about: About }) {
                 sizes="(max-width: 1100px) 100vw, 389px"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
-            ) : (
-              <div className="img-placeholder">
-                <PhotoIcon />
-              </div>
-            )}
           </div>
-        </div>
+        </div>}
         <div className="about-body" data-reveal>
+          <p className="personal-note">I care about the moment a complicated task begins to make sense.</p>
           {about.subheading && <h3 className="display h-about">{about.subheading}</h3>}
           {about.paragraphs.map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
@@ -254,6 +230,19 @@ export function AboutSection({ about }: { about: About }) {
           )}
         </div>
       </div>
+      <ChapterEnd>A thought becomes a sketch. A sketch becomes a story.</ChapterEnd>
+      </div>
     </section>
   );
+}
+
+export function TwilightMeeting() {
+  return <section className="section story-section story-twilight" id="reflections" data-story-chapter>
+    <div className="px twilight-inner" data-reveal>
+      <Chapter number="05" title="Twilight meeting" />
+      <h2 className="display">Some stories arrive<br /><em>through other people.</em></h2>
+      <div className="reflection-empty"><span className="memory-mark" aria-hidden="true">“</span><p>There is room here for their words.</p><p>Approved reflections from collaborators will appear here when added. For now, the case studies share the work in detail.</p><Link className="btn btn-light" href="/work">Read the case studies</Link></div>
+      <ChapterEnd>Until our paths cross, a message can close the distance.</ChapterEnd>
+    </div>
+  </section>;
 }

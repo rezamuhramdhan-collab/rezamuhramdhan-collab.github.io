@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ContactSection, ServiceCard } from "@/content/types";
-import { ArrowRight } from "../icons";
+import { Chapter, ChapterEnd } from "../Chapter";
 
 // The closing ink card: headline + four-field form. The form composes an email
 // to `contact.email` (mailto:) — there is still no backend, so this works on
@@ -20,17 +20,19 @@ export function Contact({
   const [email, setEmail] = useState("");
   const [service, setService] = useState("");
   const [message, setMessage] = useState("");
+  const [composed, setComposed] = useState(false);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!contact.email) return;
-    const subject = `Project enquiry${service ? ` — ${service}` : ""}${name ? ` from ${name}` : ""}`;
+    const subject = `Project enquiry${service ? `: ${service}` : ""}${name ? ` from ${name}` : ""}`;
     const lines: string[] = [];
     if (name) lines.push(`Name: ${name}`);
     if (email) lines.push(`Email: ${email}`);
     if (service) lines.push(`Service: ${service}`);
     lines.push("", message);
     const body = lines.join("\n");
+    setComposed(true);
     window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
@@ -39,18 +41,22 @@ export function Contact({
   const headline = [contact.headline, contact.headlineGhost].filter(Boolean).join(" ");
 
   return (
-    <section className="section px" id="contact">
+    <section className="section story-section story-contact" id="contact" data-story-chapter>
+      <div className="px">
+      <Chapter number="06" title="Remembering your name" />
       <div className="contact-card">
-        <h2 className="display">{headline}</h2>
+        <div className="contact-letterhead"><span className="letter-thread" aria-hidden="true" /><p className="section-context">{headline}</p><h2 className="display">Let’s find<br /><em>a shared direction.</em></h2></div>
+        <p className="contact-note">Tell me your name and what you have in mind. This form prepares a draft in your email app, ready for you to review and send.</p>
+        {contact.email ? <>
         <form className="contact-form" onSubmit={submit}>
           <div className="form-grid">
             <div className="field">
               <label className="mono" htmlFor="c-name">Name</label>
-              <input id="c-name" type="text" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
+              <input id="c-name" name="name" autoComplete="name" required type="text" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div className="field">
               <label className="mono" htmlFor="c-email">Email</label>
-              <input id="c-email" type="email" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input id="c-email" name="email" autoComplete="email" required type="email" placeholder="your@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="field wide">
               <label className="mono" htmlFor="c-service">Service</label>
@@ -72,21 +78,24 @@ export function Contact({
             </div>
             <div className="field wide">
               <label className="mono" htmlFor="c-message">Message</label>
-              <textarea id="c-message" placeholder="Tell me about your project" value={message} onChange={(e) => setMessage(e.target.value)} />
+              <textarea id="c-message" name="message" required placeholder="Tell me about your project" value={message} onChange={(e) => setMessage(e.target.value)} />
             </div>
           </div>
           <div className="form-submit">
             <button className="btn-submit" type="submit">
-              Send message
-              <ArrowRight />
+              Compose email
             </button>
             {contact.email && (
               <p className="form-alt">
                 Or write to <a href={`mailto:${contact.email}`}>{contact.email}</a>
               </p>
             )}
+            <p className="form-status" role="status">{composed ? "Your words are ready for the next part of the journey. Your email app should open with a draft. Review and send it there, or use the email link above." : ""}</p>
           </div>
         </form>
+        </> : <p className="contact-note">Contact details will be available soon.</p>}
+      </div>
+      <ChapterEnd>Somewhere between an idea and a message, a new story begins.</ChapterEnd>
       </div>
     </section>
   );

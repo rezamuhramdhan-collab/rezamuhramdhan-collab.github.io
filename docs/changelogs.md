@@ -12,6 +12,59 @@ deploy, and database work.
 
 ---
 
+## 2026-11-08
+
+### Changed
+
+- **Complete red-thread journey.** Rebuilt the visual and narrative layer across
+  the homepage, project index, every case study, navigation, footer and data/page
+  states. Existing factual CMS content, routes, contact behavior, encryption and
+  SEO generation remain intact.
+- **Story rhythm.** About now follows the two-world hero, project cards become
+  dusk fragments, services follow a vertical night-to-morning path, Experience
+  stays as an interlude, and the contact form becomes a warm message panel.
+- **Accessible motion.** Added real red-thread reading progress, active section
+  underline, full-screen twilight navigation with focus trapping, one-time comet,
+  route arrival, pausable clouds/stars and reduced-motion behavior. Pausing does
+  not freeze menus or page arrivals in their hidden starting state.
+- **All states.** Added clear narrative framing to arrival, empty, protected,
+  password error, email-draft feedback, retry and missing-page views. Testimonial
+  content is an owner-approved honest empty state rather than invented quotes.
+- **Editing workspace.** Applied the blue-toned palette and serif headings to
+  Payload while retaining native editing, validation and theme switching.
+- Case studies now offer linked excerpts for challenge, design response, and
+  reported outcome, followed by a scroll-aware contents list and readable
+  chapters. The contents list also appears after unlocking protected projects.
+- Contact form explains that it composes an email, validates required fields,
+  and gives feedback without claiming a message was sent.
+
+### Added
+
+- A continuously looping falling comet with a glowing head and cyan/pink trail.
+  It repeats automatically without a replay button, while respecting the
+  atmosphere pause control and reduced-motion settings.
+- Mobile navigation with Escape dismissal, a skip link, visible focus styles,
+  route arrival, empty states, and numbered case study chapters.
+- Owner-approved original sky artwork without characters or movie branding.
+- A shared global 404 document for completely unmatched URLs, retaining a
+  genuine 404 response and noindex behavior alongside the lost-comet scene.
+- Regression coverage for section grouping, link targets, existing content
+  round-trips, protected content, and summary excerpts.
+
+### Fixed
+
+- **Release QA.** Tests and TypeScript now gate the Pages deployment. Route arrival uses a decorative thread instead of a streaming loading boundary, preserving HTTP 404 for missing projects.
+- Fresh local seeding no longer rejects a project whose legacy image URL has
+  no corresponding CMS upload. Seed images use explicit placeholders.
+- Absent hero/portrait uploads no longer occupy large decorative placeholders.
+  Missing section media is labeled, and uploaded image captions are visible.
+
+### Removed
+
+- Decorative wireframe hero and synthetic product-thumbnail mockups.
+
+---
+
 ## 2026-09-08
 
 ### Changed

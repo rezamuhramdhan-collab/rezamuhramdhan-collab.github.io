@@ -73,9 +73,12 @@ export function ProjectLock({ slug, lock }: { slug: string; lock: ProjectLockBox
           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
         </svg>
       </span>
-      <h2>This case study is protected</h2>
-      <p>Enter the password to view the full project details.</p>
+      <p className="chapter-label">A story kept close</p>
+      <h2>A little trust opens this chapter.</h2>
+      <p>This case study is password protected. Enter the project password to read the full story.</p>
+      <label htmlFor="project-password">Project password</label>
       <input
+        id="project-password"
         className="lock-input"
         type="password"
         value={password}
@@ -84,7 +87,7 @@ export function ProjectLock({ slug, lock }: { slug: string; lock: ProjectLockBox
         aria-label="Project password"
         autoComplete="off"
       />
-      {error && <p className="lock-error">That password isn&rsquo;t right — please try again.</p>}
+      {error && <p className="lock-error" role="alert">The thread hasn’t connected yet. That password isn’t right. Please try again.</p>}
       <button className="btn btn-accent" type="submit" disabled={busy || !password}>
         {busy ? "Unlocking…" : "Unlock"}
       </button>

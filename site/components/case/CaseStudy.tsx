@@ -4,7 +4,7 @@ import { ArrowBack, ArrowUpRight } from "../icons";
 import { CaseImage } from "./images";
 import { CaseSections } from "./sections";
 import { ProjectLock } from "./ProjectLock";
-import { CaseNav } from "./CaseNav";
+import { storyHighlights } from "@/lib/case-story";
 
 // Case-study page assembly (v2): sticky tab-nav, kicker header, meta grid, and
 // footer CTA. Section grouping / block presentation live in sections.tsx,
@@ -22,25 +22,24 @@ export function CaseStudy({
   caseNumber?: number;
 }) {
   const { ctaFooter, backLink } = settings;
-  const anchors = project.sections
-    .map((s) => s.anchor)
-    .filter((anchor): anchor is string => Boolean(anchor));
+  const highlights = storyHighlights(project);
 
   return (
-    <div className="case">
+    <main className="case" id="main-content">
       <div className="topbar">
         <div className="topbar-inner">
           <Link className="back-link" href={backLink.href}>
             <ArrowBack />
             {backLink.label}
           </Link>
-          <CaseNav anchors={anchors} />
-          <span />
+          <span className="topbar-project">{project.title}</span>
+          <Link className="topbar-contact" href="/#contact">Let’s talk</Link>
         </div>
       </div>
 
       <div className="frame">
-        <header className="case-header">
+        <header className="case-header" id="case-top">
+          <p className="chapter-label"><span>A fragment, remembered</span><span className="chapter-thread" aria-hidden="true" /><span>Case study</span></p>
           <div className="kicker">
             {caseNumber != null && (
               <>
@@ -52,6 +51,7 @@ export function CaseStudy({
           </div>
           <h1>{project.title}</h1>
           <p className="subtitle">{project.summary}</p>
+          <p className="case-story-note">First, the question. Then, the choices that followed.</p>
           {project.metaGrid.length > 0 && (
             <div className="meta-grid">
               {project.metaGrid.map((pair) => (
@@ -65,7 +65,12 @@ export function CaseStudy({
         </header>
 
         {/* Above the fold — the LCP element on case pages */}
-        <CaseImage image={project.heroImage} hero priority />
+        {project.heroImage.src && project.heroImage.src !== "placeholder" && <CaseImage image={project.heroImage} hero priority />}
+
+        {highlights.length > 0 && <section className="case-brief" aria-labelledby="brief-title">
+          <div className="brief-heading"><span className="mono">The short version</span><h2 id="brief-title">At a glance</h2><p>Excerpts from the case study. Follow a link for the full context.</p></div>
+          <dl className="brief-points">{highlights.map((item) => <div key={item.label}><dt>{item.label}</dt><dd>{item.text}<a href={`#${item.id}`}>Read the {item.label === "Reported outcome" ? "results" : item.label === "Design response" ? "decisions" : "challenge"}</a></dd></div>)}</dl>
+        </section>}
 
         {project.lock ? (
           <div className="lock-wrap">
@@ -79,6 +84,7 @@ export function CaseStudy({
       <div className="foot-cta">
         <div className="foot-cta-inner">
           <div>
+            <p className="chapter-label">The thread continues</p>
             <span className="eyebrow">{ctaFooter.headline}</span>
             <h2>{ctaFooter.subtext}</h2>
           </div>
@@ -97,6 +103,6 @@ export function CaseStudy({
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

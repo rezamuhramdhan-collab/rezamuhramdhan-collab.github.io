@@ -15,10 +15,12 @@ const toTextArray = (items?: RichItem[]) =>
 const toImageSlot = (image?: ImageRef) =>
   image
     ? {
-        src: image.src === "placeholder" ? null : image.src,
         alt: image.alt,
         caption: image.caption ?? null,
-        showPlaceholder: image.src === "placeholder",
+        // Seed fixtures have no uploaded media relation. The CMS no longer
+        // stores legacy `src` strings, so keep an honest placeholder until an
+        // editor uploads an asset instead of failing required-image validation.
+        showPlaceholder: true,
       }
     : { showPlaceholder: false };
 

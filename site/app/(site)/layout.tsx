@@ -1,22 +1,20 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
-import { SiteFooter } from "@/components/shared";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import { HomeNav, SiteFooter } from "@/components/shared";
+import { JourneyEffects } from "@/components/JourneyEffects";
 import { getSiteSettings, getHero } from "@/lib/data";
 import { SITE_URL, IS_SECONDARY_DEPLOY } from "@/lib/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
+import "../journey.css";
 
-// Paper Swiss type system (v3 — see docs/desain.md):
-// Archivo — display face, SemiBold only: h1, section headings, project titles.
-// Instrument Sans — body and UI: copy, nav, buttons, card and role titles.
-// DM Mono — every small caps label: years, tags, date ranges, form labels.
-// Both sans faces are variable; the design pins the width axis to default.
-const archivo = localFont({
-  src: "../fonts/archivo.woff2",
-  weight: "100 900",
-  variable: "--font-archivo",
+// The cinematic serif voice follows the owner's anime reference; sans-serif
+// body text and locally hosted fonts keep the long case studies readable.
+const playfair = localFont({
+  src: "../fonts/playfair.woff2",
+  weight: "400 900",
+  variable: "--font-playfair",
   display: "swap",
 });
 const instrumentSans = localFont({
@@ -73,11 +71,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
   return (
-    <html lang="en" className={`${archivo.variable} ${instrumentSans.variable} ${dmMono.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${instrumentSans.variable} ${dmMono.variable}`}>
       <body>
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        <HomeNav settings={settings} />
         {children}
         <SiteFooter settings={settings} />
-        <ScrollReveal />
+        <JourneyEffects />
         <SpeedInsights />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}

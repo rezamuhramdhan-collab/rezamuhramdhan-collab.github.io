@@ -1,4 +1,126 @@
-# Visual Language — Portfolio v3 (Paper Swiss)
+# Visual language: The red-thread journey
+
+## Active direction: the complete journey (2026-11-08)
+
+The owner's latest brief applies the Your Name atmosphere to every public page,
+section, component and state. A red thread connects a city and countryside,
+then follows biography, fragments of work, a search through services, a career
+interlude, twilight, a message, and a quiet starfield.
+
+The complete audit, preservation contract, story map, tokens, component
+behaviors and rationale are in [red-thread-design.md](red-thread-design.md).
+This direction supersedes the earlier treatments recorded below.
+
+ENERGY 3 / RHYTHM 3 / MOTION 3. The owner explicitly requested glass, glow,
+multi-color sky scenes, continuously looping comet motion and scroll reveals. These are
+recorded session choices under anti-slop R-37. Their purposes are narrative
+wayfinding, scene transitions, interaction feedback and controlled contrast.
+Reduced-motion behavior and a persistent pause control are required.
+
+Approved decision: keep an honest testimonial empty state until real,
+attributed quotations are supplied. Keep all existing factual content,
+routes, encryption, form behavior, category filters, CMS editing and SEO.
+
+The active visual layer is `site/app/journey.css`; `globals.css` retains the
+structural primitives. Original CSS city/ridge shapes and the previously
+approved original sky asset establish atmosphere without film reproductions.
+
+## Previous direction: hero-led atmosphere (2026-11-08)
+
+The owner supplied a Kimi no Na wa poster as a visual reference and chose an
+original anime-inspired sky scene without characters or movie branding. This
+direction supersedes the neutral Paper Swiss proposal recorded below.
+
+Reading this as a personal product-design portfolio for hiring teams and
+collaborators, with cinematic anime skies and editorial case studies.
+ENERGY 3 / RHYTHM 3 / MOTION 1.
+
+- Identity: an original blue sky, luminous clouds, a comet and its pink
+  companion trail establish the sense of distance and connection in the reference.
+- Palette: cloud white `#f6f9fc`, navy `#142d4d`, body `#465c76`, inset
+  `#e7eef7`, and comet pink `#9f365d`. Blue and pink derive from the owner's
+  reference; pink only marks the work index and active reading location.
+- Typography: locally hosted Playfair provides the cinematic serif voice of
+  the reference; Instrument Sans keeps long case studies readable. DM Mono
+  stays confined to chapter numbers and small metadata.
+- Hero: full-width original scenery, name and biography on the left, image on
+  the right. A navy gradient serves text contrast, with at least 82% opacity
+  underneath mobile text and a darker left zone on desktop. Hero copy never
+  crosses the unprotected bright clouds or comet.
+- Composition: cinematic opening, numbered project briefs, compact working
+  practices, experience, about, then an inverse navy contact section. Existing
+  case study excerpts, contents list, 720px reading column, and CMS URLs survive.
+- Liveliness: the sky is the visual focal point, serif titles echo its scale,
+  chapter numbers connect project index to detailed stories. Layout varies
+  with the content instead of repeating card grids.
+- Motion: hover/focus feedback only, with immediate chapter navigation. The
+  comet is painted into the artwork; there is no perpetual animation.
+- Assets: the approved generated scenery is `site/public/images/comet-sky.webp`.
+  CMS hero uploads can still replace it. Existing project media is preserved;
+  absent project screenshots are explicitly labeled instead of fabricated.
+- Theme: fixed cloud-white reading pages with a navy cinematic hero, chosen
+  from the supplied reference. No unrelated dark-mode toggle is required.
+- Accessibility: opaque reading surfaces, visible focus, native controls,
+  mobile navigation, short story excerpts, and honest email-draft feedback.
+
+Anti-slop remains active in during mode. Owner approved new original scenery;
+the referenced sky and gradient have a written identity/contrast purpose
+(R-01/R-22/R-23), rather than being generic decorative defaults.
+
+## Previous direction: Paper Swiss (superseded)
+
+## Current direction (2026-11-08)
+
+The owner selected: evolve Paper Swiss with stronger type, high contrast,
+project-led layouts, and removal of the decorative wireframe grid. This section
+supersedes the historical v3 measurements below.
+
+Reading this as a product designer's portfolio for hiring teams and collaborators,
+in an editorial Paper Swiss style. ENERGY 3 / RHYTHM 3 / MOTION 1.
+
+- Color: paper `#f4f4f0`, ink `#20231f`, body/secondary `#53584f`, inset
+  `#e6e6df`, inverse `#fffefa`. Darker secondary copy makes extended reading
+  comfortable; inverse form labels and placeholders use opaque light colors.
+- Typography: retain Archivo for the identity and project titles, Instrument
+  Sans for reading, and DM Mono only for small indices and dates. Familiar
+  typography retains the portfolio's identity while body text rises to 17–18px.
+- Composition: name and biography open the portfolio, work follows immediately,
+  then working practices, experience, about, and contact. The work earns the
+  first scroll because evaluating design decisions is the reader's main task.
+- Identity motif and accent: oversized type and a numbered editorial index.
+  The accent is typographic rather than chromatic, retaining the owner's
+  all-neutral Paper Swiss identity. Ink creates emphasis at titles and links.
+- Spacing: generous separation between chapters, tighter spacing inside an
+  argument, and a reading column capped at 720px connect evidence to decisions.
+- Project presentation: numbered briefs show the existing summary, role, and
+  scope; uploaded screenshots get an adjacent image. No invented screenshots,
+  skeleton product mockups, illustrations, profile photos, or testimonials.
+- Case study: short excerpts link to challenge, design response, and reported
+  outcome when those blocks exist. A sticky, scroll-aware contents list uses
+  the same group IDs as the rendered sections. On mobile it becomes an inline
+  index so it cannot obscure the reading column. Results are existing authored
+  claims, not newly measured or independently verified outcomes.
+- Surfaces: inset brief collects the short version; the single inverse contact
+  spread marks a change from reading to action. Plain ruled rows replace
+  decorative feature cards. Small rectangular radii distinguish controls.
+- Assets: retain existing uploads; omit absent hero/portrait media. Explicit
+  section image placeholders say the project image has not been added.
+- Interaction: arrows identify case-study navigation and existing direction
+  controls, not every action. Social icons identify actual external channels.
+  Hover/focus feedback is the only motion; reduced-motion disables smooth scroll.
+- Theme: fixed light paper is intentional editorial brand guidance. The inverse
+  contact spread is a local hierarchy treatment, not a second theme.
+- Accessibility: visible focus, 44px controls, mobile menu with Escape dismissal,
+  skip link, native validation, honest mailto feedback, and retained loading,
+  empty, error, and protected-project states.
+- Compatibility: presentation changes use existing CMS shapes and URLs. No
+  database migration or content overwrite is required. Seed-only defaults use
+  a real contact anchor in place of the missing bundled resume file.
+
+Anti-slop source: `miqdadbadjuber/anti-slop`, applied in during mode for this
+session. Owner decision: drop the decorative wireframe grid (R-07/R-37).
+
+## Historical v3 reference
 
 Sources of truth, both read directly over their local MCP servers (every value
 below is pulled from a file — fills, type styles, spacing, grid tracks — never

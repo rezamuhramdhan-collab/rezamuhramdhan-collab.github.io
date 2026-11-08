@@ -1,82 +1,31 @@
 import Image from "next/image";
 import type { ImageRef, ImageLayout } from "@/content/types";
-import { PhotoIcon } from "../icons";
 
-// Case-study images. Single images render full content-width with a 16px
-// radius; galleries stack or grid. No uploaded media → a neutral placeholder
-// that still reserves layout space (the mockups' aspect-ratio frame).
-
-export function CaseImage({
-  image,
-  hero,
-  priority,
-}: {
-  image: ImageRef;
-  hero?: boolean;
-  priority?: boolean;
-}) {
+export function CaseImage({ image, hero, priority }: { image: ImageRef; hero?: boolean; priority?: boolean }) {
   const placeholder = image.src === "placeholder" || !image.src;
   return (
-    <figure className={`case-image ${hero ? "hero-image" : "body-image"}`} role="img" aria-label={image.alt}>
-      {placeholder ? (
-        <div className="img-placeholder">
-          <PhotoIcon />
-        </div>
-      ) : image.width && image.height ? (
-        <Image
-          src={image.src}
-          alt={image.alt}
-          width={image.width}
-          height={image.height}
-          sizes="(max-width: 1200px) 100vw, 1104px"
-          priority={priority}
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-        />
+    <figure className={`case-image ${hero ? "hero-image" : "body-image"}`}>
+      {placeholder ? <div className="img-placeholder"><span>Project image not added</span>{image.alt && <span>{image.alt}</span>}</div> : image.width && image.height ? (
+        <Image src={image.src} alt={image.alt} width={image.width} height={image.height}
+          sizes="(max-width: 860px) 100vw, 800px" priority={priority} style={{ width: "100%", height: "auto" }} />
       ) : (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={image.src} alt={image.alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <img src={image.src} alt={image.alt} width={hero ? 1200 : 800} height={hero ? 750 : 500}
+          loading={priority ? "eager" : "lazy"} fetchPriority={priority ? "high" : undefined} />
       )}
+      {image.caption && <figcaption>{image.caption}</figcaption>}
     </figure>
   );
 }
 
-// A section's images: stacked full-width, or a 2-/3-up grid.
 export function ImageGroup({ images, layout }: { images?: ImageRef[]; layout?: ImageLayout }) {
   if (!images?.length) return null;
-  if (layout === "grid" || layout === "grid3") {
-    return (
-      <div className={`img-grid${layout === "grid3" ? " cols-3" : ""}`}>
-        {images.map((image, i) => (
-          <CaseImage key={i} image={image} />
-        ))}
-      </div>
-    );
-  }
-  return (
-    <div className="img-stack">
-      {images.map((image, i) => (
-        <CaseImage key={i} image={image} />
-      ))}
-    </div>
-  );
+  const grid = layout === "grid" || layout === "grid3";
+  return <div className={grid ? `img-grid${layout === "grid3" ? " cols-3" : ""}` : "img-stack"}>
+    {images.map((image, index) => <CaseImage key={index} image={image} />)}
+  </div>;
 }
 
-// A block's text followed by its images (v2 keeps images full-width below the
-// text rather than beside it, so left/right collapse to a stack).
-export function WithImages({
-  images,
-  layout,
-  children,
-}: {
-  images?: ImageRef[];
-  layout?: ImageLayout;
-  children: React.ReactNode;
-}) {
-  const gallery: ImageLayout = layout === "grid" ? "grid" : "full";
-  return (
-    <>
-      {children}
-      {images?.length ? <ImageGroup images={images} layout={gallery} /> : null}
-    </>
-  );
+export function WithImages({ images, layout, children }: { images?: ImageRef[]; layout?: ImageLayout; children: React.ReactNode }) {
+  return <>{children}<ImageGroup images={images} layout={layout} /></>;
 }

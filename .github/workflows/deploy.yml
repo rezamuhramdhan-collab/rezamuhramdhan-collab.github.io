@@ -30,6 +30,14 @@ jobs:
         working-directory: site
         run: npm ci
 
+      - name: Test authored content and case-study navigation
+        working-directory: site
+        run: npm test
+
+      - name: Typecheck
+        working-directory: site
+        run: npx tsc --noEmit
+
       # Sync schema changes (new fields → columns) to the hosted database
       # before the build queries them. Drizzle push runs here because
       # NODE_ENV is unset; it is additive-safe and a no-op when in sync.

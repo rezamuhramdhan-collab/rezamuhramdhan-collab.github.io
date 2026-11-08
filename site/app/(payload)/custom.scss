@@ -1,1 +1,34 @@
-/* Admin panel style overrides (none yet) */
+/* Carry the journey palette into the editing workspace without replacing
+   Payload's native controls, validation, focus order, or theme switching. */
+:root {
+  --color-base-0: #f8faff;
+  --color-base-50: #edf1fa;
+  --color-base-100: #e2e8f4;
+  --color-base-150: #d5deee;
+  --color-base-200: #c7d2e5;
+  --color-base-250: #b7c5dc;
+  --color-base-300: #a7b7d0;
+  --color-base-350: #96a8c4;
+  --color-base-400: #8599b6;
+  --color-base-450: #7489a9;
+  --color-base-500: #657a9b;
+  --color-base-550: #566b8c;
+  --color-base-600: #485d7e;
+  --color-base-650: #3c5070;
+  --color-base-700: #304363;
+  --color-base-750: #253752;
+  --color-base-800: #1d2c46;
+  --color-base-850: #17243d;
+  --color-base-900: #111d34;
+  --color-base-950: #0d162c;
+  --color-base-1000: #080f29;
+  --style-radius-s: 7px;
+  --style-radius-m: 10px;
+  --style-radius-l: 18px;
+}
+body { background-image: radial-gradient(ellipse at 100% 0, #9f526b0d, transparent 60%); }
+h1, h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+:focus-visible { outline: 3px solid #b94365; outline-offset: 3px; }
+html[data-theme='dark'] :focus-visible { outline-color: #ffadbd; }
+a, button, summary, select { cursor: pointer; }
+button:disabled { cursor: not-allowed; }

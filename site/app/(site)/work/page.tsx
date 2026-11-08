@@ -15,7 +15,7 @@ export default async function AllProjectsPage() {
   const projects = await getPublishedProjects();
 
   return (
-    <main className="all-projects-page">
+    <main className="all-projects-page" id="main-content">
       <header className="topbar all-projects-topbar">
         <div className="topbar-inner">
           <Link className="back-link" href="/">
@@ -28,7 +28,7 @@ export default async function AllProjectsPage() {
       </header>
 
       <section className="all-projects-content">
-        <span className="eyebrow">Selected Work</span>
+        <p className="chapter-label"><span>Fragments of the comet</span><span className="chapter-thread" aria-hidden="true" /><span>Selected work</span></p>
         <div className="all-projects-heading">
           <h1>Projects</h1>
           <p>
@@ -36,6 +36,7 @@ export default async function AllProjectsPage() {
           </p>
         </div>
         <AllProjectsGrid projects={projects} />
+        <p className="chapter-end"><span aria-hidden="true" />Every fragment began with a question worth following.</p>
       </section>
 
       <section className="all-projects-cta">

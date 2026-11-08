@@ -35,13 +35,13 @@ export function AllProjectsGrid({ projects }: { projects: Project[] }) {
           );
         })}
       </div>
-      {/* v3 shares the homepage's divided work list here — the 2-up card grid
-          it used to render no longer exists in the design system. */}
+      {/* Index and homepage share the same source-backed fragment cards. */}
       <ul className="work-list all-projects-list" aria-live="polite">
-        {visibleProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {visibleProjects.map((project, index) => (
+          <ProjectCard key={project.id} project={project} index={index} />
         ))}
       </ul>
+      {!visibleProjects.length && <p className="empty-state" role="status">This part of the sky is quiet. No case studies match this category yet. Choose another category to continue.</p>}
     </>
   );
 }

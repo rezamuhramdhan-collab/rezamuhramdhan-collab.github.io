@@ -1,50 +1,33 @@
-import type { SectionBlock, StepBlock } from "@/content/types";
-import { BlockBody, StepGroup, blockHeading, type SingleBlock } from "./blocks";
+import type { SectionBlock } from "@/content/types";
+import { groupCaseSections } from "@/lib/case-story";
+import { BlockBody, StepGroup, blockHeading } from "./blocks";
+import { CaseNav } from "./CaseNav";
 
-// Section grouping + the accent-label section shell for a case study body.
-// Shared by the server-rendered page (unlocked) and ProjectLock's client-side
-// render after decryption (locked). Consecutive stepBlocks share one section.
-
-type SectionGroup =
-  | { kind: "single"; block: SingleBlock; anchor?: string; label?: string }
-  | { kind: "steps"; steps: StepBlock[]; anchor?: string; label?: string };
-
-function groupSections(sections: SectionBlock[]): SectionGroup[] {
-  const groups: SectionGroup[] = [];
-  for (const block of sections) {
-    const last = groups[groups.length - 1];
-    if (block.type === "stepBlock") {
-      if (last?.kind === "steps") {
-        last.steps.push(block);
-      } else {
-        groups.push({ kind: "steps", steps: [block], anchor: block.anchor, label: blockHeading(block) });
-      }
-    } else {
-      groups.push({ kind: "single", block, anchor: block.anchor, label: blockHeading(block) });
-    }
-  }
-  return groups;
-}
-
+// Also used after decryption: protected content and its contents list appear
+// together only after a successful unlock.
 export function CaseSections({ sections }: { sections: SectionBlock[] }) {
-  const groups = groupSections(sections);
+  const groups = groupCaseSections(sections);
+  if (!groups.length) return <p className="empty-state">This story is still taking shape. The full case study will appear here when it is ready.</p>;
   return (
-    <>
-      {groups.map((group, i) => (
-        <section key={i} className="sec" id={group.anchor} data-reveal>
-          {group.label && (
-            <div className="sec-label-row">
-              <span className="eyebrow">{group.label}</span>
-              <div className="rule" />
-            </div>
-          )}
-          {group.kind === "steps" ? (
-            <StepGroup steps={group.steps} />
-          ) : (
-            <BlockBody block={group.block} />
-          )}
-        </section>
-      ))}
-    </>
+    <div className="case-reading">
+      <aside className="case-contents">
+        <span className="mono">In this case study</span>
+        <CaseNav items={groups.map(({ id, label }) => ({ id, label }))} />
+        <a className="contents-top" href="#case-top">Back to top</a>
+      </aside>
+      <div className="case-chapters">
+        {groups.map((group, index) => (
+          <section key={group.id} className="sec" id={group.id}>
+            {(group.kind === "steps" || blockHeading(group.block)) && (
+              <div className="sec-label-row">
+                <span className="chapter-number mono" aria-hidden="true">Chapter {String(index + 1).padStart(2, "0")}</span>
+                <h2>{group.label}</h2>
+              </div>
+            )}
+            {group.kind === "steps" ? <StepGroup steps={group.steps} /> : <BlockBody block={group.block} />}
+          </section>
+        ))}
+      </div>
+    </div>
   );
 }

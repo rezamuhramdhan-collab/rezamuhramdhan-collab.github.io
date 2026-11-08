@@ -2,49 +2,43 @@
 
 import { useEffect, useState } from "react";
 
-export function CaseNav({ anchors }: { anchors: string[] }) {
-  const [activeAnchor, setActiveAnchor] = useState(anchors[0] ?? "");
+type ContentsItem = { id: string; label: string };
 
+export function CaseNav({ items }: { items: ContentsItem[] }) {
+  const [activeId, setActiveId] = useState(items[0]?.id ?? "");
   useEffect(() => {
-    if (anchors.length === 0) return;
-
-    const updateActiveAnchor = () => {
-      let current = anchors[0];
-      for (const anchor of anchors) {
-        const section = document.getElementById(anchor);
-        if (section && section.getBoundingClientRect().top <= 120) {
-          current = anchor;
-        }
+    if (!items.length) return;
+    let frame = 0;
+    const update = () => {
+      let current = items[0].id;
+      for (const { id } of items) {
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= 160) current = id;
       }
-      setActiveAnchor(current);
+      setActiveId(current);
     };
-
-    updateActiveAnchor();
-    window.addEventListener("scroll", updateActiveAnchor, { passive: true });
-    window.addEventListener("hashchange", updateActiveAnchor);
-
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("hashchange", update);
     return () => {
-      window.removeEventListener("scroll", updateActiveAnchor);
-      window.removeEventListener("hashchange", updateActiveAnchor);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("hashchange", update);
     };
-  }, [anchors]);
+  }, [items]);
 
   return (
     <nav className="tab-nav" aria-label="Case study sections">
-      {anchors.map((anchor) => {
-        const active = anchor === activeAnchor;
-        return (
-          <a
-            key={anchor}
-            className={active ? "active" : undefined}
-            href={`#${anchor}`}
-            aria-current={active ? "location" : undefined}
-            onClick={() => setActiveAnchor(anchor)}
-          >
-            {anchor.replace(/-/g, " ")}
-          </a>
-        );
-      })}
+      {items.map(({ id, label }, index) => (
+        <a key={id} className={id === activeId ? "active" : undefined} href={`#${id}`}
+          aria-current={id === activeId ? "location" : undefined} onClick={() => setActiveId(id)}>
+          <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{label}
+        </a>
+      ))}
     </nav>
   );
 }

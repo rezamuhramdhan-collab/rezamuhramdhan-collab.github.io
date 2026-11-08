@@ -7,6 +7,9 @@ import { withPayload } from "@payloadcms/next/withPayload";
 const nextConfig = {
   ...(process.env.STATIC_EXPORT ? { output: "export" } : {}),
   experimental: {
+    // Multiple root layouts otherwise leave completely unmatched URLs on
+    // Next's default white 404 instead of the portfolio's recovery scene.
+    globalNotFound: true,
     // The global stylesheet is only ~7 KiB. Inlining it removes the extra
     // render-blocking request and its critical network dependency.
     inlineCss: true,
