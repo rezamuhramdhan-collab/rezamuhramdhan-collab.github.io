@@ -221,3 +221,11 @@ About context label. Hero intro contains just one identity span; its extra
 Product Designer label is absent. Both section titles and the hero's factual
 bio remain. No horizontal overflow at 1280px. TypeScript, all nine tests,
 server build and static export passed.
+
+## Dreamy Twilight reference refresh (2026-11-09)
+
+- TypeScript and all 9 tests passed. The server production build and the GitHub Pages static export both completed.
+- Browser QA at 1280px and 375px checked the homepage, work cards, mobile menu and a real case study. No horizontal overflow was observed. The complete selected-work headline stays on one line at desktop width and wraps on mobile.
+- QA caught the legacy one-pixel pseudo-element rule shrinking project cover artwork. The final static export shows a 361px desktop cover and a 209px mobile cover made from the original approved sky.
+- The Cormorant fonts and original sky loaded from local assets. No browser console errors were observed apart from the expected Vercel Speed Insights script request on the local static server.
+- Content, project routes, contact mailto behavior, CMS code, SEO metadata, reduced-motion rules and the looping comet remain in place.

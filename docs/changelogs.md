@@ -506,3 +506,10 @@ admin hosted on Vercel, uploads persisted to Vercel Blob, and an uploadable
 header logo, favicon, and hero portrait. Flexible case-study sections with
 categories and mandatory fields, a Lexical rich-text editor across blocks,
 scroll-reveal animations, and a mobile breakpoint.
+
+# Dreamy Twilight visual refresh (2026-11-09)
+
+- Reworked the homepage, work index, case studies, navigation, forms, footer and states around the owner's Figma reference: midnight blue, cream display type, peach accents and spacious editorial sections.
+- Introduced locally hosted Cormorant Garamond for headlines; kept Plus Jakarta Sans for body text and controls.
+- Replaced heavy glass work tiles with image-led cards while retaining factual summaries and the problem, action, result reveal.
+- Kept original sky and looping comet, real portfolio content, route behavior, SEO and reduced-motion support. No reference imagery or fictional portfolio copy was used.

@@ -1,5 +1,23 @@
 # Visual language: The red-thread journey
 
+## Current direction: Dreamy Twilight reference (2026-11-09)
+
+The owner supplied a Figma Make portfolio as the visual reference. Its useful
+qualities are a midnight editorial canvas, warm cream type, expressive serif
+headlines, peach accents, spacious composition, and image-led project cards.
+The site keeps Reza's real project data, original approved sky, comet, red
+thread, section order, CMS, routes, interactions, SEO, and case-study narrative.
+The sample project's wording, identity and imagery are not reused.
+
+`site/app/twilight-reference.css` is the visual layer over the structural
+`globals.css`, journey behavior, and case-study reading layout. Cormorant
+Garamond is locally hosted for display type, while Plus Jakarta Sans remains
+the readable body and interface face. Full homepage headlines stay on one line
+on wide desktops and wrap at narrower widths. All public pages, states and
+case studies share dark blue surfaces, readable contrast and restrained
+separators. The original comet continues to loop, with reduced-motion support.
+
+
 Owner refinement (2026-11-09): omit the redundant small labels "Selected work",
 "Product Designer" beside the hero identity, and "About" above its title.
 
