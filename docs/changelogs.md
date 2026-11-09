@@ -16,6 +16,9 @@ deploy, and database work.
 
 ### Changed
 
+- Corrected the main homepage titles so each complete title appears on one
+  desktop line. Narrow viewports wrap naturally without horizontal overflow.
+
 - Set each phrase of the homepage's split titles on its own full line on desktop;
   narrow screens keep natural wrapping.
 

@@ -1,5 +1,10 @@
 # Visual language: The red-thread journey
 
+Owner correction (2026-11-09): each complete homepage main title is one
+continuous line at desktop width, including the selected-work title. Keep the
+normal/italic emphasis within the same line. On phone widths, allow natural
+wrapping for legibility. This supersedes the phrase-per-line note below.
+
 Owner refinement (2026-11-09): main split titles are two clear phrases, one
 phrase per line on desktop. Each line may use the full available width.
 At the mobile breakpoint, phrases wrap naturally inside the viewport.

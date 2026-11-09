@@ -45,7 +45,7 @@ export function Contact({
       <div className="px">
       <Chapter number="06" title="Remembering your name" />
       <div className="contact-card">
-        <div className="contact-letterhead"><span className="letter-thread" aria-hidden="true" /><p className="section-context">{headline}</p><h2 className="display"><span>Let’s find</span><em>a shared direction.</em></h2></div>
+        <div className="contact-letterhead"><span className="letter-thread" aria-hidden="true" /><p className="section-context">{headline}</p><h2 className="display"><span>Let’s find </span><em>a shared direction.</em></h2></div>
         <p className="contact-note">Tell me your name and what you have in mind. This form prepares a draft in your email app, ready for you to review and send.</p>
         {contact.email ? <>
         <form className="contact-form" onSubmit={submit}>

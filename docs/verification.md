@@ -206,3 +206,11 @@ one complete phrase per line at desktop width. At 375px the same phrases wrap
 within the viewport. No horizontal overflow at 1280px or 375px. TypeScript,
 all nine tests, full server build and static export passed. Copy and links are
 unchanged.
+# Complete single-line titles (2026-11-09)
+
+The owner's correction supersedes the preceding phrase-per-line treatment.
+At 1280px, the Hero, Work, Services, Experience, About, Twilight and Contact
+main titles each measured one line high in the production browser preview.
+The selected-work screenshot visibly shows the entire title on one line with
+its link aligned at the lower right of the intro. At 375px the title wraps
+without page overflow. TypeScript, nine tests, server build and static export passed.
