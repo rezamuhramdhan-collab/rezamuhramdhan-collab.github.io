@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type {
   Hero as HeroData,
@@ -188,10 +187,7 @@ function ExperienceBullets({ entry }: { entry: ExperienceEntry }) {
   );
 }
 
-// Portrait + definition list on the left, heading and copy on the right.
-// The first paragraph gets the ink-90 lead treatment.
 export function AboutSection({ about }: { about: About }) {
-  const hasPhoto = about.image && about.image.src !== "placeholder";
   return (
     <section className="section story-section story-about" id="about" data-story-chapter>
       <div className="px">
@@ -199,43 +195,13 @@ export function AboutSection({ about }: { about: About }) {
       <div className="sec-head" data-reveal>
         <div><h2 className="display"><span>Between people </span><em>and possibility.</em></h2></div>
       </div>
-      <div className={`about-grid${hasPhoto ? "" : " without-photo"}`}>
-        {hasPhoto && <div data-reveal>
-          <div className="about-photo">
-              <Image
-                src={about.image!.src}
-                alt={about.image!.alt || "Portrait"}
-                width={about.image!.width ?? 600}
-                height={about.image!.height ?? 640}
-                sizes="(max-width: 1100px) 100vw, 389px"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-          </div>
-        </div>}
+      <div className="about-grid">
         <div className="about-body" data-reveal>
           <p className="personal-note">I care about the moment a complicated task begins to make sense.</p>
           {about.subheading && <h3 className="display h-about">{about.subheading}</h3>}
           {about.paragraphs.map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}
-          {/* Fact list closes the copy column — two across, between hairlines.
-              It sits under the text, not under the portrait. */}
-          {(about.locationTag || about.skills.length > 0) && (
-            <dl className="about-facts">
-              {about.locationTag && (
-                <div>
-                  <dt className="mono">Based in</dt>
-                  <dd>{about.locationTag}</dd>
-                </div>
-              )}
-              {about.skills.length > 0 && (
-                <div>
-                  <dt className="mono">Tools</dt>
-                  <dd>{about.skills.join(", ")}</dd>
-                </div>
-              )}
-            </dl>
-          )}
         </div>
       </div>
       <ChapterEnd>Every shared story carries a few voices with it.</ChapterEnd>
