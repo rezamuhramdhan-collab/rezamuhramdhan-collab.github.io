@@ -513,3 +513,7 @@ scroll-reveal animations, and a mobile breakpoint.
 - Introduced locally hosted Cormorant Garamond for headlines; kept Plus Jakarta Sans for body text and controls.
 - Replaced heavy glass work tiles with image-led cards while retaining factual summaries and the problem, action, result reveal.
 - Kept original sky and looping comet, real portfolio content, route behavior, SEO and reduced-motion support. No reference imagery or fictional portfolio copy was used.
+
+## Complete Figma section composition
+
+Rebuilt the hero with original vector scenery, moved About below the hero in two columns, changed featured work to three compact cards, simplified service and experience surfaces, restyled the reflection and footer, and added a centered contact invitation with an accessible form disclosure. Existing CMS fields and all case-study routes are retained.

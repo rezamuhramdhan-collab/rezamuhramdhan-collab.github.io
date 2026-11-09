@@ -229,3 +229,7 @@ server build and static export passed.
 - QA caught the legacy one-pixel pseudo-element rule shrinking project cover artwork. The final static export shows a 361px desktop cover and a 209px mobile cover made from the original approved sky.
 - The Cormorant fonts and original sky loaded from local assets. No browser console errors were observed apart from the expected Vercel Speed Insights script request on the local static server.
 - Content, project routes, contact mailto behavior, CMS code, SEO metadata, reduced-motion rules and the looping comet remain in place.
+
+## Full section composition QA
+
+TypeScript, nine tests and server production build passed. Browser checks at 1280px and 375px found no horizontal overflow. Three featured cards render; the contact disclosure opens and exposes the original form fields. No console errors were observed.

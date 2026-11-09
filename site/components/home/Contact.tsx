@@ -48,6 +48,9 @@ export function Contact({
         <div className="contact-letterhead"><span className="letter-thread" aria-hidden="true" /><p className="section-context">{headline}</p><h2 className="display"><span>Let’s find </span><em>a shared direction.</em></h2></div>
         <p className="contact-note">Tell me your name and what you have in mind. This form prepares a draft in your email app, ready for you to review and send.</p>
         {contact.email ? <>
+        <a className="btn contact-direct" href={`mailto:${contact.email}`}>Let’s make something <span aria-hidden="true">↗</span></a>
+        <p className="contact-email"><a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+        <details className="contact-compose"><summary>Write a message</summary>
         <form className="contact-form" onSubmit={submit}>
           <div className="form-grid">
             <div className="field">
@@ -93,6 +96,7 @@ export function Contact({
             <p className="form-status" role="status">{composed ? "Your words are ready for the next part of the journey. Your email app should open with a draft. Review and send it there, or use the email link above." : ""}</p>
           </div>
         </form>
+        </details>
         </> : <p className="contact-note">Contact details will be available soon.</p>}
       </div>
       <ChapterEnd>Somewhere between an idea and a message, a new story begins.</ChapterEnd>

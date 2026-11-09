@@ -1,5 +1,16 @@
 # Visual language: The red-thread journey
 
+## Complete reference composition (2026-11-09)
+
+The owner requested that every section follow the Figma composition. This
+supersedes the earlier single-line headings and About position: the hero now
+uses two lines over original vector twilight scenery, About follows the hero
+in two columns, and Work uses three compact cards. Services and Experience
+retain their CMS content with quiet separators. The reflection remains an
+honest empty state, Contact is a centered invitation with the existing form in
+an accessible disclosure, and the footer is compact. Existing CMS fields supply
+the content, so no destructive database migration is required.
+
 ## Current direction: Dreamy Twilight reference (2026-11-09)
 
 The owner supplied a Figma Make portfolio as the visual reference. Its useful

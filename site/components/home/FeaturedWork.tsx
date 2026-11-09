@@ -3,7 +3,7 @@ import type { Project } from "@/content/types";
 import { ProjectCard } from "./ProjectCard";
 import { Chapter, ChapterEnd } from "../Chapter";
 
-const FEATURED_PROJECT_COUNT = 4;
+const FEATURED_PROJECT_COUNT = 3;
 
 export function FeaturedWork({ projects }: { projects: Project[] }) {
   const featuredProjects = projects.slice(0, FEATURED_PROJECT_COUNT);
