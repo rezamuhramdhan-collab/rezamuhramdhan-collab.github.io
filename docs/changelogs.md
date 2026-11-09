@@ -12,6 +12,14 @@ deploy, and database work.
 
 ---
 
+## 2026-11-09
+
+### Changed
+
+- Stacked titles above their descriptions with a shared left edge across services,
+  About, the project index and case-study chapters. Moved the selected-work link
+  after its introduction. Text wraps naturally and project media keeps its width.
+
 ## 2026-11-08
 
 ### Changed

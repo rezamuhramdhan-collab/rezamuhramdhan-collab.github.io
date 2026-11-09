@@ -29,15 +29,15 @@
 .case-paper { background: var(--paper); }
 .case-editorial .case-reading { display: block; padding-block: 0 96px; }
 .case-editorial .case-chapters { max-width: none; }
-.case-editorial .case-chapters .sec, .case-editorial .case-chapters .sec + .sec { display: grid; grid-template-columns: minmax(170px, 240px) minmax(0, 800px); justify-content: space-between; gap: clamp(32px, 5vw, 80px); padding: 72px 0; margin: 0; background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; scroll-margin-top: 112px; }
+.case-editorial .case-chapters .sec, .case-editorial .case-chapters .sec + .sec { display: block; padding: 72px 0; margin: 0; background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; scroll-margin-top: 112px; }
 .case-editorial .case-chapters .sec:last-child { border-bottom: 0; padding-bottom: 0; }
-.case-editorial .sec-label-row { position: sticky; top: 112px; align-self: start; gap: 20px; margin: 0; }
+.case-editorial .sec-label-row { position: static; align-items: flex-start; gap: 16px; margin: 0 0 28px; }
 .case-editorial .chapter-number { color: #9b2c46; font-size: 40px; line-height: 1; font-weight: 300; letter-spacing: -.06em; }
 .case-editorial .sec-label-row h2 { color: var(--ink); font-size: 24px; line-height: 1.45; font-weight: 500; letter-spacing: -.025em; overflow-wrap: anywhere; }
 .case-editorial .chapter-body { min-width: 0; }
+.case-editorial .chapter-body > .prose, .case-editorial .chapter-body > p { max-width: 800px; }
 .case-editorial .chapter-body > :first-child { margin-top: 0; }
 .case-editorial .case-chapters .sec--image { display: block; }
-.case-editorial .case-chapters .sec:not(:has(.sec-label-row)) .chapter-body { grid-column: 2; }
 .case-editorial .sec p, .case-editorial .prose p, .case-editorial .prose li,
 .case-editorial .dash-list li, .case-editorial .bullet-list li, .case-editorial .check-list li, .case-editorial .sq-list li { color: var(--muted); font-size: 17px; line-height: 1.85; }
 .case-editorial .sec strong, .case-editorial .prose strong, .case-editorial .rich-inline strong { color: var(--ink); }
@@ -82,7 +82,6 @@
 @media (max-width: 1000px) {
   .case-editorial .case-header { grid-template-columns: 1fr; gap: 40px; padding-block: 48px; }
   .case-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
-  .case-editorial .case-chapters .sec, .case-editorial .case-chapters .sec + .sec { grid-template-columns: 180px minmax(0, 1fr); gap: 32px; }
   .case-editorial .two-col { grid-template-columns: 1fr; }
   .case-next { grid-template-columns: minmax(0, 1fr) auto; gap: 20px; }
   .case-next-label { grid-column: 1 / -1; }
@@ -99,7 +98,7 @@
   .case-facts dd { font-size: 13px; }
   .case-cover-end { font-size: 12px; padding-block: 20px 24px; }
   .case-editorial .case-chapters .sec, .case-editorial .case-chapters .sec + .sec { display: block; padding-block: 40px; scroll-margin-top: 110px; }
-  .case-editorial .sec-label-row { position: static; flex-direction: row; align-items: baseline; gap: 20px; margin-bottom: 26px; }
+  .case-editorial .sec-label-row { gap: 12px; margin-bottom: 24px; }
   .case-editorial .chapter-number { font-size: 24px; }
   .case-editorial .sec-label-row h2 { font-size: 22px; }
   .case-editorial .sec p, .case-editorial .prose p, .case-editorial .prose li,

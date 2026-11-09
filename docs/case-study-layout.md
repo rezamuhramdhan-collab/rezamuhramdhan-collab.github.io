@@ -184,3 +184,27 @@ URL or case-study route file changed in this revision.
 - site/components/case/CaseNav.tsx: position tracking and horizontal visibility.
 - site/components/case/images.tsx: responsive wide cover sizes.
 - site/app/case-study.css: scoped layout, reading palette and breakpoints.
+# Stacked title refinement (2026-11-09)
+
+Owner reference: title above description with a shared left edge. This replaces
+the earlier sticky margin-heading composition described below. Chapter bodies
+remain in authored order; prose is capped at 800px and images retain full width.
+Home services, About and the work index use the same vertical reading direction.
+No new assets, copy, routes, schema or interactions were added.
+
+Verification: TypeScript, all nine tests, the full server build and final static
+export passed. Browser measurements at 375px confirmed the work, services and
+About heading/description pairs share x=20 and descriptions follow headings.
+At 1440px About heading and description share x=128. No horizontal overflow.
+All nine fixture case chapters shared their heading/body left edge at 1280px
+and 375px. The final static case page was visually inspected at 1440px.
+See all projects was clicked and reached /work; its intro is vertically stacked.
+The #overview anchor reached the chapter below the site header. Browser error
+and warning logs were empty. No changes to other controls; prior interaction
+evidence below remains historical rather than a new full-site click-through.
+
+Delivery gate: PASS, reference-driven alignment and existing identity preserved.
+Delivery gate: PASS, responsive wrapping without nowrap or truncation.
+Delivery gate: PASS, CMS facts, full chapters, media, anchors and SEO unchanged.
+Delivery gate: PASS, no new claims, assets or controls; existing motion retained.
+Delivery gate: PASS, build/test and scoped browser verification recorded above.

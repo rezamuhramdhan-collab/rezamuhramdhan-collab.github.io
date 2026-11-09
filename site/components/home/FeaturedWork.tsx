@@ -14,11 +14,9 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
       <Chapter number="02" title="Fragments of the comet" />
       <div className="sec-head" data-reveal>
         <div><p className="section-context">Selected work</p><h2 className="display">Small decisions.<br /><em>Lasting connections.</em></h2></div>
-        <Link className="sec-link" href="/work">
-          See all projects
-        </Link>
       </div>
       <p className="work-intro">The problem, the decisions, and what changed. Read the story behind each project.</p>
+      <Link className="sec-link" href="/work">See all projects</Link>
       {featuredProjects.length ? <ul className="work-list">
         {featuredProjects.map((project, index) => (
           <ProjectCard key={project.id} project={project} index={index} />

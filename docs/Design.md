@@ -1,5 +1,11 @@
 # Visual language: The red-thread journey
 
+Owner refinement (2026-11-09): stack titles above their descriptions on the same
+left edge, following the selected-work reference. Services and the work index
+use a vertical intro. About copy begins below its heading, with the portrait to
+the right. Case-study chapters use headings above content instead of sticky
+margin headings. Keep natural text wrapping and full-width project media.
+
 Latest owner refinement: omit the detail-page work counter, category/year
 eyebrow, complete chapter navigation bar and global atmosphere button. Keep
 the full authored story, direct anchors and original project metadata. Motion
