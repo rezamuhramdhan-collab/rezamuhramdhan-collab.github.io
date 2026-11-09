@@ -12,11 +12,14 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
     <section className="section story-section story-work" id="work" data-story-chapter>
       <div className="px">
       <Chapter number="02" title="Fragments of the comet" />
-      <div className="sec-head" data-reveal>
-        <div><p className="section-context">Selected work</p><h2 className="display">Small decisions.<br /><em>Lasting connections.</em></h2></div>
+      <div className="sec-head work-heading" data-reveal>
+        <div className="work-heading-copy">
+          <p className="section-context">Selected work</p>
+          <h2 className="display">Small decisions.<br /><em>Lasting connections.</em></h2>
+          <p className="work-intro">The problem, the decisions, and what changed. Read the story behind each project.</p>
+        </div>
+        <Link className="sec-link" href="/work">See all projects</Link>
       </div>
-      <p className="work-intro">The problem, the decisions, and what changed. Read the story behind each project.</p>
-      <Link className="sec-link" href="/work">See all projects</Link>
       {featuredProjects.length ? <ul className="work-list">
         {featuredProjects.map((project, index) => (
           <ProjectCard key={project.id} project={project} index={index} />

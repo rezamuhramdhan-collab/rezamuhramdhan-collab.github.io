@@ -191,3 +191,11 @@ website deployment was performed. Earlier screenshots show the prior variant.
 - Nine tests passed, including round trips across all fixture projects and focused punctuation preservation checks. TypeScript and the production server build passed.
 - Browser checks at 1280px and 375px confirm Plus Jakarta Sans for body, headings and labels, no horizontal overflow, correct section order and no em dashes in the homepage or checked full design-system case study. The CMS email form renders with Plus Jakarta Sans. No console errors or warnings were observed in these checks.
 - Final static export passed with all fixture routes and custom 404. Both normal and italic WOFF2 assets are valid and included.
+# Selected-work header refinement (2026-11-09)
+
+PASS: The title and description share a wider copy column. The project link
+aligns with the copy block's lower right edge at 1280px: its bottom is within
+2px of the copy bottom. At 375px the link follows below the copy. Both checked
+widths had no horizontal overflow. Clicking the link opened /work. TypeScript,
+all nine tests, the server build and static export passed. Existing content,
+routes and controls were retained.

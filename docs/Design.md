@@ -1,5 +1,10 @@
 # Visual language: The red-thread journey
 
+Owner refinement (2026-11-09): give the selected-work title and description
+more horizontal room. Keep the description below the title; place the open-work
+link at the right, aligned with the bottom of the copy block on wider screens.
+Stack the link below the copy on narrow screens.
+
 Owner refinement (2026-11-09): stack titles above their descriptions on the same
 left edge, following the selected-work reference. Services and the work index
 use a vertical intro. About copy begins below its heading, with the portrait to

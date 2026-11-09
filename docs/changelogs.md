@@ -16,6 +16,9 @@ deploy, and database work.
 
 ### Changed
 
+- Widened the selected-work title and description and aligned its project link
+  with the bottom of that copy on desktop. The link sits below the copy on mobile.
+
 - Stacked titles above their descriptions with a shared left edge across services,
   About, the project index and case-study chapters. Moved the selected-work link
   after its introduction. Text wraps naturally and project media keeps its width.
