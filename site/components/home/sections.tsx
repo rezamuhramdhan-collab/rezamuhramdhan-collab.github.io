@@ -31,7 +31,7 @@ export function Hero({ hero }: { hero: HeroData }) {
       <div className="world-thread" aria-hidden="true" /><ArrivalComet />
       <div className="px hero-content">
       <Chapter number="01" title="Two worlds" />
-      <div className="hero-intro"><span>{[hero.firstName, hero.lastName].filter(Boolean).join(" ")}</span><span>{hero.eyebrow || "Product design"}</span></div>
+      <div className="hero-intro"><span>{[hero.firstName, hero.lastName].filter(Boolean).join(" ")}</span></div>
       <div className="hero-grid">
         <div>
           <h1 className="display hero-name">
@@ -187,7 +187,7 @@ export function AboutSection({ about }: { about: About }) {
       <div className="px">
       <Chapter number="04" title="The thread" />
       <div className="sec-head" data-reveal>
-        <div><p className="section-context">{about.headline}</p><h2 className="display"><span>Between people </span><em>and possibility.</em></h2></div>
+        <div><h2 className="display"><span>Between people </span><em>and possibility.</em></h2></div>
       </div>
       <div className={`about-grid${hasPhoto ? "" : " without-photo"}`}>
         {hasPhoto && <div data-reveal>

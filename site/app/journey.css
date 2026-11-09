@@ -87,7 +87,6 @@ body { color: var(--ink); background: var(--night); }
 .hero-content > .chapter-label { margin-bottom: 28px; }
 .hero-intro { padding-bottom: 16px; display: flex; justify-content: flex-start; gap: 14px; flex-wrap: wrap; color: #d0def4; }
 .hero-intro span:first-child { font-size: 14px; text-transform: none; letter-spacing: .025em; }
-.hero-intro span:last-child { font-size: 14px; color: #d0def4; }
 .hero-grid { grid-template-columns: minmax(0, 600px); gap: 24px; }
 .hero-name { font-size: var(--type-hero); line-height: 1.06; letter-spacing: -.03em; font-weight: 400; }
 .hero-name em { font-weight: 400; }
@@ -351,7 +350,6 @@ html[data-atmosphere="paused"] [data-reveal] { opacity: 1; filter: none; transfo
   .hero-name { font-size: clamp(48px, 11.7vw, 76px); }
   .hero-intro { gap: 6px 14px; padding-bottom: 18px; }
   .hero-intro span { display: inline; font-size: 13px !important; }
-  .hero-intro span:last-child { display: inline; }
   .hero-content > .chapter-label { font-size: 11px; gap: 9px; margin-bottom: 28px; }
   .hero .hero-bio { font-size: 17px; }
   .hero-bottom { font-size: 15px; margin-top: 28px; }

@@ -214,3 +214,10 @@ main titles each measured one line high in the production browser preview.
 The selected-work screenshot visibly shows the entire title on one line with
 its link aligned at the lower right of the intro. At 375px the title wraps
 without page overflow. TypeScript, nine tests, server build and static export passed.
+# Redundant label removal (2026-11-09)
+
+PASS: The production preview contains no selected-work context label and no
+About context label. Hero intro contains just one identity span; its extra
+Product Designer label is absent. Both section titles and the hero's factual
+bio remain. No horizontal overflow at 1280px. TypeScript, all nine tests,
+server build and static export passed.

@@ -14,7 +14,6 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
       <Chapter number="02" title="Fragments of the comet" />
       <div className="sec-head work-heading" data-reveal>
         <div className="work-heading-copy">
-          <p className="section-context">Selected work</p>
           <h2 className="display"><span>Small decisions. </span><em>Lasting connections.</em></h2>
           <p className="work-intro">The problem, the decisions, and what changed. Read the story behind each project.</p>
         </div>

@@ -16,6 +16,9 @@ deploy, and database work.
 
 ### Changed
 
+- Removed three redundant small labels from the hero, selected-work intro and
+  About section.
+
 - Corrected the main homepage titles so each complete title appears on one
   desktop line. Narrow viewports wrap naturally without horizontal overflow.
 

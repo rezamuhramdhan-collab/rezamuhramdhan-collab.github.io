@@ -1,5 +1,8 @@
 # Visual language: The red-thread journey
 
+Owner refinement (2026-11-09): omit the redundant small labels "Selected work",
+"Product Designer" beside the hero identity, and "About" above its title.
+
 Owner correction (2026-11-09): each complete homepage main title is one
 continuous line at desktop width, including the selected-work title. Keep the
 normal/italic emphasis within the same line. On phone widths, allow natural
