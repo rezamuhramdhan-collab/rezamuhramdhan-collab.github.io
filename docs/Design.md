@@ -1,5 +1,9 @@
 # Visual language: The red-thread journey
 
+Owner refinement (2026-11-09): main split titles are two clear phrases, one
+phrase per line on desktop. Each line may use the full available width.
+At the mobile breakpoint, phrases wrap naturally inside the viewport.
+
 Owner refinement (2026-11-09): give the selected-work title and description
 more horizontal room. Keep the description below the title; place the open-work
 link at the right, aligned with the bottom of the copy block on wider screens.

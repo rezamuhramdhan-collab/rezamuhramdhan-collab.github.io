@@ -15,7 +15,7 @@ export function FeaturedWork({ projects }: { projects: Project[] }) {
       <div className="sec-head work-heading" data-reveal>
         <div className="work-heading-copy">
           <p className="section-context">Selected work</p>
-          <h2 className="display">Small decisions.<br /><em>Lasting connections.</em></h2>
+          <h2 className="display"><span>Small decisions.</span><em>Lasting connections.</em></h2>
           <p className="work-intro">The problem, the decisions, and what changed. Read the story behind each project.</p>
         </div>
         <Link className="sec-link" href="/work">See all projects</Link>

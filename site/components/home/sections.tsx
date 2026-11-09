@@ -35,7 +35,7 @@ export function Hero({ hero }: { hero: HeroData }) {
       <div className="hero-grid">
         <div>
           <h1 className="display hero-name">
-            Design brings<br /><em>us closer.</em>
+            <span>Design brings</span><em>us closer.</em>
           </h1>
         </div>
         <div className="hero-context">
@@ -107,7 +107,7 @@ export function Approach({ services }: { services: ServiceCard[] }) {
     <section className="section story-section story-search" id="services" data-story-chapter>
       <div className="px">
       <Chapter number="03" title="The search" />
-      <div className="sec-head"><h2 className="display">A way through<br /><em>the unknown.</em></h2><p className="section-note">How I work. Following the question until a clear direction appears.</p></div>
+      <div className="sec-head"><h2 className="display"><span>A way through</span><em>the unknown.</em></h2><p className="section-note">How I work. Following the question until a clear direction appears.</p></div>
       <div className="approach">
         {cells.map((service, index) => {
           return (
@@ -187,7 +187,7 @@ export function AboutSection({ about }: { about: About }) {
       <div className="px">
       <Chapter number="04" title="The thread" />
       <div className="sec-head" data-reveal>
-        <div><p className="section-context">{about.headline}</p><h2 className="display">Between people<br /><em>and possibility.</em></h2></div>
+        <div><p className="section-context">{about.headline}</p><h2 className="display"><span>Between people</span><em>and possibility.</em></h2></div>
       </div>
       <div className={`about-grid${hasPhoto ? "" : " without-photo"}`}>
         {hasPhoto && <div data-reveal>
@@ -238,7 +238,7 @@ export function TwilightMeeting() {
   return <section className="section story-section story-twilight" id="reflections" data-story-chapter>
     <div className="px twilight-inner" data-reveal>
       <Chapter number="05" title="Twilight meeting" />
-      <h2 className="display">Some stories arrive<br /><em>through other people.</em></h2>
+      <h2 className="display"><span>Some stories arrive</span><em>through other people.</em></h2>
       <div className="reflection-empty"><span className="memory-mark" aria-hidden="true">“</span><p>There is room here for their words.</p><p>Approved reflections from collaborators will appear here when added. For now, the case studies share the work in detail.</p><Link className="btn btn-light" href="/work">Read the case studies</Link></div>
       <ChapterEnd>Until our paths cross, a message can close the distance.</ChapterEnd>
     </div>

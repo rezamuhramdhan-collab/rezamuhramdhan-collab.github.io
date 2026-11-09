@@ -16,6 +16,9 @@ deploy, and database work.
 
 ### Changed
 
+- Set each phrase of the homepage's split titles on its own full line on desktop;
+  narrow screens keep natural wrapping.
+
 - Widened the selected-work title and description and aligned its project link
   with the bottom of that copy on desktop. The link sits below the copy on mobile.
 

@@ -199,3 +199,10 @@ aligns with the copy block's lower right edge at 1280px: its bottom is within
 widths had no horizontal overflow. Clicking the link opened /work. TypeScript,
 all nine tests, the server build and static export passed. Existing content,
 routes and controls were retained.
+# Split title line treatment (2026-11-09)
+
+PASS: Hero, Work, Services, About, Twilight and Contact split titles render
+one complete phrase per line at desktop width. At 375px the same phrases wrap
+within the viewport. No horizontal overflow at 1280px or 375px. TypeScript,
+all nine tests, full server build and static export passed. Copy and links are
+unchanged.
