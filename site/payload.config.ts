@@ -512,10 +512,11 @@ export default buildConfig({
                   type: "group",
                   admin: {
                     description:
-                      "Homepage card image. A neutral placeholder shows until an image is uploaded.",
+                      "The five existing studies use bundled twilight artwork. Turn on the override to show an uploaded image instead. New projects use their uploaded image automatically.",
                   },
                   fields: [
                     { name: "media", type: "upload", relationTo: "media" },
+                    { name: "useUploaded", type: "checkbox", label: "Use uploaded image for this study", defaultValue: false },
                     // Deprecated (v1) — retained hidden to keep the push additive.
                     {
                       name: "placeholderKey",

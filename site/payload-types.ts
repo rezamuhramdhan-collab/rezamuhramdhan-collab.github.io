@@ -289,10 +289,11 @@ export interface Project {
     timeline: string;
   };
   /**
-   * Homepage card image. A neutral placeholder shows until an image is uploaded.
+   * The five existing studies use bundled twilight artwork. Turn on the override to show an uploaded image instead. New projects use their uploaded image automatically.
    */
   thumbnail?: {
     media?: (number | null) | Media;
+    useUploaded?: boolean | null;
     placeholderKey?: ('bank-saqu' | 'banking-app' | 'saas-wireframes' | 'design-system' | 'banking-homepage') | null;
   };
   heroImage?: {
@@ -997,6 +998,7 @@ export interface ProjectsSelect<T extends boolean = true> {
     | T
     | {
         media?: T;
+        useUploaded?: T;
         placeholderKey?: T;
       };
   heroImage?:

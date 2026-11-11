@@ -3,6 +3,7 @@ import config from "@payload-config";
 import { hasLexical } from "./lexical";
 import { formatDisplayCopy } from "./display-copy";
 import { encryptSections } from "./lock";
+import { caseThumbnails } from "@/content/case-thumbnails";
 import type { Project as ProjectDoc, Media } from "@/payload-types";
 import type {
   SiteSettings,
@@ -178,6 +179,8 @@ function fromBlock(block: SectionBlockDoc): SectionBlock {
 
 function fromProjectDoc(doc: ProjectDoc, index: number): Project {
   const thumbMedia = doc.thumbnail?.media;
+  const uploadedThumbnail = thumbMedia && typeof thumbMedia === "object" && thumbMedia.url ? thumbMedia.url : "";
+  const curatedThumbnail = caseThumbnails[doc.slug];
   const sections = formatDisplayCopy((doc.sections ?? []).map(fromBlock));
   // Locked projects ship only ciphertext; the raw sections never leave here.
   const locked = Boolean(doc.locked && doc.password);
@@ -189,8 +192,9 @@ function fromProjectDoc(doc: ProjectDoc, index: number): Project {
       typeof doc.category === "object" && doc.category ? doc.category.name : String(doc.category ?? ""),
     year: doc.year,
     tags: (doc.tags ?? []).map((t) => t.text),
-    thumbnail:
-      thumbMedia && typeof thumbMedia === "object" && thumbMedia.url ? thumbMedia.url : "",
+    thumbnail: doc.thumbnail?.useUploaded && uploadedThumbnail
+      ? uploadedThumbnail
+      : curatedThumbnail ?? uploadedThumbnail,
     featured: Boolean(doc.featured),
     order: index + 1,
     summary: doc.summary,

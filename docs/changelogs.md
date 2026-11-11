@@ -14,6 +14,10 @@ deploy, and database work.
 
 ## 2026-11-11
 
+### Added
+
+- Created five original, optimized twilight thumbnails for every existing case study. Each illustration reflects its project's subject while sharing the site's blue, violet, peach, and red-thread palette. The homepage and project index now use these bundled assets; CMS editors can explicitly switch an existing study back to an uploaded image, and new projects use uploaded media automatically.
+
 ### Changed
 
 - Matched the Figma header's thin peach eight-point star with an inline SVG and refined the hero's centered thread with a small warm glow. The bright blue editor selection controls in the reference are not part of the site artwork.
