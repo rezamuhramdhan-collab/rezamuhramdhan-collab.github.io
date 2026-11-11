@@ -14,6 +14,10 @@ deploy, and database work.
 
 ## 2026-11-11
 
+### Changed
+
+- Reworked the contact chapter into an asymmetric diagonal composition: the headline and explanation stay at the upper left while the invitation and message form begin lower on the right. Small screens retain a readable left-aligned stack.
+
 ### Added
 
 - Created original, optimized twilight thumbnails for all six published CMS case studies and the local sample studies. Each illustration reflects its project's subject while sharing the site's blue, violet, peach, and red-thread palette. The homepage and project index use these bundled assets; CMS editors can explicitly switch an existing study back to an uploaded image, and new projects use uploaded media automatically.

@@ -47,6 +47,7 @@ export function Contact({
       <div className="contact-card">
         <div className="contact-letterhead"><span className="letter-thread" aria-hidden="true" /><p className="section-context">{headline}</p><h2 className="display"><span>Let’s find </span><em>a shared direction.</em></h2></div>
         <p className="contact-note">Tell me your name and what you have in mind. This form prepares a draft in your email app, ready for you to review and send.</p>
+        <div className="contact-actions">
         {contact.email ? <>
         <a className="btn contact-direct" href={`mailto:${contact.email}`}>Let’s make something <span aria-hidden="true">↗</span></a>
         <p className="contact-email"><a href={`mailto:${contact.email}`}>{contact.email}</a></p>
@@ -98,6 +99,7 @@ export function Contact({
         </form>
         </details>
         </> : <p className="contact-note">Contact details will be available soon.</p>}
+        </div>
       </div>
       <ChapterEnd>Somewhere between an idea and a message, a new story begins.</ChapterEnd>
       </div>

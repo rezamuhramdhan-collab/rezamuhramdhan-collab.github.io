@@ -269,14 +269,16 @@ body { background: var(--night); }
 .reflection-empty .memory-mark { display: none; }
 .reflection-empty p:first-of-type { font-size: 30px; font-style: italic; }
 .reflection-empty p + p { font-size: 13px; max-width: 450px; margin: 18px auto; }
-.story-contact .chapter-label { justify-content: center; }
-.contact-card { max-width: 900px; text-align: center; padding: 0; border: 0; background: transparent; }
+.story-contact .chapter-label { justify-content: flex-start; }
+.contact-card { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); column-gap: clamp(48px, 8vw, 130px); max-width: none; text-align: left; padding: 0; border: 0; background: transparent; }
 .contact-card .section-context, .letter-thread { display: none; }
+.contact-letterhead { grid-column: 1; grid-row: 1; }
 .contact-card h2 span, .contact-card h2 em { display: block; }
-.contact-note { font-size: 14px; max-width: 540px; margin-inline: auto; }
-.contact-direct { margin-top: 32px; padding-inline: 28px; }
+.contact-note { grid-column: 1; grid-row: 2; font-size: 14px; max-width: 540px; margin: 24px 0 0; }
+.contact-actions { grid-column: 2; grid-row: 1 / 3; align-self: start; min-width: 0; padding-top: clamp(110px, 15vw, 210px); }
+.contact-direct { margin-top: 0; padding-inline: 28px; }
 .contact-email { font-size: 12px; color: #c5c4d3; margin-top: 20px; }
-.contact-compose { margin: 28px auto 0; max-width: 650px; }
+.contact-compose { margin: 28px 0 0; max-width: 650px; }
 .contact-compose summary { cursor: pointer; font-size: 12px; color: #e5af9d; }
 .contact-compose .contact-form { text-align: left; }
 .site-footer { border-top: 1px solid #34394c; background-color: #101424; padding-block: 36px; }
@@ -299,5 +301,7 @@ body { background: var(--night); }
   .work-list, .approach { grid-template-columns: 1fr; }
   .project-body h3, .project-row.has-image .project-body h3 { font-size: 34px; }
   .story-twilight h2 { font-size: 42px; }
-  .contact-card { padding: 0; }
+  .contact-card { display: block; padding: 0; }
+  .contact-note { margin-top: 22px; }
+  .contact-actions { padding-top: 34px; }
 }
