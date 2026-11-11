@@ -16,7 +16,7 @@ deploy, and database work.
 
 ### Added
 
-- Created five original, optimized twilight thumbnails for every existing case study. Each illustration reflects its project's subject while sharing the site's blue, violet, peach, and red-thread palette. The homepage and project index now use these bundled assets; CMS editors can explicitly switch an existing study back to an uploaded image, and new projects use uploaded media automatically.
+- Created original, optimized twilight thumbnails for all six published CMS case studies and the local sample studies. Each illustration reflects its project's subject while sharing the site's blue, violet, peach, and red-thread palette. The homepage and project index use these bundled assets; CMS editors can explicitly switch an existing study back to an uploaded image, and new projects use uploaded media automatically.
 
 ### Changed
 

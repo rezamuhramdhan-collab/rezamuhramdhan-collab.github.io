@@ -289,7 +289,7 @@ export interface Project {
     timeline: string;
   };
   /**
-   * The five existing studies use bundled twilight artwork. Turn on the override to show an uploaded image instead. New projects use their uploaded image automatically.
+   * Existing studies use bundled twilight artwork. Turn on the override to show an uploaded image instead. New projects use their uploaded image automatically.
    */
   thumbnail?: {
     media?: (number | null) | Media;
