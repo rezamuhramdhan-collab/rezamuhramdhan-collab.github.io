@@ -517,3 +517,6 @@ scroll-reveal animations, and a mobile breakpoint.
 ## Complete Figma section composition
 
 Rebuilt the hero with original vector scenery, moved About below the hero in two columns, changed featured work to three compact cards, simplified service and experience surfaces, restyled the reflection and footer, and added a centered contact invitation with an accessible form disclosure. Existing CMS fields and all case-study routes are retained.
+## Figma artwork and motion correction (2026-11-11)
+
+Replaced the simplified vector hero with an original optimized painted twilight scene that restores soft clouds, layered mountains, water, city lights and a clear dark text area. Added slow sky drift, subtle stars and a low hillside to the reflection scene. Preserved the live CMS project thumbnails, the looping comet and reduced-motion behavior.

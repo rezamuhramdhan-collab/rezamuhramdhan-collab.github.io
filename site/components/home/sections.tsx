@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type {
   Hero as HeroData,
@@ -24,17 +25,7 @@ export function Hero({ hero }: { hero: HeroData }) {
   const socialLinks = hero.socialLinks;
   return (
     <header className="hero" id="top">
-      <svg className="twilight-landscape" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-        <defs><linearGradient id="landscape-sky" x2="0" y2="1"><stop stopColor="#293958"/><stop offset=".6" stopColor="#64617b"/><stop offset="1" stopColor="#b18487"/></linearGradient><linearGradient id="landscape-water" x2="0" y2="1"><stop stopColor="#8d839c"/><stop offset="1" stopColor="#142133"/></linearGradient></defs>
-        <path fill="url(#landscape-sky)" d="M0 0h1440v900H0z"/>
-        {[90,220,345,490,660,780,940,1090,1240,1360].map((x,i)=><circle key={x} cx={x} cy={80+(i*67)%290} r={i%3===0?1.5:1} fill="#f6e2dc" opacity=".55"/>)}
-        <path d="M0 590 160 515 290 580 420 520 590 610 760 555 900 600 1080 510 1220 550 1350 490 1440 530V900H0Z" fill="#687088"/>
-        <path d="M0 650 180 590 330 655 510 605 690 675 880 615 1030 650 1210 590 1440 650V900H0Z" fill="#3d506c"/>
-        <path d="M0 760Q350 640 720 685T1440 710V900H0Z" fill="url(#landscape-water)"/>
-        <g fill="#273b57">{Array.from({length:28},(_,i)=><g key={i}><rect x={790+i*23} y={650-(i*31)%100} width="17" height={130+(i*31)%100}/>{[0,1,2,3].map(j=><rect key={j} x={794+i*23} y={660-(i*31)%100+j*19} width="3" height="5" fill="#d9b7a4" opacity=".6"/>)}</g>)}</g>
-        <path d="M0 700Q210 730 410 900H0Z M1440 765Q1230 745 1040 900H1440Z" fill="#142133"/>
-        <path d="M0 830Q320 760 650 900H0Z" fill="#10192c"/>
-      </svg>
+      <Image className="twilight-landscape" src="/images/twilight-horizon.webp" alt="" fill priority sizes="100vw" />
       <div className="hero-shade" aria-hidden="true" />
       <div className="world-city" aria-hidden="true" /><div className="world-nature" aria-hidden="true" />
       <div className="world-thread" aria-hidden="true" /><ArrivalComet />

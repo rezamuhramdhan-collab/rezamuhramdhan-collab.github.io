@@ -208,9 +208,11 @@ body { background: var(--night); }
 .story-section .display { white-space: normal; }
 .chapter-label { font-size: 10px; letter-spacing: .18em; }
 .chapter-end { display: none; }
-.twilight-landscape { position: absolute; inset: 0; width: 100%; height: 100%; }
+.twilight-landscape { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 58%; animation: horizon-drift 28s ease-in-out infinite alternate; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(circle at 18% 19%, #fff2e8 0 1px, transparent 2px), radial-gradient(circle at 73% 12%, #fff2e8 0 1px, transparent 2px), radial-gradient(circle at 84% 31%, #fff2e8 0 1px, transparent 2px); opacity: .45; animation: quiet-stars 8s ease-in-out infinite alternate; }
+@keyframes horizon-drift { from { transform: scale(1.02) translateX(-.4%); } to { transform: scale(1.06) translateX(.4%); } }
 .hero, .hero-content { min-height: 820px; }
-.hero-shade { background: linear-gradient(#17233f30, #1c294030 70%, #111526); }
+.hero-shade { background: linear-gradient(#101a3159 0%, #17233f36 48%, #11152638 75%, #111526 100%); }
 .world-city, .world-nature { display: none; }
 .hero-content { padding-top: 120px; justify-content: flex-start; }
 .hero-content > .chapter-label { display: none; }
@@ -257,6 +259,7 @@ body { background: var(--night); }
 .exp-bullets li { font-size: 15px; }
 .story-twilight { background: radial-gradient(ellipse at 50% 110%, #44615e, transparent 75%), #182333; }
 .story-twilight::before { display: none; }
+.story-twilight::after { content: ""; position: absolute; z-index: 0; inset: auto 0 0; height: 32%; background: #142632; clip-path: ellipse(75% 38% at 50% 100%); pointer-events: none; }
 .story-twilight h2 { max-width: 800px; margin: auto; font-size: 52px; }
 .reflection-empty { background: transparent; border: 0; padding: 0; margin-top: 28px; box-shadow: none; }
 .reflection-empty .memory-mark { display: none; }
