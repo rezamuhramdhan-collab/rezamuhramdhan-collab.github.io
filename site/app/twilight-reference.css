@@ -48,6 +48,7 @@ body { background: var(--night); }
 .site-nav { background: var(--header-bg); border-color: #66779055; box-shadow: none; }
 .nav-inner { min-height: 76px; }
 .nav-mark { color: var(--ink); font: 600 24px/1 var(--ff-display); letter-spacing: -.025em; }
+.nav-star { width: 30px; height: 30px; flex: none; color: #e8b7aa; }
 .nav-monogram { border-radius: 50%; width: 32px; height: 32px; color: #17253b; background: #ead3c9; font: 600 16px/1 var(--ff-display); }
 .nav-links a { color: #dae0e9; font-size: 13px; letter-spacing: .05em; }
 .nav-thread { background: var(--thread); box-shadow: none; height: 1px; }
@@ -75,7 +76,9 @@ body { background: var(--night); }
 .hero-bottom { align-self: center; gap: 10px; margin-top: auto; padding-top: 10px; border: 0; color: #e9dbdf; font: 400 20px/1.2 var(--ff-display); }
 .world-city { width: 60%; opacity: .72; background: #10192d; }
 .world-nature { width: 60%; background: linear-gradient(180deg, #3d466a88, #10182bcc); }
-.world-thread { left: 50%; opacity: .55; background: linear-gradient(transparent, #efb3ad 25%, #e7a5a7 75%, transparent); }
+.world-thread { left: 50%; width: 1px; opacity: .82; background: linear-gradient(180deg, #e9a8aa05, #e9a8aa72 17%, #e9a8aa43 55%, #e9a8aa0a 96%); box-shadow: 0 0 5px #eab1ae29; }
+.world-thread::after { left: -3px; top: 19%; width: 7px; height: 7px; background: #ffd4c5; box-shadow: 0 0 5px 2px #ffd0b9, 0 0 20px 7px #ef9fa77d; animation: thread-pulse 5s ease-in-out infinite; }
+@keyframes thread-pulse { 0%, 100% { opacity: .75; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
 
 /* Full dark reading rhythm, with subtle shifts from scene to scene. */
 .story-work { background: radial-gradient(ellipse at 78% 3%, #57466966, transparent 45%), #16253d; }
@@ -213,6 +216,7 @@ body { background: var(--night); }
 @keyframes horizon-drift { from { transform: scale(1.02) translateX(-.4%); } to { transform: scale(1.06) translateX(.4%); } }
 .hero, .hero-content { min-height: 820px; }
 .hero-shade { background: linear-gradient(#101a3159 0%, #17233f36 48%, #11152638 75%, #111526 100%); }
+.site-nav .nav-monogram { display: none; }
 .world-city, .world-nature { display: none; }
 .hero-content { padding-top: 120px; justify-content: flex-start; }
 .hero-content > .chapter-label { display: none; }

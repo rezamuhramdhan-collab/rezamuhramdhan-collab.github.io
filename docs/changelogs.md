@@ -12,6 +12,12 @@ deploy, and database work.
 
 ---
 
+## 2026-11-11
+
+### Changed
+
+- Matched the Figma header's thin peach eight-point star with an inline SVG and refined the hero's centered thread with a small warm glow. The bright blue editor selection controls in the reference are not part of the site artwork.
+
 ## 2026-11-09
 
 ### Changed

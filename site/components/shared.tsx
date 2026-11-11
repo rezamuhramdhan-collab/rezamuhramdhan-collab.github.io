@@ -38,6 +38,10 @@ export function HomeNav({ settings }: { settings: SiteSettings }) {
           logos drawn for the v2 dark theme are near-white and would vanish on
           the v3 paper chip. */}
       <Link className="nav-mark" href="/" aria-label={logoText}>
+        <svg className="nav-star" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M16 1v30M1 16h30M5.4 5.4l21.2 21.2M26.6 5.4 5.4 26.6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          <circle cx="16" cy="16" r="2" fill="currentColor" />
+        </svg>
         <span className="nav-monogram" aria-hidden={logoImage ? undefined : "true"}>
           {logoImage ? (
             logoImage.width && logoImage.height ? (
